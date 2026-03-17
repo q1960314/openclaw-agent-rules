@@ -1,0 +1,45 @@
+{
+  "optimizations": [
+    {
+      "id": "opt-001",
+      "timestamp": "2026-03-12 14:32:10",
+      "agent": "test-expert",
+      "category": "性能优化",
+      "description": "接口测试可以并行执行，提升速度",
+      "priority": "high",
+      "suggested_action": "",
+      "status": "pending",
+      "implemented_at": null,
+      "notes": ""
+    },
+    {
+      "id": "opt-002",
+      "timestamp": "2026-03-12 14:32:10",
+      "agent": "coder",
+      "category": "代码结构",
+      "description": "建议将配置提取到独立文件",
+      "priority": "medium",
+      "suggested_action": "",
+      "status": "pending",
+      "implemented_at": null,
+      "notes": ""
+    },
+    {
+      "id": "opt-003",
+      "timestamp": "2026-03-12 14:32:10",
+      "agent": "data-collector",
+      "category": "数据源",
+      "description": "建议添加 AkShare 作为备份数据源",
+      "priority": "medium",
+      "suggested_action": "",
+      "status": "pending",
+      "implemented_at": null,
+      "notes": ""
+    }
+  ],
+  "stats": {
+    "total": 3,
+    "implemented": 0,
+    "pending": 3
+  }
+}

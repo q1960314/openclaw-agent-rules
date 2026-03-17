@@ -1,0 +1,19 @@
+{
+  "required": [
+    "feishu-doc",
+    "feishu-wiki",
+    "github",
+    "tavily",
+    "searxng",
+    "self-improving-agent",
+    "edict-multi-agent",
+    "memory-fusion-skill",
+    "calendar-skill",
+    "email-skill",
+    "proactive-agent"
+  ],
+  "optional": [
+    "data-analyst",
+    "knowledge-graph"
+  ]
+}

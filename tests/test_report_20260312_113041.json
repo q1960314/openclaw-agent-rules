@@ -1,0 +1,222 @@
+{
+  "timestamp": "2026-03-12T11:30:33.890006",
+  "summary": {
+    "total": 16,
+    "passed": 9,
+    "failed": 1,
+    "skipped": 6,
+    "pass_rate": "56.2%"
+  },
+  "results": [
+    {
+      "test_name": "全量抓取模式 - 正常启动",
+      "mode": "抓取 + 回测",
+      "status": "pass",
+      "duration": 0.9848988056182861,
+      "error_message": "",
+      "output_file": "",
+      "checks": [
+        {
+          "item": "程序启动",
+          "status": "pass"
+        }
+      ]
+    },
+    {
+      "test_name": "全量抓取模式 - 读取时间范围",
+      "mode": "抓取 + 回测",
+      "status": "fail",
+      "duration": 0.8477480411529541,
+      "error_message": "返回码：0",
+      "output_file": "",
+      "checks": [
+        {
+          "item": "时间范围配置",
+          "status": "fail"
+        }
+      ]
+    },
+    {
+      "test_name": "全量抓取模式 - 抓取数据",
+      "mode": "抓取 + 回测",
+      "status": "skip",
+      "duration": 0.0,
+      "error_message": "Dry-run 模式跳过实际数据抓取",
+      "output_file": "",
+      "checks": []
+    },
+    {
+      "test_name": "全量抓取模式 - 保存进度",
+      "mode": "抓取 + 回测",
+      "status": "skip",
+      "duration": 0.0,
+      "error_message": "未找到进度文件（可能是首次运行）",
+      "output_file": "",
+      "checks": [
+        {
+          "item": "进度文件存在",
+          "status": "skip"
+        }
+      ]
+    },
+    {
+      "test_name": "增量抓取模式 - 正常启动",
+      "mode": "抓取 + 回测（增量）",
+      "status": "pass",
+      "duration": 0.8715450763702393,
+      "error_message": "",
+      "output_file": "",
+      "checks": [
+        {
+          "item": "程序启动",
+          "status": "pass"
+        }
+      ]
+    },
+    {
+      "test_name": "增量抓取模式 - 识别最新交易日",
+      "mode": "抓取 + 回测（增量）",
+      "status": "pass",
+      "duration": 0.822735071182251,
+      "error_message": "",
+      "output_file": "",
+      "checks": [
+        {
+          "item": "日期识别",
+          "status": "pass"
+        }
+      ]
+    },
+    {
+      "test_name": "增量抓取模式 - 只抓取 1 天数据",
+      "mode": "抓取 + 回测（增量）",
+      "status": "skip",
+      "duration": 0.0,
+      "error_message": "Dry-run 模式跳过实际数据抓取",
+      "output_file": "",
+      "checks": []
+    },
+    {
+      "test_name": "增量抓取模式 - 合并到现有数据",
+      "mode": "抓取 + 回测（增量）",
+      "status": "pass",
+      "duration": 0.0,
+      "error_message": "",
+      "output_file": "",
+      "checks": [
+        {
+          "item": "数据合并",
+          "status": "pass",
+          "file_count": 3
+        }
+      ]
+    },
+    {
+      "test_name": "回测模式 - 正常启动",
+      "mode": "仅回测",
+      "status": "pass",
+      "duration": 0.819627046585083,
+      "error_message": "",
+      "output_file": "",
+      "checks": [
+        {
+          "item": "程序启动",
+          "status": "pass"
+        }
+      ]
+    },
+    {
+      "test_name": "回测模式 - 加载本地数据",
+      "mode": "仅回测",
+      "status": "pass",
+      "duration": 0.8229131698608398,
+      "error_message": "",
+      "output_file": "",
+      "checks": [
+        {
+          "item": "数据加载",
+          "status": "pass"
+        }
+      ]
+    },
+    {
+      "test_name": "回测模式 - 执行回测",
+      "mode": "仅回测",
+      "status": "skip",
+      "duration": 0.0,
+      "error_message": "Dry-run 模式跳过实际回测",
+      "output_file": "",
+      "checks": []
+    },
+    {
+      "test_name": "回测模式 - 输出回测报告",
+      "mode": "仅回测",
+      "status": "skip",
+      "duration": 0.0,
+      "error_message": "未找到回测报告文件",
+      "output_file": "",
+      "checks": [
+        {
+          "item": "报告生成",
+          "status": "skip"
+        }
+      ]
+    },
+    {
+      "test_name": "每日选股模式 - 正常启动",
+      "mode": "每日选股",
+      "status": "pass",
+      "duration": 0.8572688102722168,
+      "error_message": "",
+      "output_file": "",
+      "checks": [
+        {
+          "item": "程序启动",
+          "status": "pass"
+        }
+      ]
+    },
+    {
+      "test_name": "每日选股模式 - 抓取最新数据",
+      "mode": "每日选股",
+      "status": "pass",
+      "duration": 0.8185107707977295,
+      "error_message": "",
+      "output_file": "",
+      "checks": [
+        {
+          "item": "数据抓取",
+          "status": "pass"
+        }
+      ]
+    },
+    {
+      "test_name": "每日选股模式 - 执行选股策略",
+      "mode": "每日选股",
+      "status": "pass",
+      "duration": 0.8340063095092773,
+      "error_message": "",
+      "output_file": "",
+      "checks": [
+        {
+          "item": "策略执行",
+          "status": "pass"
+        }
+      ]
+    },
+    {
+      "test_name": "每日选股模式 - 输出选股清单",
+      "mode": "每日选股",
+      "status": "skip",
+      "duration": 0.0,
+      "error_message": "未找到选股清单文件",
+      "output_file": "",
+      "checks": [
+        {
+          "item": "选股清单",
+          "status": "skip"
+        }
+      ]
+    }
+  ]
+}

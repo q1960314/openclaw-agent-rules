@@ -1,0 +1,46 @@
+{
+  "syntax_check": {
+    "status": "PASS",
+    "message": "无语法错误"
+  },
+  "dependency_check": {
+    "status": "PASS",
+    "message": "tushare: 1.4.25; pyarrow: 6.0.1; pandas: 1.1.5; numpy: 1.19.5; flask: 2.0.3; flask_cors: 5.0.0"
+  },
+  "api_tests": [
+    {
+      "name": "Tushare 股票列表接口",
+      "status": "FAIL",
+      "message": "您的token不对，请确认。"
+    },
+    {
+      "name": "Tushare 日线数据接口",
+      "status": "FAIL",
+      "message": "您的token不对，请确认。"
+    },
+    {
+      "name": "Tushare 股票基本信息接口",
+      "status": "FAIL",
+      "message": "您的token不对，请确认。"
+    },
+    {
+      "name": "Tushare 交易日历接口",
+      "status": "FAIL",
+      "message": "您的token不对，请确认。"
+    },
+    {
+      "name": "Tushare 沪深指数接口",
+      "status": "FAIL",
+      "message": "您的token不对，请确认。"
+    }
+  ],
+  "parquet_test": {
+    "status": "PASS",
+    "message": "Parquet 存储正常 | 原始数据：0.47KB | 压缩后：5.89KB | 压缩比：0.08x"
+  },
+  "summary": {
+    "total": 8,
+    "passed": 3,
+    "failed": 5
+  }
+}

@@ -1,0 +1,304 @@
+# ==============================================
+# 量化交易系统 - 配置文件 (config.yaml)
+# ==============================================
+# 说明：本配置文件支持环境变量覆盖，优先级：环境变量 > 配置文件 > 默认值
+# 使用方法：
+#   1. 直接修改本文件中的配置项
+#   2. 或使用环境变量：export QUANT_AUTO_RUN_MODE="每日选股"
+#   3. 支持多环境配置：config.dev.yaml, config.prod.yaml
+# ==============================================
+
+# ============================================
+# 【1. 核心运行配置 - 最常用，每次运行必看】
+# ============================================
+core:
+  # --------------------------- 1.1 运行模式选择 ---------------------------
+  # 【可选模式】：
+  #   - "抓取 + 回测"：先从 Tushare 抓取最新数据，再自动跑回测（最常用，首次使用建议先跑这个）
+  #   - "仅服务"：仅启动 Flask 后端 API 服务，不执行抓取/回测/选股
+  #   - "仅回测"：不重新抓取数据，直接用本地已缓存的数据跑回测（速度快）
+  #   - "每日选股"：抓取最新 1 个交易日数据，执行实盘选股（适合每天收盘后用）
+  auto_run_mode: "每日选股"
+  
+  # --------------------------- 1.2 策略类型选择 ---------------------------
+  # 【可选策略】：
+  #   - "打板策略"：原 23 维评分策略，追涨停板用，新手首选，但风险较高
+  #   - "缩量潜伏策略"：涨停后缩量回调低吸，不追高，风险相对较低
+  #   - "板块轮动策略"：电风扇行情专用，抓板块轮动机会
+  strategy_type: "打板策略"
+  
+  # --------------------------- 1.3 板块筛选配置 ---------------------------
+  # 【可选板块】："主板", "创业板", "科创板", "北交所"
+  # 【配置示例】：
+  #   只选主板：allowed_market: ["主板"]
+  #   选主板和创业板：allowed_market: ["主板", "创业板"]
+  #   所有板块：allowed_market: ["主板", "创业板", "科创板", "北交所"]
+  # 【注意】：这里选什么板块，就只会抓取什么板块的股票，不会浪费时间抓全市场
+  allowed_market:
+    - "主板"
+
+# ============================================
+# 【2. 时间配置 - 抓取/回测/选股通用】
+# ============================================
+time:
+  # 全量回测/抓取的开始日期（格式：YYYY-MM-DD）
+  start_date: "2020-01-01"
+  # 最新交易日（格式：YYYY-MM-DD）
+  end_date: "2026-03-11"
+
+# ============================================
+# 【3. 消息推送配置】
+# ============================================
+notification:
+  # 是否启用微信机器人推送
+  wechat_robot_enabled: true
+  # 微信机器人 Webhook URL（替换为你的实际地址）
+  wechat_robot_url: "https://qyapi.weixin.qq.com/cgi-bin/webhook/send?key=YOUR_KEY_HERE"
+
+# ============================================
+# 【4. 交易核心参数 - 回测/选股通用】
+# ============================================
+trading:
+  # 初始本金（单位：元，回测用）
+  init_capital: 5000
+  # 最长持股天数（单位：天，超过就强制卖出）
+  max_hold_days: 3
+  # 基础止损比例（默认 6%，亏损超过这个比例就止损）
+  stop_loss_rate: 0.06
+  # 基础止盈比例（默认 12%，盈利超过这个比例就止盈）
+  stop_profit_rate: 0.12
+  # 佣金比例（万 2.5，即 0.025%）
+  commission_rate: 0.00025
+  # 最低佣金（5 元/笔，不足 5 元按 5 元收，A 股实盘规则）
+  min_commission: 5
+  # 印花税（卖出千 1，仅卖出收取，买入不收，A 股实盘规则）
+  stamp_tax_rate: 0.001
+  # 单只股票最大仓位占比（20%，即最多用 20% 的钱买一只股票）
+  single_stock_position: 0.2
+  # 单行业最大仓位占比（30%，避免单一行业风险）
+  industry_position: 0.3
+  # 最大持仓股票数（5 只，分散风险）
+  max_hold_stocks: 5
+  # 账户最大回撤≥15%，强制清仓空仓休息
+  max_drawdown_stop: 0.15
+  # 清仓后空仓休息天数（3 天）
+  drawdown_stop_days: 3
+  # 单次买入量≤当日成交量 5%（避免冲击成本，A 股合规）
+  max_trade_ratio: 0.05
+  # 复权类型：front(前复权)/back(后复权)/none(不复权)，回测建议用前复权
+  price_adjust: "front"
+  # 实盘滑点：单边 0.5%，即买入时多花 0.5%，卖出时少卖 0.5%
+  slippage_rate: 0.005
+
+# ============================================
+# 【5. 前置筛选配置】
+# ============================================
+filter:
+  # 【注意】Tushare 官方标准：amount 单位为千元，vol 单位为手，所有数值已严格校准
+  # 最低成交额（千元，300000 千元=30 亿元，保证流动性）
+  min_amount: 300000
+  # 最低换手率（%，3% 以上保证股性活跃）
+  min_turnover: 3
+  # 是否排除 ST/*ST/退市整理股票（True=排除，避免踩雷）
+  exclude_st: true
+  # 是否排除停牌股票（True=排除，避免资金占用）
+  exclude_suspend: true
+  # 单只股票最大抓取重试次数（3 次，超过标记为永久失败）
+  max_fetch_retry: 3
+  # 永久失败股票自动过期天数（30 天后重新尝试抓取）
+  permanent_failed_expire: 30
+
+# ============================================
+# 【6. 评分规则 - 选股 + 回测通用】
+# ============================================
+scoring:
+  # 策略及格分（通用）
+  pass_score: 12
+  # 各策略专属及格分
+  strategy_pass_score:
+    打板策略：18
+    缩量潜伏策略：12
+    板块轮动策略：17
+  # 评分项配置（格式：评分项名称：[分值，条件表达式，{策略名：策略分值}]）
+  # 详细说明见原 Python 配置中的 CORE_CONFIG
+
+# ============================================
+# 【7. 三大策略专属筛选配置】
+# ============================================
+strategies:
+  # ----------------------
+  # 打板策略配置
+  # ----------------------
+  打板策略:
+    type: "link"                # 策略类型：link=连板策略，first=首板策略
+    min_order_ratio: 0.03        # 最低封单比（3%，封单太少容易炸板）
+    max_break_times: 1           # 最大炸板次数（1 次，炸板太多说明股性弱）
+    link_board_range: [2, 4]      # 连板高度范围（2-4 板）
+    exclude_late_board: true      # 是否排除尾盘封板
+    stop_loss_rate: 0.06          # 止损比例
+    stop_profit_rate: 0.12        # 止盈比例
+    max_hold_days: 2              # 最长持股天数
+  
+  # ----------------------
+  # 缩量潜伏策略配置
+  # ----------------------
+  缩量潜伏策略:
+    type: "first_board_pullback"  # 策略类型：首板回调潜伏
+    first_board_limit: true        # 必须是阶段首次涨停
+    board_volume_growth: 1.5       # 涨停当天成交量倍数
+    shrink_volume_ratio: [0.33, 0.5]  # 缩量比例范围（1/3~1/2）
+    shrink_days_range: [3, 10]     # 缩量回调天数范围
+    pullback_support_level: 0.5    # 回调支撑位（0.5=首板 1/2 分位）
+    support_tolerance: 0.02        # 支撑位容错（±2%）
+    stop_loss_rate: 0.03           # 止损比例（更严格）
+    stop_profit_rate: 0.15         # 止盈比例
+    max_hold_days: 8               # 最长持股 8 天
+    rotate_days: 1                 # 每日选股更新
+  
+  # ----------------------
+  # 板块轮动策略配置
+  # ----------------------
+  板块轮动策略:
+    type: "industry"            # 策略类型：industry=行业轮动策略
+    rotate_days: 3               # 轮动调仓天数
+    stop_loss_rate: 0.05         # 止损比例
+    stop_profit_rate: 0.1        # 止盈比例
+    main_trend: true             # 是否只做主线行业
+    fund_inflow_top: 30          # 只选资金流入前 30 的行业
+    max_hold_days: 3             # 最长持股天数
+
+# ============================================
+# 【8. 今日选股专属配置】
+# ============================================
+stock_pick:
+  # 选股最低评分（16 分以上才考虑）
+  min_pick_score: 16
+  # 最大输出股票数（10 只，太多看不过来）
+  max_output_count: 10
+  # 是否只选主板（True=只选主板）
+  only_main_board: true
+  # 是否导出 Excel 选股清单
+  export_excel: true
+  # 是否导出评分明细
+  export_score_detail: true
+  # 每日选股抓取天数（仅需最新 1 天，节省请求次数）
+  fetch_days: 1
+
+# ============================================
+# 【9. 后端服务配置】
+# ============================================
+server:
+  # 服务监听地址
+  host: "0.0.0.0"
+  # 服务监听端口
+  port: 5001
+  # Tushare API Token（替换为你的实际 Token）
+  tushare_token: "YOUR_TUSHARE_TOKEN_HERE"
+  # Tushare API 地址
+  tushare_api_url: "http://42.194.163.97:5000"
+  # 是否抓取扩展数据
+  fetch_extend_data: true
+  # 是否启用可视化
+  visualization: false
+  # 日志级别（DEBUG/INFO/WARNING/ERROR）
+  log_level: "INFO"
+
+# ============================================
+# 【10. 抓取性能优化配置】
+# ============================================
+performance:
+  # 【配置说明】根据你的 Tushare 积分调整以下参数：
+  #   - 积分<1000：max_workers=2-5, max_requests_per_minute=100-300
+  #   - 积分 1000-5000：max_workers=5-10, max_requests_per_minute=300-1000
+  #   - 积分 5000-10000：max_workers=10-15, max_requests_per_minute=1000-2000
+  #   - 积分>10000：max_workers=15-20, max_requests_per_minute=2000-5000
+  # 并发线程数
+  max_workers: 20
+  # 批量 IO 间隔（秒）
+  batch_io_interval: 10
+  # 每分钟最大请求数
+  max_requests_per_minute: 1500
+
+# ============================================
+# 【11. 扩展数据抓取配置】
+# ============================================
+extend_data:
+  # 基础扩展数据开关
+  enable_top_list: true          # 龙虎榜每日明细
+  enable_top_inst: true          # 龙虎榜机构席位明细
+  enable_finance_sheet: true     # 财务三表
+  enable_hk_hold: true           # 北向资金
+  enable_cyq: true               # 筹码分布
+  enable_block_trade: true       # 大宗交易
+  enable_index_weight: true      # 指数成分股权重
+  enable_kpl_concept: true       # 概念板块
+  enable_stk_limit: true         # 每日涨跌停数据
+  
+  # 多资讯源配置
+  enable_multi_news: false       # 开启多资讯源抓取
+  news_source_list:              # 资讯源列表（可自由增删）
+    - "sina"         # 新浪财经
+    - "cls"          # 财联社（短线核心，必开）
+    - "yicai"        # 第一财经
+    - "eastmoney"    # 东方财富
+    - "xueqiu"       # 雪球
+    - "10jqka"       # 同花顺
+    - "ifeng"        # 凤凰财经
+    - "jrj"          # 金融界
+    - "yuncaijing"   # 云财经
+    - "wallstreetcn" # 华尔街见闻
+  
+  # AkShare 新闻源配置
+  enable_akshare_news: false     # 开启 AkShare 新闻抓取
+  akshare_news_sources:
+    - "stock_news_em"           # 东方财富个股新闻
+    - "news_economic_baidu"     # 百度经济日历
+    - "stock_news_main_cx"      # 财新数据
+    - "news_cctv"                # 新闻联播
+
+# ============================================
+# 【12. 日志配置】
+# ============================================
+logging:
+  # 日志目录
+  log_dir: "logs"
+  # 日志文件轮转周期（D=每天，W=每周，M=每月）
+  rotation_when: "D"
+  # 保留的日志文件数量
+  backup_count_info: 30          # INFO 日志保留 30 天
+  backup_count_error: 7          # ERROR 日志保留 7 天
+  # 日志格式
+  format: "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+  # 日期格式
+  date_format: "%Y-%m-%d %H:%M:%S"
+
+# ============================================
+# 【13. 数据存储配置】
+# ============================================
+storage:
+  # 数据输出目录
+  output_dir: "data"
+  # 全量股票数据目录
+  stocks_dir: "data_all_stocks"
+  # 图表输出目录
+  chart_dir: "charts"
+  # 是否使用 Parquet 格式存储（推荐，性能更好）
+  use_parquet: true
+  # Parquet 压缩方式（snappy/gzip/brotli）
+  parquet_compression: "snappy"
+
+# ============================================
+# 【14. 环境变量覆盖说明】
+# ============================================
+# 以下环境变量可用于覆盖配置文件中的值：
+#   QUANT_AUTO_RUN_MODE      -> core.auto_run_mode
+#   QUANT_STRATEGY_TYPE      -> core.strategy_type
+#   QUANT_TUSHARE_TOKEN      -> server.tushare_token
+#   QUANT_LOG_LEVEL          -> server.log_level
+#   QUANT_WECHAT_ENABLED     -> notification.wechat_robot_enabled
+#   QUANT_MAX_WORKERS        -> performance.max_workers
+#
+# 使用示例：
+#   export QUANT_AUTO_RUN_MODE="每日选股"
+#   export QUANT_TUSHARE_TOKEN="your_token_here"
+#   python fetch_data_optimized.py

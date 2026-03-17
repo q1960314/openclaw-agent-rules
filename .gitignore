@@ -1,0 +1,48 @@
+# 敏感信息
+*.token
+*.key
+*.env
+.env.*
+
+# 数据文件（太大）
+data/
+data_all_stocks/
+quant_data_project/data/
+*.csv
+*.parquet
+*.xlsx
+*.json.bak
+
+# 日志
+logs/
+*.log
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+.Python
+.venv/
+venv/
+
+# IDE
+.idea/
+.vscode/
+*.swp
+
+# 备份文件
+*.bak
+
+# 临时文件
+*.tmp
+*.temp
+
+# 敏感配置
+.openclaw/config.json
+.openclaw/config.json.*
+.openclaw/config.json.bak*
+*.token
+*.key
+
+# 会话文件（太大）
+sessions/

@@ -1,0 +1,58 @@
+# OpenClaw 定时任务配置
+# 优化时间：2026-03-11 23:15
+# 原则：进度汇报避开重要任务，夜间减少打扰
+
+# 环境变量设置
+SHELL=/bin/bash
+PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/home/admin/.local/bin:/home/admin/.npm-global/bin
+MAILTO=""
+
+# ==============================================
+# Master-Quant 定时任务
+# ==============================================
+
+# 每 30 分钟飞书进度通知（7:00-20:30，避开重要任务）
+# 避开：08:30 选股、21:00 数据、21:30 总结、23:00 学习
+30 7-20 * * * /home/admin/.openclaw/agents/master/scripts/feishu-report.sh >> /home/admin/.openclaw/agents/master/logs/feishu-cron.log 2>&1
+
+# ==============================================
+# 数据抓取任务
+# ==============================================
+
+# 每个交易日 21:00 增量数据抓取
+0 21 * * 1-5 /home/admin/.openclaw/agents/master/scripts/fetch-data.sh daily >> /home/admin/.openclaw/agents/master/logs/fetch-daily.log 2>&1
+
+# ==============================================
+# 每日选股任务
+# ==============================================
+
+# 每个交易日 08:30 选股并飞书通知
+30 8 * * 1-5 /home/admin/.openclaw/agents/master/scripts/daily-stock-pick.sh >> /home/admin/.openclaw/agents/master/logs/stock-pick.log 2>&1
+
+# ==============================================
+# AI 进化任务（Master 的自我学习）
+# ==============================================
+
+# 每天 23:00 AI 每日学习总结
+0 23 * * * /home/admin/.openclaw/agents/master/scripts/ai-daily-learning.sh >> /home/admin/.openclaw/agents/master/logs/ai-self-improvement.log 2>&1
+
+# ==============================================
+# 每日总结任务
+# ==============================================
+
+# 每天 21:30 每日总结汇报（与数据抓取错开 30 分钟）
+30 21 * * * /home/admin/.openclaw/agents/master/scripts/daily-summary.sh >> /home/admin/.openclaw/agents/master/logs/daily-summary.log 2>&1
+
+# ==============================================
+# 备份任务
+# ==============================================
+
+# 每天 02:00 轻量级备份（保留 7 天）
+0 2 * * * /home/admin/.openclaw/agents/master/scripts/backup-openclaw.sh >> /home/admin/.openclaw/agents/master/logs/backup.log 2>&1
+
+# ==============================================
+# 任务队列轮询（每 1 分钟）
+# ==============================================
+
+# 每分钟检查任务队列，子 agent 完成后自动派发下一个
+* * * * * /home/admin/.openclaw/agents/master/scripts/check-task-queue.sh >> /home/admin/.openclaw/agents/master/logs/task-queue.log 2>&1

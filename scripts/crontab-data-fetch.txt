@@ -1,0 +1,34 @@
+# OpenClaw 数据抓取 24 小时循环任务配置
+# 创建时间：2026-03-10
+# 说明：所有任务使用绝对路径，日志输出到指定文件
+
+# 环境变量设置
+SHELL=/bin/bash
+PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+MAILTO=""
+
+# 原有备份任务（保留）
+0 * * * * /home/admin/.openclaw/workspace/backup-openclaw.sh
+
+# ==================== 数据抓取任务 ====================
+
+# 01:00 - 增量数据抓取
+0 1 * * * /home/admin/.openclaw/agents/master/scripts/fetch-data.sh daily >> /home/admin/.openclaw/agents/master/logs/daily-$(date +\%Y\%m\%d).log 2>&1
+
+# 03:00 - 日线行情补全
+0 3 * * * /home/admin/.openclaw/agents/master/scripts/fetch-data.sh backfill >> /home/admin/.openclaw/agents/master/logs/backfill-$(date +\%Y\%m\%d).log 2>&1
+
+# 05:00 - 财务数据更新
+0 5 * * * /home/admin/.openclaw/agents/master/scripts/fetch-data.sh finance >> /home/admin/.openclaw/agents/master/logs/finance-$(date +\%Y\%m\%d).log 2>&1
+
+# 06:00 - 资金流向更新
+0 6 * * * /home/admin/.openclaw/agents/master/scripts/fetch-data.sh moneyflow >> /home/admin/.openclaw/agents/master/logs/moneyflow-$(date +\%Y\%m\%d).log 2>&1
+
+# 07:00 - 龙虎榜/涨跌停
+0 7 * * * /home/admin/.openclaw/agents/master/scripts/fetch-data.sh top_list >> /home/admin/.openclaw/agents/master/logs/top_list-$(date +\%Y\%m\%d).log 2>&1
+
+# 08:00 - 数据质量校验
+0 8 * * * /home/admin/.openclaw/agents/master/scripts/fetch-data.sh quality-check >> /home/admin/.openclaw/agents/master/logs/quality-check-$(date +\%Y\%m\%d).log 2>&1
+
+# 16:00 - 盘后增量抓取（仅工作日）
+0 16 * * 1-5 /home/admin/.openclaw/agents/master/scripts/fetch-data.sh daily >> /home/admin/.openclaw/agents/master/logs/daily-aftermarket-$(date +\%Y\%m\%d).log 2>&1
