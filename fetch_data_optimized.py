@@ -1082,7 +1082,7 @@ class Utils:
         :param compression: 压缩算法（snappy/gzip/brotli）
         :param merge_key: 日期列名，增量模式下用于合并去重
         """
-        global FETCH_TYPE
+        global FETCH_TYPE, START_DATE, END_DATE, START_DATE_API, END_DATE_API, EXTEND_FETCH_CONFIG
         
         # 转换为 parquet 路径
         parquet_path = filepath.replace('.csv', '.parquet')
@@ -4330,7 +4330,7 @@ def wait_for_api_ready(timeout=15):
 # ============================================== 【模式执行入口 - 全量修复】 ==============================================
 def run_by_mode():
     """根据运行模式执行对应逻辑"""
-    global FETCH_TYPE
+    global FETCH_TYPE, START_DATE, END_DATE, START_DATE_API, END_DATE_API, EXTEND_FETCH_CONFIG
     logger.info(f"当前运行模式：{AUTO_RUN_MODE}，策略类型：{STRATEGY_TYPE}")
     pro, utils = get_pro_api(load_config())
     
@@ -4411,8 +4411,38 @@ def run_by_mode():
             return
         
         FETCH_TYPE = "latest"
-        logger.info("开始提交增量数据抓取任务（仅最新 1 天）...")
+        
+        # 【增量抓取优化】自动获取上一个有效交易日
+        try:
+            today_api = datetime.now().strftime("%Y%m%d")
+            start_api = (datetime.now() - timedelta(days=30)).strftime("%Y%m%d")
+            cal_df = pro.trade_cal(exchange="", start_date=start_api, end_date=today_api)
+            if cal_df is not None and not cal_df.empty:
+                open_dates = cal_df[cal_df["is_open"] == 1]["cal_date"].tolist()
+                today_str = datetime.now().strftime("%Y%m%d")
+                prev_dates = [d for d in open_dates if d < today_str]
+                if prev_dates:
+                    prev_date_api = max(prev_dates)
+                    prev_trade_date = datetime.strptime(prev_date_api, "%Y%m%d")
+                else:
+                    prev_trade_date = datetime.now() - timedelta(days=1)
+            else:
+                prev_trade_date = datetime.now() - timedelta(days=1)
+        except Exception as e:
+            logger.warning(f"获取交易日历失败，使用昨天：{e}")
+            prev_trade_date = datetime.now() - timedelta(days=1)
+        START_DATE = prev_trade_date.strftime("%Y-%m-%d")
+        END_DATE = prev_trade_date.strftime("%Y-%m-%d")
+        START_DATE_API = START_DATE.replace("-", "")
+        END_DATE_API = END_DATE.replace("-", "")
+        logger.info(f"📅 自动检测到上一个有效交易日：{START_DATE}")
+        
+        logger.info("开始提交每日选股任务...")
         task_id = str(uuid.uuid4())
+        # 【增量抓取优化】关闭季度数据接口（财务三表等）
+        EXTEND_FETCH_CONFIG["enable_finance_sheet"] = False  # 财务三表
+        EXTEND_FETCH_CONFIG["enable_hk_hold"] = False        # 港股持仓
+        logger.info("📅 增量模式：已关闭财务报表等季度数据接口")
         TASK_QUEUE.put({
             'id': task_id,
             'config': load_config(),
@@ -4421,8 +4451,8 @@ def run_by_mode():
         with TASK_STATUS_LOCK:
             TASK_STATUS[task_id] = {'status': 'queued', 'progress': 0, 'message': '任务已排队', 'logs': []}
         
-        logger.info(f"增量数据抓取任务已提交，任务 ID：{task_id}")
-        print(f"最新数据抓取中...请稍候（任务 ID：{task_id}），请勿关闭程序！")
+        logger.info(f"每日选股任务已提交，任务 ID：{task_id}")
+        print(f"每日选股数据抓取中...请稍候（任务 ID：{task_id}），请勿关闭程序！")
         print("="*80)
         
         while True:
@@ -4515,7 +4545,38 @@ def run_by_mode():
             return
         
         FETCH_TYPE = "latest"
-        logger.info("开始提交增量数据抓取任务（仅最新 1 天）...")
+        
+        # 【每日选股优化】自动获取交易日 + 关闭季度接口
+        try:
+            today_api = datetime.now().strftime("%Y%m%d")
+            start_api = (datetime.now() - timedelta(days=30)).strftime("%Y%m%d")
+            cal_df = pro.trade_cal(exchange="", start_date=start_api, end_date=today_api)
+            if cal_df is not None and not cal_df.empty:
+                open_dates = cal_df[cal_df["is_open"] == 1]["cal_date"].tolist()
+                today_str = datetime.now().strftime("%Y%m%d")
+                prev_dates = [d for d in open_dates if d <= today_str]
+                if prev_dates:
+                    prev_date_api = max(prev_dates)
+                    prev_trade_date = datetime.strptime(prev_date_api, "%Y%m%d")
+                else:
+                    prev_trade_date = datetime.now() - timedelta(days=1)
+            else:
+                prev_trade_date = datetime.now() - timedelta(days=1)
+        except Exception as e:
+            logger.warning(f"获取交易日历失败：{e}")
+            prev_trade_date = datetime.now() - timedelta(days=1)
+        START_DATE = prev_trade_date.strftime("%Y-%m-%d")
+        END_DATE = START_DATE
+        START_DATE_API = START_DATE.replace("-", "")
+        END_DATE_API = END_DATE.replace("-", "")
+        logger.info(f"📅 每日选股：交易日 {START_DATE}")
+        
+        # 关闭季度数据接口
+        EXTEND_FETCH_CONFIG["enable_finance_sheet"] = False
+        EXTEND_FETCH_CONFIG["enable_hk_hold"] = False
+        logger.info("📅 每日选股模式：已关闭财务报表等季度数据接口")
+        
+        logger.info("开始提交每日选股任务...")
         task_id = str(uuid.uuid4())
         TASK_QUEUE.put({
             'id': task_id,
@@ -4525,8 +4586,8 @@ def run_by_mode():
         with TASK_STATUS_LOCK:
             TASK_STATUS[task_id] = {'status': 'queued', 'progress': 0, 'message': '任务已排队', 'logs': []}
         
-        logger.info(f"增量数据抓取任务已提交，任务 ID：{task_id}")
-        print(f"最新数据抓取中...请稍候（任务 ID：{task_id}），请勿关闭程序！")
+        logger.info(f"每日选股任务已提交，任务 ID：{task_id}")
+        print(f"每日选股数据抓取中...请稍候（任务 ID：{task_id}），请勿关闭程序！")
         print("="*80)
         
         while True:
