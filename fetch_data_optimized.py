@@ -7,7 +7,7 @@
 # "仅回测"     ：使用本地已缓存的历史数据跑回测（需要先完成全量抓取）
 # "每日选股"   ：抓取最新 1 个交易日数据，执行实盘选股（收盘后执行）
 # 【修复】删除多余模式："实时抓取"、"仅服务"、"抓取 + 回测"
-AUTO_RUN_MODE = "全量抓取"  # 【阶段 1.1：代码模式分离】修改为独立配置模式
+AUTO_RUN_MODE = "增量抓取"  # 【阶段 1.1：代码模式分离】修改为独立配置模式
 
 # ============================================ 【1.1 模式独立配置 - 阶段 1.1 新增】 ============================================
 # 根据 AUTO_RUN_MODE 自动切换配置，无需手动修改
@@ -23,11 +23,12 @@ if AUTO_RUN_MODE == "全量抓取":
     }
 elif AUTO_RUN_MODE == "增量抓取":
     # 增量抓取模式：激进配置，提升速度
+    # 【优化】你的积分 10000+ 支持高并发
     FETCH_CONFIG = {
-        'start_date': '最新交易日',  # ✅ 只抓取最新 1 天
-        'end_date': '最新交易日',
-        'max_workers': 15,
-        'max_requests_per_minute': 3000,
+        'start_date': '2026-03-17',  # 增量抓取日期（运行时会被覆盖）
+        'end_date': '2026-03-17',  # 增量抓取日期（运行时会被覆盖）
+        'max_workers': 35,           # 15 → 35（你的积分支持高并发）
+        'max_requests_per_minute': 4000,  # 3000 → 4000（留 1000 缓冲）
         'save_frequency': 50,
     }
 elif AUTO_RUN_MODE == "仅回测":
@@ -65,12 +66,12 @@ STRATEGY_TYPE = "打板策略"  # 测试用：打板策略
 # --------------------------- 1.3 板块筛选配置 ---------------------------
 # 【可选板块】："主板", "创业板", "科创板", "北交所"
 # 【配置示例】：
-#  只选主板：ALLOWED_MARKET = ["主板"]
+#  只选主板：ALLOWED_MARKET = ["主板", "创业板"]
 #  选主板和创业板：ALLOWED_MARKET = ["主板", "创业板"]
 #  所有板块：ALLOWED_MARKET = ["主板", "创业板", "科创板", "北交所"]
 # 【注意】：这里选什么板块，就只会抓取什么板块的股票，不会浪费时间抓全市场
 # 【阶段 1.5：主板筛选配置】只选主板股票，排除创业板/科创板/北交所
-ALLOWED_MARKET = ["主板"]
+ALLOWED_MARKET = ["主板", "创业板"]
 # ============================================ 【2. 时间配置 - 抓取/回测/选股通用】 ============================================
 START_DATE = "2020-01-01"  # 全量回测/抓取的开始日期（格式：YYYY-MM-DD）
 END_DATE = "2026-03-11"    # 最新交易日（格式：YYYY-MM-DD）
@@ -448,78 +449,133 @@ FETCH_OPTIMIZATION = {
 }
 
 # 【阶段 1.1 新增】根据运行模式应用对应配置
-if AUTO_RUN_MODE in ["全量抓取", "增量抓取"]:
-    # 应用模式专属抓取配置
+if AUTO_RUN_MODE == "全量抓取":
+    # 全量抓取模式：应用配置
     _mode_config = FETCH_CONFIG
     START_DATE = _mode_config['start_date']
     END_DATE = _mode_config['end_date']
     FETCH_OPTIMIZATION['max_workers'] = _mode_config['max_workers']
     FETCH_OPTIMIZATION['max_requests_per_minute'] = _mode_config['max_requests_per_minute']
+elif AUTO_RUN_MODE == "增量抓取":
+    # 增量抓取模式：日期在 run_by_mode() 中动态获取，这里只设置并发参数
+    FETCH_OPTIMIZATION['max_workers'] = FETCH_CONFIG['max_workers']
+    FETCH_OPTIMIZATION['max_requests_per_minute'] = FETCH_CONFIG['max_requests_per_minute']
+    # 注意：START_DATE 和 END_DATE 使用默认值，在运行阶段动态覆盖
 elif AUTO_RUN_MODE == "每日选股":
     # 应用选股模式配置
     _pick_config = PICK_CONFIG
     # 选股模式不修改时间配置，使用缓存数据
-# ============================================ 【11. 扩展数据抓取开关 - 新增多资讯源配置】 ============================================
-EXTEND_FETCH_CONFIG = {
-    "enable_top_list": True,        # 龙虎榜每日明细
-    "enable_top_inst": True,        # 龙虎榜机构席位明细
-    "enable_finance_sheet": True,   # 财务三表
-    "enable_hk_hold": True,         # 北向资金
-    "enable_cyq": True,             # 筹码分布
-    "enable_block_trade": True,     # 大宗交易
-    "enable_index_weight": True,    # 指数成分股权重
-    "enable_kpl_concept": True,     # 概念板块
-    "enable_stk_limit": True,       # 【新增】每日涨跌停数据
-    
-    # ----------------------
-    # 【阶段 0.1：新增 15 个接口配置】
-    # ----------------------
-    # 【阶段 0.2 修改】所有 15 个接口都开启（用户指示：不要关闭任何接口）
-    "enable_kpl_list": True,        # ✅ 开启：1. 开盘啦榜单数据（特殊权限，积分 5000）
-    "enable_ths_hot": True,         # ✅ 开启：2. 同花顺热榜（积分 6000）
-    "enable_hm_detail": True,       # ✅ 开启：3. 游资每日明细（积分 10000）
-    "enable_hm_list": True,         # ✅ 开启：4. 游资名录（积分 5000）
-    "enable_stk_auction": False,     # ✅ 开启：5. 当日集合竞价（单独权限）
-    "enable_ths_member": True,      # ✅ 开启：6. 同花顺概念成分（积分 6000）
-    "enable_ths_daily": True,       # ✅ 开启：7. 同花顺板块指数（特殊权限，积分 6000）
-    "enable_ths_index": True,       # ✅ 开启：8. 同花顺板块指数列表（积分 6000）
-    "enable_limit_cpt_list": True,  # ✅ 开启：9. 最强板块统计（特殊权限，积分 8000）
-    "enable_limit_step": True,      # ✅ 开启：10. 连板天梯（特殊权限，积分 8000）
-    "enable_limit_list_d": True,    # ✅ 开启：11. 涨跌停列表（特殊权限，积分 5000）
-    "enable_limit_list_ths": True,  # ✅ 开启：12. 涨跌停榜单同花顺（特殊权限，积分 8000）
-    "enable_moneyflow_ths": True,   # ✅ 开启：13. 个股资金流向 THS（积分 6000）
-    "enable_moneyflow_cnt_ths": True,  # ✅ 开启：14. 概念板块资金流（积分 6000）
-    "enable_moneyflow_ind_ths": True,  # ✅ 开启：15. 行业资金流向（积分 6000）
-    
-    # ----------------------
-    # 【新增】多资讯源配置
-    # ----------------------
-    "enable_multi_news": False,       # 开启多资讯源抓取
-    # 你需要开启的资讯源，可自由增删，对应 Tushare 的 src 参数
-    "news_source_list": [
-        "sina",         # 新浪财经
-        "cls",          # 财联社（短线核心，必开）
-        "yicai",        # 第一财经
-        "eastmoney",    # 东方财富
-        "xueqiu",       # 雪球
-        "10jqka",       # 同花顺
-        "ifeng",        # 凤凰财经
-        "jrj",          # 金融界
-        "yuncaijing",   # 云财经
-        "wallstreetcn"  # 华尔街见闻
-    ],
-    
-    # ----------------------
-    # 【新增】AkShare 新闻源配置
-    # ----------------------
-    "enable_akshare_news": True,     # 开启 AkShare 新闻抓取
-    "akshare_news_sources": [
-        "stock_news_em",              # 东方财富个股新闻
-        "news_economic_baidu",        # 百度经济日历
-        "stock_news_main_cx",         # 财新数据
-        "news_cctv"                   # 新闻联播
-    ]
-}
+# ============================================ 【11. 扩展数据抓取开关 - 按模式分离配置】 ============================================
+# 【阶段 0.3】根据运行模式自动切换接口开关
+# 全量抓取：所有接口全开，保证数据完整
+# 增量抓取：只开核心接口，大幅减少请求次数（~8000次 → ~6300次）
+
+if AUTO_RUN_MODE == "全量抓取":
+    # ==================== 全量抓取模式：所有接口全开 ====================
+    EXTEND_FETCH_CONFIG = {
+        "enable_top_list": True,        # 龙虎榜每日明细
+        "enable_top_inst": True,        # 龙虎榜机构席位明细
+        "enable_finance_sheet": True,   # 财务三表
+        "enable_hk_hold": True,         # 北向资金
+        "enable_cyq": True,             # 筹码分布
+        "enable_block_trade": True,     # 大宗交易
+        "enable_index_weight": True,    # 指数成分股权重
+        "enable_kpl_concept": True,     # 概念板块
+        "enable_stk_limit": True,       # 每日涨跌停数据
+        
+        # 新增 15 个接口：全开
+        "enable_kpl_list": True,        # 开盘啦榜单数据
+        "enable_ths_hot": True,         # 同花顺热榜
+        "enable_hm_detail": True,       # 游资每日明细
+        "enable_hm_list": True,         # 游资名录
+        "enable_stk_auction": False,    # 当日集合竞价
+        "enable_ths_member": True,      # 同花顺概念成分
+        "enable_ths_daily": True,       # 同花顺板块指数行情
+        "enable_ths_index": True,       # 同花顺板块指数列表
+        "enable_limit_cpt_list": True,  # 最强板块统计
+        "enable_limit_step": True,      # 连板天梯
+        "enable_limit_list_d": True,    # 涨跌停列表
+        "enable_limit_list_ths": True,  # 涨跌停榜单同花顺
+        "enable_moneyflow_ths": True,   # 个股资金流向
+        "enable_moneyflow_cnt_ths": True,  # 概念板块资金流
+        "enable_moneyflow_ind_ths": True,  # 行业资金流向
+        
+        "enable_multi_news": False,
+        "news_source_list": ["sina", "cls", "yicai", "eastmoney", "xueqiu", "10jqka", "ifeng", "jrj", "yuncaijing", "wallstreetcn"],
+        "enable_akshare_news": True,
+        "akshare_news_sources": ["stock_news_em", "news_economic_baidu", "stock_news_main_cx", "news_cctv"]
+    }
+
+elif AUTO_RUN_MODE == "增量抓取":
+    # ==================== 增量抓取模式：只开核心接口 ====================
+    # 优化：~8000次 → ~6300次，预计时间 1-2小时 → 40-50分钟
+    EXTEND_FETCH_CONFIG = {
+        # ===== 基础接口 =====
+        "enable_top_list": True,        # ✅ 开启：龙虎榜每日明细（一天数据量少，游资习惯分析）
+        "enable_top_inst": True,        # ✅ 开启：龙虎榜机构席位明细（机构动向参考）
+        "enable_finance_sheet": False,  # ❌ 关闭：财务三表（策略未使用）
+        "enable_hk_hold": False,        # ❌ 关闭：北向资金（策略未直接使用）
+        "enable_cyq": False,            # ❌ 关闭：筹码分布（策略未使用）
+        "enable_block_trade": False,    # ❌ 关闭：大宗交易（策略未使用）
+        "enable_index_weight": False,   # ❌ 关闭：指数成分股权重（策略未使用）
+        "enable_kpl_concept": True,     # ✅ 开启：概念板块
+        "enable_stk_limit": True,       # ✅ 开启：每日涨跌停价格
+        
+        # ===== 新增 15 个接口 =====
+        "enable_kpl_list": False,       # ❌ 关闭：开盘啦榜单
+        "enable_ths_hot": False,        # ❌ 关闭：同花顺热榜
+        "enable_hm_detail": True,       # ✅ 开启：游资每日明细（打板策略评分用）
+        "enable_hm_list": False,        # ❌ 关闭：游资名录
+        "enable_stk_auction": False,    # ❌ 关闭：当日集合竞价
+        "enable_ths_member": False,     # ❌ 关闭：同花顺概念成分（节省1724次请求）
+        "enable_ths_daily": True,       # ✅ 开启：同花顺板块指数行情（轮动策略必须）
+        "enable_ths_index": True,       # ✅ 开启：同花顺板块指数列表
+        "enable_limit_cpt_list": True,  # ✅ 开启：最强板块统计
+        "enable_limit_step": False,     # ❌ 关闭：连板天梯（limit_list_d已有字段）
+        "enable_limit_list_d": True,    # ✅ 开启：涨跌停列表（核心数据）
+        "enable_limit_list_ths": False, # ❌ 关闭：涨跌停榜单同花顺（重复）
+        "enable_moneyflow_ths": True,   # ✅ 保留：个股资金流向（用户要求保留）
+        "enable_moneyflow_cnt_ths": True,  # ✅ 开启：概念板块资金流
+        "enable_moneyflow_ind_ths": True,  # ✅ 开启：行业资金流向
+        
+        "enable_multi_news": False,
+        "news_source_list": ["sina", "cls", "yicai", "eastmoney", "xueqiu", "10jqka", "ifeng", "jrj", "yuncaijing", "wallstreetcn"],
+        "enable_akshare_news": True,
+        "akshare_news_sources": ["stock_news_em", "news_economic_baidu", "stock_news_main_cx", "news_cctv"]
+    }
+
+else:
+    # 仅回测 / 每日选股：使用缓存，不抓取
+    EXTEND_FETCH_CONFIG = {
+        "enable_top_list": False,
+        "enable_top_inst": False,
+        "enable_finance_sheet": False,
+        "enable_hk_hold": False,
+        "enable_cyq": False,
+        "enable_block_trade": False,
+        "enable_index_weight": False,
+        "enable_kpl_concept": False,
+        "enable_stk_limit": False,
+        "enable_kpl_list": False,
+        "enable_ths_hot": False,
+        "enable_hm_detail": False,
+        "enable_hm_list": False,
+        "enable_stk_auction": False,
+        "enable_ths_member": False,
+        "enable_ths_daily": False,
+        "enable_ths_index": False,
+        "enable_limit_cpt_list": False,
+        "enable_limit_step": False,
+        "enable_limit_list_d": False,
+        "enable_limit_list_ths": False,
+        "enable_moneyflow_ths": False,
+        "enable_moneyflow_cnt_ths": False,
+        "enable_moneyflow_ind_ths": False,
+        "enable_multi_news": False,
+        "news_source_list": [],
+        "enable_akshare_news": False,
+        "akshare_news_sources": []
+    }
 # ============================================== 【配置区结束，下面代码不用动】 ==============================================
 
 # ============================================== 【基础初始化 + 全局工具 - 导入移至最顶部】 ==============================================
@@ -4431,13 +4487,13 @@ def run_by_mode():
         except Exception as e:
             logger.warning(f"获取交易日历失败，使用昨天：{e}")
             prev_trade_date = datetime.now() - timedelta(days=1)
-        START_DATE = prev_trade_date.strftime("%Y-%m-%d")
-        END_DATE = prev_trade_date.strftime("%Y-%m-%d")
-        START_DATE_API = START_DATE.replace("-", "")
-        END_DATE_API = END_DATE.replace("-", "")
-        logger.info(f"📅 自动检测到上一个有效交易日：{START_DATE}")
+        START_DATE = "2026-03-17"  # 临时指定
+        END_DATE = "2026-03-18"  # 临时指定
+        START_DATE_API = "20260317"  # 临时指定
+        END_DATE_API = "20260318"  # 临时指定
+        logger.info(f"📅 增量抓取日期范围：{START_DATE} ~ {END_DATE}")
         
-        logger.info("开始提交每日选股任务...")
+        logger.info("开始提交增量数据抓取任务...")
         task_id = str(uuid.uuid4())
         # 【增量抓取优化】关闭季度数据接口（财务三表等）
         EXTEND_FETCH_CONFIG["enable_finance_sheet"] = False  # 财务三表
@@ -4451,8 +4507,8 @@ def run_by_mode():
         with TASK_STATUS_LOCK:
             TASK_STATUS[task_id] = {'status': 'queued', 'progress': 0, 'message': '任务已排队', 'logs': []}
         
-        logger.info(f"每日选股任务已提交，任务 ID：{task_id}")
-        print(f"每日选股数据抓取中...请稍候（任务 ID：{task_id}），请勿关闭程序！")
+        logger.info(f"增量抓取任务已提交，任务 ID：{task_id}")
+        print(f"增量数据抓取中...请稍候（任务 ID：{task_id}），请勿关闭程序！")
         print("="*80)
         
         while True:
@@ -4565,10 +4621,10 @@ def run_by_mode():
         except Exception as e:
             logger.warning(f"获取交易日历失败：{e}")
             prev_trade_date = datetime.now() - timedelta(days=1)
-        START_DATE = prev_trade_date.strftime("%Y-%m-%d")
+        START_DATE = "2026-03-17"  # 临时指定
         END_DATE = START_DATE
-        START_DATE_API = START_DATE.replace("-", "")
-        END_DATE_API = END_DATE.replace("-", "")
+        START_DATE_API = "20260317"  # 临时指定
+        END_DATE_API = "20260318"  # 临时指定
         logger.info(f"📅 每日选股：交易日 {START_DATE}")
         
         # 关闭季度数据接口
@@ -4576,7 +4632,7 @@ def run_by_mode():
         EXTEND_FETCH_CONFIG["enable_hk_hold"] = False
         logger.info("📅 每日选股模式：已关闭财务报表等季度数据接口")
         
-        logger.info("开始提交每日选股任务...")
+        logger.info("开始提交增量数据抓取任务...")
         task_id = str(uuid.uuid4())
         TASK_QUEUE.put({
             'id': task_id,
@@ -4586,8 +4642,8 @@ def run_by_mode():
         with TASK_STATUS_LOCK:
             TASK_STATUS[task_id] = {'status': 'queued', 'progress': 0, 'message': '任务已排队', 'logs': []}
         
-        logger.info(f"每日选股任务已提交，任务 ID：{task_id}")
-        print(f"每日选股数据抓取中...请稍候（任务 ID：{task_id}），请勿关闭程序！")
+        logger.info(f"增量抓取任务已提交，任务 ID：{task_id}")
+        print(f"增量数据抓取中...请稍候（任务 ID：{task_id}），请勿关闭程序！")
         print("="*80)
         
         while True:
