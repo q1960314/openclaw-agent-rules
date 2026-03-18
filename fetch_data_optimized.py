@@ -479,6 +479,7 @@ EXTEND_FETCH_CONFIG = {
     "enable_ths_hot": True,         # ✅ 开启：2. 同花顺热榜（积分 6000）
     "enable_hm_detail": True,       # ✅ 开启：3. 游资每日明细（积分 10000）
     "enable_hm_list": True,         # ✅ 开启：4. 游资名录（积分 5000）
+    "enable_stk_auction": False,     # ✅ 开启：5. 当日集合竞价（单独权限）
     "enable_ths_member": True,      # ✅ 开启：6. 同花顺概念成分（积分 6000）
     "enable_ths_daily": True,       # ✅ 开启：7. 同花顺板块指数（特殊权限，积分 6000）
     "enable_ths_index": True,       # ✅ 开启：8. 同花顺板块指数列表（积分 6000）
@@ -544,6 +545,9 @@ from queue import Queue, Empty
 from copy import deepcopy
 from threading import Thread, Lock, RLock
 import pandas as pd
+
+# 【增量抓取修复】全局标志
+FETCH_TYPE = "full"
 import numpy as np
 import requests
 from tqdm import tqdm
@@ -1070,24 +1074,37 @@ class Utils:
         return []
     
     # 【优化】阶段 1 任务 3:Parquet 存储支持
-    def save_to_parquet(self, df, filepath, compression='snappy'):
+    def save_to_parquet(self, df, filepath, compression='snappy', merge_key=None):
         """
         保存 DataFrame 为 Parquet 格式，使用 Snappy 压缩
         :param df: pandas DataFrame
         :param filepath: 保存路径
         :param compression: 压缩算法（snappy/gzip/brotli）
+        :param merge_key: 日期列名，增量模式下用于合并去重
         """
+        global FETCH_TYPE
+        
+        # 转换为 parquet 路径
+        parquet_path = filepath.replace('.csv', '.parquet')
+        
+        # 【增量抓取修复】如果是增量模式且文件已存在，合并数据
+        if FETCH_TYPE == 'latest' and merge_key and os.path.exists(parquet_path) and merge_key in df.columns:
+            try:
+                df_existing = self.load_from_parquet(filepath)
+                if not df_existing.empty and merge_key in df_existing.columns:
+                    df = pd.concat([df_existing, df], ignore_index=True)
+                    df = df.drop_duplicates(subset=[merge_key], keep='last')
+                    df = df.sort_values(merge_key, ascending=False).reset_index(drop=True)
+                    logger.debug(f"✅ 数据已合并: {parquet_path}")
+            except Exception as e:
+                logger.warning(f"合并数据失败: {e}")
+        
         if not PARQUET_AVAILABLE:
-            # 降级为 CSV
             df.to_csv(filepath, index=False, encoding='utf-8-sig')
             return
         
         try:
-            # 确保目录存在
             os.makedirs(os.path.dirname(filepath), exist_ok=True)
-            # 转换路径为.parquet 后缀
-            parquet_path = filepath.replace('.csv', '.parquet')
-            # 保存为 Parquet
             table = pa.Table.from_pandas(df)
             pq.write_table(table, parquet_path, compression=compression)
             logger.debug(f"✅ Parquet 文件已保存：{parquet_path}")
@@ -1421,6 +1438,38 @@ class Utils:
             logger.error(f"❌ 游资名录数据抓取失败：{e}")
             return pd.DataFrame()
     
+    # 5. 当日集合竞价接口 - 单独权限，限流 8000 条/次
+    def fetch_stk_auction(self, trade_date):
+        """
+        抓取当日集合竞价数据
+        :param trade_date: 交易日期，格式 YYYYMMDD
+        :return: 集合竞价数据 DataFrame
+        :说明: 单独权限，限流 8000 条/次
+        :保存路径: data/stk_auction.csv
+        """
+        try:
+            df = self.request_retry(
+                self.pro.stk_auction,
+                trade_date=trade_date,
+                timeout=60
+            )
+            if df is not None and not df.empty:
+                df['trade_date'] = df['trade_date'].astype(str)
+                save_path = os.path.join(self.config['output_dir'], 'stk_auction.csv')
+                # 增量抓取合并旧数据
+                if os.path.exists(save_path):
+                    try:
+                        existing_df = utils.load_from_parquet(save_path)
+                        df = pd.concat([existing_df, df], ignore_index=True)
+                        df = df.drop_duplicates(subset=['ts_code', 'trade_date'], keep='last')
+                    except:
+                        pass
+                self.save_to_parquet(df, save_path)
+                logger.info(f"✅ 集合竞价数据已保存：{save_path}，共{len(df)}条")
+            return df if df is not None else pd.DataFrame()
+        except Exception as e:
+            logger.error(f"❌ {trade_date} 集合竞价数据抓取失败：{e}")
+            return pd.DataFrame()
     
     # 6. 同花顺概念成分接口 - 积分 6000，限流 5000 条/次
     def fetch_ths_member(self, concept_code):
@@ -2388,7 +2437,7 @@ def fetch_worker():
                                     os.makedirs(stock_dir, exist_ok=True)
                                 filepath = os.path.join(stock_dir, "daily.csv")
                                 df_group['trade_date'] = df_group['trade_date'].astype(str)
-                                utils.save_to_parquet(df_group, filepath)
+                                utils.save_to_parquet(df_group, filepath, merge_key="trade_date")
                         logger.info(f"✅ 全市场日线数据已分组保存至各股票目录")
                     else:
                         logger.warning("⚠️  批量获取全市场日线数据为空")
@@ -2405,7 +2454,7 @@ def fetch_worker():
                                 stock_dir = os.path.join(config['stocks_dir'], ts_code_group)
                                 filepath = os.path.join(stock_dir, "daily_basic.csv")
                                 df_group['trade_date'] = df_group['trade_date'].astype(str)
-                                utils.save_to_parquet(df_group, filepath)
+                                utils.save_to_parquet(df_group, filepath, merge_key="trade_date")
                         logger.info(f"✅ 全市场日线指标数据已分组保存至各股票目录")
                 except Exception as e:
                     logger.warning(f"⚠️  批量获取日线指标数据失败：{e}，降级为单只股票抓取")
@@ -2423,7 +2472,7 @@ def fetch_worker():
                                 filepath = os.path.join(stock_dir, "fina_indicator.csv")
                                 if 'end_date' in df_group.columns:
                                     df_group['end_date'] = df_group['end_date'].astype(str)
-                                utils.save_to_parquet(df_group, filepath)
+                                utils.save_to_parquet(df_group, filepath, merge_key="trade_date")
                         logger.info(f"✅ 全市场财务指标数据已分组保存至各股票目录")
                     else:
                         logger.warning("⚠️  批量获取全市场财务指标数据为空")
@@ -2468,7 +2517,7 @@ def fetch_worker():
                                         _DYNAMIC_CONCURRENCY_INSTANCE.record_request(success=False)
                                     return ts_code, False
                                 df_daily['trade_date'] = df_daily['trade_date'].astype(str)
-                                utils.save_to_parquet(df_daily, daily_file)
+                                utils.save_to_parquet(df_daily, daily_file, merge_key="trade_date")
                         
                         # 【优化】阶段 1 任务 5&6: 数据完整性&准确性校验（使用已加载的数据）
                         if os.path.exists(daily_file):
@@ -2492,7 +2541,7 @@ def fetch_worker():
                                 if 'end_date' in df_fina.columns:
                                     df_fina['end_date'] = df_fina['end_date'].astype(str)
                                 filepath = os.path.join(stock_dir, "fina_indicator.csv")
-                                utils.save_to_parquet(df_fina, filepath)
+                                utils.save_to_parquet(df_fina, filepath, merge_key="end_date")
                         else:
                             logger.debug(f"{ts_code} 财务指标数据已存在，跳过重复抓取")
                         
@@ -2500,7 +2549,7 @@ def fetch_worker():
                             df_moneyflow = utils.request_retry(pro.moneyflow, ts_code=ts_code, start_date=start_date_api, end_date=end_date_api, silent=True)
                             if not df_moneyflow.empty:
                                 df_moneyflow['trade_date'] = df_moneyflow['trade_date'].astype(str)
-                                utils.save_to_parquet(df_moneyflow, os.path.join(stock_dir, "moneyflow.csv"))
+                                utils.save_to_parquet(df_moneyflow, os.path.join(stock_dir, "moneyflow.csv"), merge_key="trade_date")
                             df_concept = utils.request_retry(pro.concept_detail, ts_code=ts_code, silent=True)
                             if not df_concept.empty:
                                 utils.save_to_parquet(df_concept, os.path.join(stock_dir, "concept_detail.csv"))
@@ -2509,46 +2558,46 @@ def fetch_worker():
                             df_top = utils.request_retry(pro.top_list, ts_code=ts_code, start_date=start_date_api, end_date=end_date_api, silent=True)
                             if not df_top.empty:
                                 df_top['trade_date'] = df_top['trade_date'].astype(str)
-                                utils.save_to_parquet(df_top, os.path.join(stock_dir, "top_list.csv"))
+                                utils.save_to_parquet(df_top, os.path.join(stock_dir, "top_list.csv"), merge_key="trade_date")
                         
                         if EXTEND_FETCH_CONFIG.get('enable_finance_sheet', False):
                             df_balance = utils.request_retry(pro.balancesheet, ts_code=ts_code, start_date=start_date_api, end_date=end_date_api, silent=True)
                             if not df_balance.empty:
                                 if 'end_date' in df_balance.columns:
                                     df_balance['end_date'] = df_balance['end_date'].astype(str)
-                                utils.save_to_parquet(df_balance, os.path.join(stock_dir, "balancesheet.csv"))
+                                utils.save_to_parquet(df_balance, os.path.join(stock_dir, "balancesheet.csv"), merge_key="end_date")
                             df_cash = utils.request_retry(pro.cashflow, ts_code=ts_code, start_date=start_date_api, end_date=end_date_api, silent=True)
                             if not df_cash.empty:
                                 if 'end_date' in df_cash.columns:
                                     df_cash['end_date'] = df_cash['end_date'].astype(str)
-                                utils.save_to_parquet(df_cash, os.path.join(stock_dir, "cashflow.csv"))
+                                utils.save_to_parquet(df_cash, os.path.join(stock_dir, "cashflow.csv"), merge_key="end_date")
                             df_income = utils.request_retry(pro.income, ts_code=ts_code, start_date=start_date_api, end_date=end_date_api, silent=True)
                             if not df_income.empty:
                                 if 'end_date' in df_income.columns:
                                     df_income['end_date'] = df_income['end_date'].astype(str)
-                                utils.save_to_parquet(df_income, os.path.join(stock_dir, "income.csv"))
+                                utils.save_to_parquet(df_income, os.path.join(stock_dir, "income.csv"), merge_key="end_date")
                         
                         if EXTEND_FETCH_CONFIG.get('enable_hk_hold', False):
                             df_hk = utils.request_retry(pro.hk_hold, ts_code=ts_code, start_date=start_date_api, end_date=end_date_api, silent=True)
                             if not df_hk.empty:
                                 df_hk['trade_date'] = df_hk['trade_date'].astype(str)
-                                utils.save_to_parquet(df_hk, os.path.join(stock_dir, "hk_hold.csv"))
+                                utils.save_to_parquet(df_hk, os.path.join(stock_dir, "hk_hold.csv"), merge_key="trade_date")
                         
                         if EXTEND_FETCH_CONFIG.get('enable_cyq', False):
                             df_cyq_chips = utils.request_retry(pro.cyq_chips, ts_code=ts_code, start_date=start_date_api, end_date=end_date_api, silent=True)
                             if not df_cyq_chips.empty:
                                 df_cyq_chips['trade_date'] = df_cyq_chips['trade_date'].astype(str)
-                                utils.save_to_parquet(df_cyq_chips, os.path.join(stock_dir, "cyq_chips.csv"))
+                                utils.save_to_parquet(df_cyq_chips, os.path.join(stock_dir, "cyq_chips.csv"), merge_key="trade_date")
                             df_cyq_perf = utils.request_retry(pro.cyq_perf, ts_code=ts_code, start_date=start_date_api, end_date=end_date_api, silent=True)
                             if not df_cyq_perf.empty:
                                 df_cyq_perf['trade_date'] = df_cyq_perf['trade_date'].astype(str)
-                                utils.save_to_parquet(df_cyq_perf, os.path.join(stock_dir, "cyq_perf.csv"))
+                                utils.save_to_parquet(df_cyq_perf, os.path.join(stock_dir, "cyq_perf.csv"), merge_key="trade_date")
                         
                         if EXTEND_FETCH_CONFIG.get('enable_block_trade', False):
                             df_block = utils.request_retry(pro.block_trade, ts_code=ts_code, start_date=start_date_api, end_date=end_date_api, silent=True)
                             if not df_block.empty:
                                 df_block['trade_date'] = df_block['trade_date'].astype(str)
-                                utils.save_to_parquet(df_block, os.path.join(stock_dir, "block_trade.csv"))
+                                utils.save_to_parquet(df_block, os.path.join(stock_dir, "block_trade.csv"), merge_key="trade_date")
                         
                         with GLOBAL_LOCK:
                             if ts_code not in completed_stocks:
@@ -2872,6 +2921,32 @@ def fetch_worker():
                         TASK_STATUS[task_id]['progress'] = 98
                         TASK_STATUS[task_id]['message'] = '抓取游资名录...'
                     logger.info("开始抓取游资名录...")
+                    utils.fetch_hm_list()
+                
+                # 5. 当日集合竞价接口
+                if EXTEND_FETCH_CONFIG.get('enable_stk_auction', False):
+                    with TASK_STATUS_LOCK:
+                        TASK_STATUS[task_id]['progress'] = 98
+                        TASK_STATUS[task_id]['message'] = '抓取集合竞价数据...'
+                    logger.info("开始抓取集合竞价数据...")
+                    all_auction = []
+                    start_dt = datetime.strptime(start_date_api, "%Y%m%d")
+                    end_dt = datetime.strptime(end_date_api, "%Y%m%d")
+                    delta = end_dt - start_dt
+                    for i in range(delta.days + 1):
+                        if not get_app_running():
+                            break
+                        current_dt = start_dt + timedelta(days=i)
+                        current_date_str = current_dt.strftime("%Y%m%d")
+                        df_day = utils.fetch_stk_auction(current_date_str)
+                        if df_day is not None and not df_day.empty:
+                            all_auction.append(df_day)
+                    if all_auction:
+                        df_auction = pd.concat(all_auction, ignore_index=True)
+                        auction_path = os.path.join(config['output_dir'], 'stk_auction.csv')
+                        utils.save_to_parquet(df_auction, auction_path)
+                        logger.info(f"✅ 集合竞价数据已保存到：{auction_path}")
+                
                 # 6. 同花顺概念成分接口（需要先获取概念列表）
                 if EXTEND_FETCH_CONFIG.get('enable_ths_member', False):
                     with TASK_STATUS_LOCK:
@@ -4255,6 +4330,7 @@ def wait_for_api_ready(timeout=15):
 # ============================================== 【模式执行入口 - 全量修复】 ==============================================
 def run_by_mode():
     """根据运行模式执行对应逻辑"""
+    global FETCH_TYPE
     logger.info(f"当前运行模式：{AUTO_RUN_MODE}，策略类型：{STRATEGY_TYPE}")
     pro, utils = get_pro_api(load_config())
     
@@ -4276,6 +4352,7 @@ def run_by_mode():
         if not wait_for_api_ready():
             return
         
+        FETCH_TYPE = "full"
         logger.info("开始提交全量数据抓取任务...")
         task_id = str(uuid.uuid4())
         TASK_QUEUE.put({
@@ -4333,6 +4410,7 @@ def run_by_mode():
         if not wait_for_api_ready():
             return
         
+        FETCH_TYPE = "latest"
         logger.info("开始提交增量数据抓取任务（仅最新 1 天）...")
         task_id = str(uuid.uuid4())
         TASK_QUEUE.put({
@@ -4436,6 +4514,7 @@ def run_by_mode():
         if not wait_for_api_ready():
             return
         
+        FETCH_TYPE = "latest"
         logger.info("开始提交增量数据抓取任务（仅最新 1 天）...")
         task_id = str(uuid.uuid4())
         TASK_QUEUE.put({
