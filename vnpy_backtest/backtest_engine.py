@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """
-vnpy回测引擎 - 完整的交易模拟
+vnpy回测引擎 v2.0 - 完整的交易模拟
 """
 
 import pandas as pd
@@ -9,13 +9,13 @@ from typing import Dict, List, Optional
 from datetime import datetime
 import logging
 
-logging.basicConfig(level=logging.INFO)
+logging.basicConfig(level=logging.INFO, format='%(levelname)s: %(message)s')
 logger = logging.getLogger(__name__)
 
 
 class BacktestEngine:
     """
-    vnpy回测引擎
+    vnpy回测引擎 v2.0
     
     完整的交易模拟：选股 -> 买入 -> 持仓管理 -> 卖出 -> 绩效统计
     """
@@ -44,6 +44,10 @@ class BacktestEngine:
         # 手续费
         self.commission_rate = 0.0003  # 万三
         self.stamp_duty = 0.001  # 千一（仅卖出）
+        
+        # 持仓限制
+        self.max_positions = 3  # 最大持仓数量
+        self.position_ratio = 0.3  # 单只股票最大仓位比例
     
     def run(self, trade_dates: List[str], data_loader) -> Dict:
         """
@@ -62,19 +66,22 @@ class BacktestEngine:
             # 1. 加载当日数据
             stock_data = data_loader.load_all_stocks_daily(date)
             if stock_data.empty:
+                logger.warning(f"[{date}] 无股票数据")
                 continue
             
             # 2. 检查持仓：止盈止损
             self._check_positions(stock_data, date)
             
-            # 3. 选股
-            bars = {row['ts_code']: row.to_dict() for _, row in stock_data.iterrows()}
-            signals = self.strategy.on_bars(bars, date, data_loader)
-            
-            # 4. 买入（T+1：今天选的，明天买）
-            if signals and i + 1 < len(trade_dates):
-                next_date = trade_dates[i + 1]
-                self._buy(signals, next_date, data_loader)
+            # 3. 选股（如果有空仓位）
+            if len(self.positions) < self.max_positions:
+                bars = {row['ts_code']: row.to_dict() for _, row in stock_data.iterrows()}
+                signals = self.strategy.on_bars(bars, date, data_loader)
+                
+                # 4. 买入（T+1：今天选的，明天买）
+                if signals and i + 1 < len(trade_dates):
+                    next_date = trade_dates[i + 1]
+                    available_slots = self.max_positions - len(self.positions)
+                    self._buy(signals[:available_slots], next_date, data_loader)
             
             # 5. 记录每日资金
             total_value = self._calculate_total_value(stock_data)
@@ -82,10 +89,21 @@ class BacktestEngine:
                 'date': date,
                 'cash': self.cash,
                 'position_value': total_value - self.cash,
-                'total': total_value
+                'total': total_value,
+                'positions': len(self.positions)
             })
         
-        # 6. 计算绩效
+        # 6. 清算剩余持仓
+        if self.positions and trade_dates:
+            last_date = trade_dates[-1]
+            stock_data = data_loader.load_all_stocks_daily(last_date)
+            if not stock_data.empty:
+                for ts_code in list(self.positions.keys()):
+                    stock = stock_data[stock_data['ts_code'] == ts_code]
+                    if not stock.empty:
+                        self._sell(ts_code, stock.iloc[0]['close'], last_date, '清算')
+        
+        # 7. 计算绩效
         performance = self._calculate_performance()
         
         return {
@@ -96,7 +114,9 @@ class BacktestEngine:
             'max_drawdown': performance['max_drawdown'],
             'sharpe_ratio': performance['sharpe_ratio'],
             'win_rate': performance['win_rate'],
-            'total_trades': len(self.trades),
+            'total_trades': len([t for t in self.trades if t['action'] == 'buy']),
+            'win_trades': performance['win_trades'],
+            'loss_trades': performance['loss_trades'],
             'trades': self.trades,
             'daily_capital': self.daily_capital
         }
@@ -128,12 +148,13 @@ class BacktestEngine:
     
     def _buy(self, signals: List[Dict], date: str, data_loader):
         """买入股票"""
-        # 计算可用资金（每只股票平均分配）
-        available = self.cash * 0.9  # 留10%现金
-        per_stock = available / len(signals) if signals else 0
-        
         for signal in signals:
+            if len(self.positions) >= self.max_positions:
+                break
+            
             ts_code = signal['ts_code']
+            if ts_code in self.positions:
+                continue
             
             # 获取买入价格（次日开盘价）
             stock_data = data_loader.load_stock_daily(ts_code, date, date)
@@ -142,8 +163,11 @@ class BacktestEngine:
             
             buy_price = stock_data.iloc[0]['open']
             
+            # 计算可用资金（单只股票不超过总资金的30%）
+            available = min(self.cash * 0.95, self.cash * self.position_ratio)
+            
             # 计算买入股数（100股整数倍）
-            shares = int(per_stock / buy_price / 100) * 100
+            shares = int(available / buy_price / 100) * 100
             if shares < 100:
                 continue
             
@@ -168,7 +192,8 @@ class BacktestEngine:
                 'action': 'buy',
                 'price': buy_price,
                 'shares': shares,
-                'commission': commission
+                'commission': commission,
+                'score': signal.get('score', 0)
             })
             
             logger.info(f"[{date}] 买入 {ts_code}: {shares}股 @ {buy_price:.2f}")
@@ -223,7 +248,7 @@ class BacktestEngine:
     def _calculate_performance(self) -> Dict:
         """计算绩效"""
         if not self.daily_capital:
-            return {'total_return': 0, 'annual_return': 0, 'max_drawdown': 0, 'sharpe_ratio': 0, 'win_rate': 0}
+            return {'total_return': 0, 'annual_return': 0, 'max_drawdown': 0, 'sharpe_ratio': 0, 'win_rate': 0, 'win_trades': 0, 'loss_trades': 0}
         
         # 总收益率
         final = self.daily_capital[-1]['total']
@@ -251,6 +276,7 @@ class BacktestEngine:
         # 胜率
         sell_trades = [t for t in self.trades if t['action'] == 'sell']
         win_trades = [t for t in sell_trades if t.get('pnl', 0) > 0]
+        loss_trades = [t for t in sell_trades if t.get('pnl', 0) <= 0]
         win_rate = len(win_trades) / len(sell_trades) if sell_trades else 0
         
         return {
@@ -258,7 +284,9 @@ class BacktestEngine:
             'annual_return': annual_return,
             'max_drawdown': max_drawdown,
             'sharpe_ratio': sharpe_ratio,
-            'win_rate': win_rate
+            'win_rate': win_rate,
+            'win_trades': len(win_trades),
+            'loss_trades': len(loss_trades)
         }
     
     def generate_report(self, result: Dict, output_path: str = None) -> str:
@@ -274,7 +302,9 @@ class BacktestEngine:
         report.append(f"最大回撤: {result['max_drawdown']*100:.2f}%")
         report.append(f"夏普比率: {result['sharpe_ratio']:.2f}")
         report.append(f"胜率: {result['win_rate']*100:.1f}%")
-        report.append(f"总交易次数: {result['total_trades']}")
+        report.append(f"盈利交易: {result['win_trades']}笔")
+        report.append(f"亏损交易: {result['loss_trades']}笔")
+        report.append(f"总交易次数: {result['total_trades']}笔")
         report.append("=" * 60)
         
         report_text = "\n".join(report)
@@ -287,4 +317,4 @@ class BacktestEngine:
 
 
 if __name__ == "__main__":
-    print("BacktestEngine模块测试通过")
+    print("BacktestEngine v2.0 模块测试通过")

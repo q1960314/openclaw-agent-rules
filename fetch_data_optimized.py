@@ -2411,7 +2411,8 @@ def fetch_worker():
             fetch_type = task['fetch_type']
             
             with TASK_STATUS_LOCK:
-                TASK_STATUS[task_id] = {'status': 'running', 'progress': 0, 'message': '初始化...', 'logs': []}
+                import time
+                TASK_STATUS[task_id] = {'status': 'running', 'progress': 0, 'message': '初始化...', 'logs': [], 'start_time': time.time()}
             
             try:
                 pro, utils = get_pro_api(config)
@@ -3182,12 +3183,24 @@ def fetch_worker():
                     utils.fetch_moneyflow_ind_ths(start_date_api, end_date_api)
                 # ============================================== 【阶段 0.1：15 个新接口调用集成结束】 ==============================================
                 
+                # 计算耗时
+                import time
+                start_time = TASK_STATUS[task_id].get('start_time', time.time())
+                duration_seconds = int(time.time() - start_time)
+                duration_str = f"{duration_seconds // 60}分{duration_seconds % 60}秒" if duration_seconds >= 60 else f"{duration_seconds}秒"
+                
                 with TASK_STATUS_LOCK:
                     TASK_STATUS[task_id]['progress'] = 100
                     TASK_STATUS[task_id]['status'] = 'completed'
                     TASK_STATUS[task_id]['message'] = f"全量数据抓取完成！成功：{success_count}/{len(stocks)} 只股票，失败{len(failed_stocks)}只已保存清单"
-                logger.info(f"✅ 全量数据抓取完成！成功{success_count}/{len(stocks)}只股票，失败{len(failed_stocks)}只已保存清单")
-                utils.send_wechat_message(f"【数据抓取完成】成功{success_count}/{len(stocks)}只，失败{len(failed_stocks)}只")
+                    TASK_STATUS[task_id]['detail'] = {
+                        'success_count': success_count,
+                        'failed_count': len(failed_stocks),
+                        'total_count': len(stocks),
+                        'duration': duration_str
+                    }
+                logger.info(f"✅ 全量数据抓取完成！成功{success_count}/{len(stocks)}只股票，失败{len(failed_stocks)}只已保存清单，耗时{duration_str}")
+                # 已在模式结束后发送详细通知，此处移除重复通知
             
             except Exception as e:
                 with TASK_STATUS_LOCK:
@@ -3862,6 +3875,21 @@ def run_by_mode():
         
         print("\n" + "="*80)
         logger.info("🎉 【全量抓取模式】执行完成！所有数据已保存至本地目录")
+        
+        # 发送企业微信通知
+        status = TASK_STATUS.get(task_id, {})
+        progress_detail = status.get('detail', {})
+        utils.send_wechat_message(f"""【全量抓取完成】
+📊 策略类型：{STRATEGY_TYPE}
+📅 抓取区间：{START_DATE} ~ {END_DATE}
+✅ 成功抓取：{progress_detail.get('success_count', 'N/A')}只
+❌ 失败数量：{progress_detail.get('failed_count', 'N/A')}只
+📈 总进度：100%
+⏱️ 耗时：{progress_detail.get('duration', 'N/A')}
+📁 数据存储：data/ & data_all_stocks/
+📝 日志文件：logs/quant_info.log
+""")
+        
         print("="*80)
         print("全量抓取完成！结果文件：")
         print(f"1. 抓取/运行日志：logs/quant_info.log")
@@ -3950,6 +3978,21 @@ def run_by_mode():
         
         print("\n" + "="*80)
         logger.info("🎉 【增量抓取模式】执行完成！所有数据已保存至本地目录")
+        
+        # 发送企业微信通知
+        status = TASK_STATUS.get(task_id, {})
+        progress_detail = status.get('detail', {})
+        utils.send_wechat_message(f"""【增量抓取完成】
+📊 策略类型：{STRATEGY_TYPE}
+📅 抓取日期：{START_DATE}
+✅ 成功抓取：{progress_detail.get('success_count', 'N/A')}只
+❌ 失败数量：{progress_detail.get('failed_count', 'N/A')}只
+📈 总进度：100%
+⏱️ 耗时：{progress_detail.get('duration', 'N/A')}
+📁 数据存储：data/ & data_all_stocks/
+📝 日志文件：logs/quant_info.log
+""")
+        
         print("="*80)
         print("增量抓取完成！结果文件：")
         print(f"1. 抓取/运行日志：logs/quant_info.log")
@@ -4027,12 +4070,29 @@ def run_by_mode():
         logger.info(f"交易记录已保存: {trades_path}")
         
         logger.info("🎉 【仅回测模式】执行完成！所有报告已导出至本地目录")
+        
+        # 发送企业微信通知
+        backtest_notify = f"""【回测完成通知】
+📊 策略类型：{STRATEGY_TYPE}
+📅 回测区间：{START_DATE} ~ {END_DATE}
+💰 初始资金：{INIT_CAPITAL:,.0f}元
+💰 期末资金：{result['final_capital']:,.2f}元
+📈 总收益率：{result['total_return']*100:.2f}%
+📉 最大回撤：{result['max_drawdown']*100:.2f}%
+⚡ 夏普比率：{result['sharpe_ratio']:.2f}
+🎯 胜率：{result['win_rate']*100:.1f}%
+📊 交易次数：{result['total_trades']}次（盈{result['win_trades']}/亏{result['loss_trades']}）
+📁 报告路径：backtest_results/backtest_report.txt
+"""
+        utils.send_wechat_message(backtest_notify)
+        
         print("="*80)
         print("回测完成！结果文件：")
-        print(f"1. 回测报告：一体化回测结果报告.xlsx")
+        print(f"1. 回测报告：backtest_results/backtest_report.txt")
+        print(f"2. 交易记录：backtest_results/trades.json")
         if VISUALIZATION:
-            print(f"2. 可视化图表：charts/回测报告_{datetime.now().strftime('%Y%m%d')}.png")
-        print(f"3. 运行日志：logs/quant_info.log")
+            print(f"3. 可视化图表：charts/回测报告_{datetime.now().strftime('%Y%m%d')}.png")
+        print(f"4. 运行日志：logs/quant_info.log")
         print("="*80)
         return
     
@@ -4250,248 +4310,3 @@ def main():
 if __name__ == '__main__':
     main()
 
-# ============================================== 【vnpy回测入口】 ==============================================
-
-def run_vnpy_backtest(start_date: str, end_date: str, initial_capital: float = 5000, min_score: float = 5):
-    """
-    运行vnpy回测
-    
-    Args:
-        start_date: 开始日期，格式 '20231201'
-        end_date: 结束日期，格式 '20231231'
-        initial_capital: 初始资金，默认5000元
-        min_score: 最低评分阈值，默认5分
-    
-    Returns:
-        BacktestResult: 回测结果对象
-    """
-    try:
-        from vnpy_strategies import DataLoader, MultiStockStrategy, BacktestEngine
-        
-        logger.info(f"开始vnpy回测: {start_date} -> {end_date}")
-        
-        # 初始化
-        loader = DataLoader()
-        strategy = MultiStockStrategy(loader, config={'min_score': min_score, 'top_n': 3})
-        engine = BacktestEngine(strategy, initial_capital=initial_capital)
-        
-        # 运行回测
-        result = engine.run(start_date, end_date)
-        
-        # 生成报告
-        report_path = f"/data/agents/master/vnpy_strategies/backtest_report_{start_date}_{end_date}.txt"
-        report = engine.generate_report(result, report_path)
-        
-        logger.info(f"回测完成，报告已保存到: {report_path}")
-        
-        return result
-        
-    except ImportError as e:
-        logger.error(f"vnpy_strategies模块导入失败: {e}")
-        return None
-    except Exception as e:
-        logger.error(f"vnpy回测执行失败: {e}")
-        return None
-
-
-def run_vnpy_stock_picking(date: str = None, min_score: float = 5):
-    """
-    使用vnpy策略进行每日选股
-    
-    Args:
-        date: 选股日期，默认为最近交易日
-        min_score: 最低评分阈值
-    
-    Returns:
-        list: 选股结果列表
-    """
-    try:
-        from vnpy_strategies import DataLoader, MultiStockStrategy
-        
-        loader = DataLoader()
-        strategy = MultiStockStrategy(loader, config={'min_score': min_score, 'top_n': 5})
-        
-        if date is None:
-            # 获取最近交易日
-            trade_dates = loader.get_trade_dates('20260101', '20261231')
-            date = trade_dates[-1] if trade_dates else None
-        
-        if date is None:
-            logger.error("无法获取交易日")
-            return []
-        
-        logger.info(f"开始选股: {date}")
-        
-        results = strategy.select_stocks(date)
-        
-        if results:
-            logger.info(f"选股完成: {len(results)} 只股票达标")
-            for i, r in enumerate(results):
-                logger.info(f"  {i+1}. {r.ts_code} {r.name}: {r.total_score}分")
-        
-        return results
-        
-    except Exception as e:
-        logger.error(f"选股失败: {e}")
-        return []
-
-
-# ============================================== 【vnpy+qlib结合回测入口】 ==============================================
-
-def run_combined_backtest(start_date: str, end_date: str, initial_capital: float = 5000,
-                          vnpy_weight: float = 0.6, qlib_weight: float = 0.4):
-    """
-    运行vnpy+qlib结合策略回测
-    
-    Args:
-        start_date: 开始日期
-        end_date: 结束日期
-        initial_capital: 初始资金
-        vnpy_weight: vnpy评分权重
-        qlib_weight: qlib预测权重
-    """
-    try:
-        from vnpy_strategies import DataLoader, MultiStockStrategyV2, QlibAdapter, CombinedStrategy, BacktestEngine
-        
-        logger.info(f"开始vnpy+qlib结合回测: {start_date} -> {end_date}")
-        
-        # 初始化
-        loader = DataLoader()
-        vnpy_strategy = MultiStockStrategyV2(loader, config={'min_score': 8, 'top_n': 10})
-        qlib_adapter = QlibAdapter()
-        combined = CombinedStrategy(vnpy_strategy, qlib_adapter, vnpy_weight, qlib_weight)
-        
-        # 创建自定义选股函数
-        class CombinedBacktestStrategy:
-            def __init__(self, combined_strategy, loader):
-                self.combined = combined_strategy
-                self.loader = loader
-                self.min_score = 8
-                self.top_n = 3
-            
-            def select_stocks(self, date):
-                return self.combined.select_stocks(date, top_n=self.top_n)
-            
-            def get_buy_plan(self, selected, capital):
-                if not selected:
-                    return {}
-                
-                target = selected[0]
-                price = target.details.get('close', 0)
-                if price <= 0:
-                    return {}
-                
-                shares = int((capital - 10) / price / 100) * 100
-                if shares < 100:
-                    return {}
-                
-                return {
-                    'ts_code': target.ts_code,
-                    'name': target.name,
-                    'price': price,
-                    'shares': shares,
-                    'cost': shares * price,
-                    'score': target.details.get('combined_score', 0)
-                }
-        
-        strategy = CombinedBacktestStrategy(combined, loader)
-        engine = BacktestEngine(strategy, initial_capital=initial_capital)
-        
-        result = engine.run(start_date, end_date)
-        
-        report_path = f"/data/agents/master/vnpy_strategies/backtest_report_combined_{start_date}_{end_date}.txt"
-        report = engine.generate_report(result, report_path)
-        
-        logger.info(f"结合回测完成，报告: {report_path}")
-        
-        return result
-        
-    except Exception as e:
-        logger.error(f"结合回测失败: {e}")
-        return None
-
-
-# ============================================== 【qlib独立回测入口】 ==============================================
-
-def run_qlib_factor_backtest(factors: list, start_date: str, end_date: str, 
-                              top_n: int = 10):
-    """
-    qlib独立回测新因子
-    
-    Args:
-        factors: 因子列表，如 ['momentum', 'volume', 'volatility']
-        start_date: 开始日期，格式 '2023-01-01' 或 '20230101'
-        end_date: 结束日期
-        top_n: 每日选出前N只股票
-    """
-    try:
-        from qlib_factors import QlibFactorCalculator
-        from vnpy_backtest import VnpyDataLoader
-        
-        logger.info(f"开始qlib因子回测: {start_date} -> {end_date}")
-        logger.info(f"因子: {factors}")
-        
-        # 初始化
-        loader = VnpyDataLoader()
-        calculator = QlibFactorCalculator()
-        
-        # 获取交易日
-        trade_dates = loader.get_trade_dates(
-            start_date.replace('-', ''),
-            end_date.replace('-', '')
-        )
-        
-        if not trade_dates:
-            logger.error("无交易日数据")
-            return None
-        
-        logger.info(f"共{len(trade_dates)}个交易日")
-        
-        # 每日信号
-        all_signals = []
-        
-        for date in trade_dates:
-            stock_data = loader.load_all_stocks_daily(date)
-            if stock_data.empty:
-                continue
-            
-            # 计算因子评分
-            scores = calculator.calculate(stock_data, date)
-            
-            if scores.empty:
-                continue
-            
-            # 选出前N只
-            top_stocks = scores.nlargest(top_n)
-            
-            signals = []
-            for idx in top_stocks.index:
-                ts_code = stock_data.loc[idx, 'ts_code']
-                score = top_stocks[idx]
-                signals.append({
-                    'date': date,
-                    'ts_code': ts_code,
-                    'score': score
-                })
-            
-            all_signals.extend(signals)
-            
-            if signals:
-                logger.info(f"[{date}] 选出{len(signals)}只股票")
-        
-        # 汇总结果
-        result = {
-            'start_date': start_date,
-            'end_date': end_date,
-            'factors': factors,
-            'total_signals': len(all_signals),
-            'signals': all_signals
-        }
-        
-        logger.info(f"qlib因子回测完成，共{len(all_signals)}个信号")
-        
-        return result
-        
-    except Exception as e:
-        logger.error(f"qlib因子回测失败: {e}")
-        return None
