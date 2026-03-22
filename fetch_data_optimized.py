@@ -3354,597 +3354,6 @@ class StrategyCore:
         logger.info(f"✅ {self.strategy_type}评分完成，达标标的：{len(df_pass)}只，最高评分：{df_pass['total_score'].max() if not df_pass.empty else 0}")
         return df_pass
 
-# ============================================== 【回测系统 - 完全保留，仅做多资讯源利空过滤升级】 ==============================================
-class BacktestSystem:
-    def __init__(self, base_url):
-        self.base_url = base_url
-        self.session = requests.Session()
-        self.start_date = datetime.strptime(START_DATE, "%Y-%m-%d")
-        self.end_date = datetime.strptime(END_DATE, "%Y-%m-%d")
-        self.pro, self.utils = get_pro_api(load_config())
-        self.strategy_display = STRATEGY_TYPE
-        self.strategy = StrategyCore(STRATEGY_TYPE)
-        self.trade_records = []
-        self.daily_capital = []
-        self.current_capital = INIT_CAPITAL
-        self.position = {}
-        self.max_cash = INIT_CAPITAL
-        self.news_sina = pd.DataFrame()
-        self.stk_limit = pd.DataFrame()
-
-        logger.info("✅ 回测系统初始化完成，完全基于 Tushare 真实数据，贴合 A 股实盘规则")
-    
-    def load_extra_data(self):
-        """【升级】加载多资讯源新闻、涨跌停等额外数据"""
-        self.news_sina = pd.DataFrame()
-        self.stk_limit = pd.DataFrame()
-        
-        # 加载多资讯源全量新闻
-        news_path = os.path.join(OUTPUT_DIR, 'multi_news_all.csv')
-        if os.path.exists(news_path):
-            self.news_sina = pd.read_csv(news_path, encoding='utf-8-sig')
-            if 'datetime' in self.news_sina.columns:
-                self.news_sina['datetime'] = pd.to_datetime(self.news_sina['datetime'])
-            logger.info(f"✅ 多资讯源新闻数据加载完成，共{len(self.news_sina)}条")
-        
-        # 加载涨跌停数据
-        stk_limit_path = os.path.join(OUTPUT_DIR, 'stk_limit.csv')
-        if os.path.exists(stk_limit_path):
-            self.stk_limit = pd.read_csv(stk_limit_path, encoding='utf-8-sig')
-            logger.info("✅ 涨跌停数据加载完成")
-    
-    def get_cached_data(self):
-        """加载已缓存的回测数据"""
-        logger.info("开始加载已缓存的回测数据...")
-        stock_list_result = self._get("stocks")
-        stock_list = [item["ts_code"] for item in stock_list_result.get("stocks", []) if item["has_data"]]
-        if not stock_list:
-            logger.error("❌ 后端未找到已缓存的股票数据，请先执行数据抓取！")
-            return pd.DataFrame()
-        stock_basic_result = self._get("stock-basic")
-        stock_basic_df = pd.DataFrame(stock_basic_result.get("data", []))
-        stk_limit_result = self._get("stk-limit")
-        stk_limit_df = pd.DataFrame(stk_limit_result.get("data", []))
-        if not stk_limit_df.empty:
-            stk_limit_df['trade_date'] = stk_limit_df['trade_date'].astype(str)
-        all_stock_data = []
-        for ts_code in tqdm(stock_list, desc="个股数据加载进度"):
-            try:
-                daily_result = self._get(f"stock/{ts_code}/data")
-                if "error" in daily_result:
-                    continue
-                daily_df = pd.DataFrame(daily_result.get("data", []))
-                if daily_df.empty:
-                    continue
-                daily_df['trade_date'] = daily_df['trade_date'].astype(str)
-                daily_basic_result = self._get(f"stock/{ts_code}/daily-basic")
-                daily_basic_df = pd.DataFrame(daily_basic_result.get("data", []))
-                if not daily_basic_df.empty:
-                    daily_basic_df['trade_date'] = daily_basic_df['trade_date'].astype(str)
-                    daily_df = pd.merge(daily_df, daily_basic_df, on=['ts_code', 'trade_date'], how='left')
-                fina_result = self._get(f"stock/{ts_code}/fina-indicator")
-                fina_df = pd.DataFrame(fina_result.get("data", []))
-                if not fina_df.empty and 'end_date' in fina_df.columns:
-                    fina_df['end_date'] = fina_df['end_date'].astype(str)
-                    daily_df = pd.merge(daily_df, fina_df, on='ts_code', how='left')
-                if not stock_basic_df.empty:
-                    basic_info = stock_basic_df[stock_basic_df["ts_code"] == ts_code]
-                    if not basic_info.empty:
-                        daily_df["name"] = basic_info.iloc[0]["name"]
-                        daily_df["industry"] = basic_info.iloc[0]["industry"]
-                        daily_df["market"] = basic_info.iloc[0]["market"]
-                all_stock_data.append(daily_df)
-                logger.info(f"{ts_code}数据加载完成，共{len(daily_df)}条行情记录")
-            except Exception as e:
-                logger.warning(f"{ts_code}数据加载失败，跳过：{e}")
-                continue
-        if not all_stock_data:
-            logger.error("❌ 未加载到任何有效股票数据！")
-            return pd.DataFrame()
-        total_df = pd.concat(all_stock_data, axis=0, ignore_index=True)
-        if not stk_limit_df.empty:
-            total_df = pd.merge(total_df, stk_limit_df, on=["ts_code", "trade_date"], how="left")
-        logger.info("开始数据预处理，彻底消除未来函数...")
-        total_df["trade_date"] = pd.to_datetime(total_df["trade_date"], format="%Y%m%d", errors="coerce")
-        total_df = total_df[(total_df["trade_date"] >= self.start_date) & (total_df["trade_date"] <= self.end_date)]
-        required_cols = ["ts_code", "trade_date", "open", "close", "high", "low", "vol", "amount"]
-        available_cols = [col for col in required_cols if col in total_df.columns]
-        if len(available_cols) < 5:
-            logger.error(f"❌ 核心数据列缺失，可用列：{available_cols}，回测无法继续")
-            return pd.DataFrame()
-        total_df = total_df.dropna(subset=available_cols)
-        total_df = total_df.sort_values(by=["ts_code", "trade_date"], ascending=True).reset_index(drop=True)
-        if 'limit' in total_df.columns:
-            total_df["up_down_times"] = total_df.groupby("ts_code")["limit"].cumsum().shift(1).fillna(0).astype(int)
-        if 'close' in total_df.columns:
-            total_df["pre_close"] = total_df.groupby("ts_code")["close"].shift(1).fillna(0)
-            total_df["open_gap"] = np.where(
-                total_df["pre_close"] == 0,
-                0,
-                ((total_df["open"] - total_df["pre_close"]) / total_df["pre_close"] * 100).fillna(0)
-            )
-        if 'vol' in total_df.columns:
-            total_df["pre_day_volume_growth"] = (total_df.groupby("ts_code")["vol"].shift(1) / total_df.groupby("ts_code")["vol"].shift(2) * 100 - 100).fillna(0)
-            total_df["volume_ratio"] = total_df["vol"] / total_df.groupby("ts_code")["vol"].rolling(5).mean().shift(1).fillna(1)
-        if 'order_amount' in total_df.columns and 'float_market_cap' in total_df.columns:
-            total_df["order_ratio"] = (total_df["order_amount"] / total_df["float_market_cap"] * 100).fillna(0)
-        if 'inst_buy' in total_df.columns:
-            total_df['inst_buy'] = total_df.groupby('ts_code')['inst_buy'].shift(1).fillna(0)
-        if 'youzi_buy' in total_df.columns:
-            total_df['youzi_buy'] = total_df.groupby('ts_code')['youzi_buy'].shift(1).fillna(0)
-        fillna_dict = {
-            "concept_count": 0, "industry_rank": 999, "north_hold_ratio": 0,
-            "break_limit_times": 0, "open_times": 0, "net_profit_year": np.nan
-        }
-        existing_fillna = {k: v for k, v in fillna_dict.items() if k in total_df.columns}
-        total_df = total_df.fillna(existing_fillna)
-        if "amount" in total_df.columns:
-            total_df["amount"] = total_df["amount"].astype(float)
-        if "turnover_ratio" in total_df.columns:
-            total_df["turnover_ratio"] = total_df["turnover_ratio"].astype(float)
-        logger.info("="*60)
-        logger.info(f"✅ 数据加载&预处理完成！")
-        logger.info(f"回测时间范围：{START_DATE} 至 {END_DATE}")
-        logger.info(f"有效交易日：{total_df['trade_date'].nunique()}天")
-        logger.info(f"总数据量：{len(total_df)}行，覆盖标的：{total_df['ts_code'].nunique()}只")
-        logger.info("="*60)
-        return total_df
-    
-    def _get(self, endpoint, params=None):
-        """内部 API 调用"""
-        url = f"{self.base_url}/{endpoint}"
-        try:
-            response = self.session.get(url, params=params, timeout=30)
-            response.raise_for_status()
-            return response.json()
-        except Exception as e:
-            logger.error(f"❌ API 请求失败 [{endpoint}]：{str(e)}")
-            return {}
-    
-    def update_position_market_value(self, df_today):
-        """更新持仓股的市值，处理停牌股"""
-        for ts_code, pos in list(self.position.items()):
-            stock_data = df_today[df_today["ts_code"] == ts_code]
-            if not stock_data.empty:
-                close_price = stock_data.iloc[0].get("close", pos["buy_price"])
-                self.position[ts_code]["close_price"] = close_price
-            else:
-                logger.warning(f"{ts_code}当日停牌，沿用前收盘价")
-    
-    def get_total_asset(self):
-        """计算账户总资产（现金 + 持仓市值）"""
-        total_asset = self.current_capital
-        for pos in self.position.values():
-            total_asset += pos["volume"] * pos.get("close_price", pos["buy_price"])
-        return total_asset
-    
-    def check_drawdown(self):
-        """检查最大回撤，更新账户峰值"""
-        total_asset = self.get_total_asset()
-        if total_asset > self.max_cash:
-            self.max_cash = total_asset
-        current_drawdown = (self.max_cash - total_asset) / self.max_cash
-        if current_drawdown >= MAX_DRAWDOWN_STOP:
-            logger.warning(f"⚠️  账户最大回撤达到{current_drawdown:.2%}，触发强制清仓！")
-            self.position = {}
-            self.daily_capital.append({
-                "date": datetime.now().strftime("%Y-%m-%d"),
-                "capital": self.get_total_asset(),
-                "status": "空仓休市"
-            })
-            return True
-        return False
-    
-    def calculate_position(self, buy_price, ts_code, df_today):
-        """计算可买仓位，完全贴合 A 股实盘规则，涨跌停价格限制"""
-        single_max_cash = self.current_capital * SINGLE_STOCK_POSITION
-        if 'vol' not in df_today.columns:
-            return 0, 0
-        stock_vol = df_today[df_today["ts_code"] == ts_code]["vol"].iloc[0]
-        if pd.isna(stock_vol) or stock_vol <= 0:
-            return 0, 0
-        max_trade_hand = int(stock_vol * MAX_TRADE_RATIO)
-        max_trade_vol = max_trade_hand * 100
-        available_hand = int((single_max_cash - MIN_COMMISSION) / buy_price / 100)
-        available_vol = available_hand * 100
-        buy_vol = min(available_vol, max_trade_vol, 100000)
-        if buy_vol < 100:
-            return 0, 0
-        buy_amount = buy_price * buy_vol
-        buy_commission = max(buy_amount * COMMISSION_RATE, MIN_COMMISSION)
-        buy_cost = buy_amount + buy_commission
-        return buy_vol, buy_cost
-    
-    def select_stocks(self, current_date, df_today):
-        """【升级】多资讯源利空过滤选股逻辑"""
-        # 1. 先运行你现有的选股逻辑
-        selected = self.strategy.filter(df_today)
-        selected = self.strategy.score(selected)
-        
-        # 2. 【升级】多资讯源利空过滤
-        if not self.news_sina.empty and not selected.empty:
-            current_dt = pd.to_datetime(current_date)
-            # 扩大新闻窗口到前后 5 天，覆盖所有资讯源的公告/快讯
-            news_window = self.news_sina[
-                (self.news_sina['datetime'] >= current_dt - timedelta(days=5)) &
-                (self.news_sina['datetime'] <= current_dt)
-            ]
-            
-            # 扩展利空关键词，覆盖更多风险场景
-            bad_keywords = [
-                "跌停", "暴跌", "亏损", "立案", "调查", "减持", "质押平仓",
-                "问询", "监管", "退市", "暴雷", "造假", "违约", "诉讼",
-                "利空", "大跌", "解禁", "业绩变脸", "预亏", "下修"
-            ]
-            bad_news_stocks = []
-            
-            for _, news in news_window.iterrows():
-                title = str(news.get('title', ''))
-                content = str(news.get('content', ''))
-                news_text = title + content
-                
-                # 检查是否有利空关键词
-                if any(keyword in news_text for keyword in bad_keywords):
-                    # 如果新闻里提到了股票代码，加入剔除列表
-                    if 'ts_code' in news and pd.notna(news['ts_code']):
-                        bad_news_stocks.append(news['ts_code'])
-            
-            # 从选中的股票里剔除有利空新闻的
-            if bad_news_stocks:
-                bad_news_stocks = list(set(bad_news_stocks))  # 去重
-                selected = selected[~selected['ts_code'].isin(bad_news_stocks)]
-                logger.info(f"  多资讯源利空过滤，剔除股票：{bad_news_stocks}")
-        
-        return selected
-    
-    def run(self, df_total):
-        """运行回测"""
-        if df_total.empty:
-            logger.error("❌ 回测执行失败：无有效回测数据！")
-            return pd.DataFrame(), pd.DataFrame()
-        if self.check_drawdown():
-            return pd.DataFrame(), pd.DataFrame()
-        
-        self.load_extra_data()
-        
-        logger.info(f"开始执行{self.strategy_display}策略回测，严格贴合 A 股实盘规则，无未来函数...")
-        if 'trade_date' not in df_total.columns:
-            logger.error("❌ 回测数据缺少 trade_date 列，无法执行！")
-            return pd.DataFrame(), pd.DataFrame()
-        trade_dates = sorted(df_total["trade_date"].unique())
-        drawdown_stop_days = 0
-        
-        for date in tqdm(trade_dates, desc="回测进度"):
-            if not get_app_running():
-                break
-            try:
-                date_str = date.strftime("%Y-%m-%d")
-                df_today = df_total[df_total["trade_date"] == date].copy()
-                
-                if drawdown_stop_days > 0:
-                    self.daily_capital.append({"date": date_str, "capital": self.get_total_asset(), "status": "休市"})
-                    drawdown_stop_days -= 1
-                    continue
-                if self.check_drawdown():
-                    drawdown_stop_days = DRAWDOWN_STOP_DAYS
-                    continue
-                
-                self.update_position_market_value(df_today)
-                
-                sell_ts_codes = []
-                for ts_code, pos in list(self.position.items()):
-                    stock_data = df_today[df_today["ts_code"] == ts_code]
-                    if stock_data.empty:
-                        continue
-                    stock_data = stock_data.iloc[0]
-                    hold_days = (date - pos["buy_date"]).days
-                    sell_flag = False
-                    sell_price = 0
-                    sell_reason = ""
-                    
-                    # 【适配缩量潜伏策略】获取策略专属止损止盈参数
-                    strategy_config_key = self.strategy_display
-                    sl_rate = STRATEGY_CONFIG[strategy_config_key].get('stop_loss_rate', STOP_LOSS_RATE)
-                    sp_rate = STRATEGY_CONFIG[strategy_config_key].get('stop_profit_rate', STOP_PROFIT_RATE)
-                    max_hold_days = STRATEGY_CONFIG[strategy_config_key].get('max_hold_days', MAX_HOLD_DAYS)
-                    
-                    open_price = stock_data.get("open", pos["buy_price"])
-                    low_price = stock_data.get("low", pos["buy_price"])
-                    high_price = stock_data.get("high", pos["buy_price"])
-                    close_price = stock_data.get("close", pos["buy_price"])
-                    
-                    up_limit_price = pos["buy_price"] * 1.1
-                    down_limit_price = pos["buy_price"] * 0.9
-                    
-                    # 【缩量潜伏策略专属】简化止损逻辑，避免 board_low 字段缺失问题
-                    if not sell_flag and open_price <= down_limit_price:
-                        continue
-                    if not sell_flag and open_price <= pos["buy_price"] * (1 - sl_rate):
-                        sell_flag = True
-                        sell_price = max(open_price * (1 - SLIPPAGE_RATE), down_limit_price)
-                        sell_reason = "开盘破止损"
-                    elif not sell_flag and low_price <= pos["buy_price"] * (1 - sl_rate) and open_price > pos["buy_price"] * (1 - sl_rate):
-                        sell_flag = True
-                        sell_price = max(pos["buy_price"] * (1 - sl_rate), down_limit_price)
-                        sell_reason = "盘中破止损"
-                    elif open_price >= up_limit_price:
-                        continue
-                    elif not sell_flag and open_price >= pos["buy_price"] * (1 + sp_rate):
-                        sell_flag = True
-                        sell_price = min(open_price * (1 - SLIPPAGE_RATE), up_limit_price)
-                        sell_reason = "开盘破止盈"
-                    elif not sell_flag and high_price >= pos["buy_price"] * (1 + sp_rate) and open_price < pos["buy_price"] * (1 + sp_rate):
-                        sell_flag = True
-                        sell_price = min(pos["buy_price"] * (1 + sp_rate), up_limit_price)
-                        sell_reason = "盘中破止盈"
-                    elif not sell_flag and hold_days >= max_hold_days:
-                        sell_flag = True
-                        sell_price = close_price * (1 - SLIPPAGE_RATE)
-                        sell_reason = "持股周期到期"
-                    elif not sell_flag and self.strategy_display == '板块轮动策略' and hold_days % STRATEGY_CONFIG[strategy_config_key]['rotate_days'] == 0:
-                        sell_flag = True
-                        sell_price = close_price * (1 - SLIPPAGE_RATE)
-                        sell_reason = "轮动调仓"
-                    
-                    if sell_flag:
-                        sell_amount = sell_price * pos["volume"]
-                        sell_commission = max(sell_amount * COMMISSION_RATE, MIN_COMMISSION)
-                        stamp_tax = sell_amount * STAMP_TAX_RATE
-                        sell_income = sell_amount - sell_commission - stamp_tax
-                        profit = sell_income - pos["buy_cost"]
-                        profit_rate = (sell_price / pos["buy_price"] - 1) * 100
-                        self.current_capital = round(self.current_capital + (sell_income - pos["buy_cost"]), 2)
-                        self.trade_records.append({
-                            "买入日期": pos["buy_date"].strftime("%Y-%m-%d"),
-                            "卖出日期": date_str,
-                            "股票代码": ts_code,
-                            "股票名称": pos.get("stock_name", "未知"),
-                            "买入价格": round(pos["buy_price"], 2),
-                            "卖出价格": round(sell_price, 2),
-                            "买入数量": pos["volume"],
-                            "买入成本": round(pos["buy_cost"], 2),
-                            "卖出收入": round(sell_income, 2),
-                            "单笔盈亏": round(profit, 2),
-                            "盈亏比例": round(profit_rate, 2),
-                            "卖出原因": sell_reason,
-                            "23 维评分": pos.get("total_score", 0),
-                            "所属行业": pos.get("industry", "未知")
-                        })
-                        sell_ts_codes.append(ts_code)
-                
-                for ts_code in sell_ts_codes:
-                    if ts_code in self.position:
-                        del self.position[ts_code]
-                
-                if len(self.position) < MAX_HOLD_STOCKS and self.current_capital > 1000:
-                    df_filter = self.strategy.filter(df_today)
-                    if df_filter.empty:
-                        self.daily_capital.append({"date": date_str, "capital": self.get_total_asset()})
-                        continue
-                    df_pass = self.select_stocks(date, df_filter)
-                    if df_pass.empty:
-                        self.daily_capital.append({"date": date_str, "capital": self.get_total_asset()})
-                        continue
-                    
-                    target_stocks = df_pass.head(MAX_HOLD_STOCKS - len(self.position))
-                    for _, target in target_stocks.iterrows():
-                        ts_code = target["ts_code"]
-                        if ts_code in self.position:
-                            continue
-                        
-                        if 'open' not in target or pd.isna(target['open']):
-                            continue
-                        target_open = target['open']
-                        
-                        pre_close = target.get("pre_close", target_open)
-                        if pre_close == 0:
-                            continue
-                        up_limit_price = pre_close * 1.1
-                        down_limit_price = pre_close * 0.9
-                        if target_open >= up_limit_price or target_open <= down_limit_price:
-                            logger.info(f"{ts_code}开盘涨跌停，无法买入，跳过")
-                            continue
-                        
-                        buy_price = min(target_open * (1 + SLIPPAGE_RATE), up_limit_price)
-                        buy_vol, buy_cost = self.calculate_position(buy_price, ts_code, df_today)
-                        if buy_vol < 100 or buy_cost > self.current_capital:
-                            continue
-                        
-                        self.current_capital = round(self.current_capital - buy_cost, 2)
-                        self.position[ts_code] = {
-                            "stock_name": target.get("name", "未知"),
-                            "buy_date": date,
-                            "buy_price": buy_price,
-                            "volume": buy_vol,
-                            "buy_cost": buy_cost,
-                            "close_price": target.get("close", buy_price),
-                            "total_score": target.get("total_score", 0),
-                            "industry": target.get("industry", "未知")
-                        }
-                
-                self.daily_capital.append({"date": date_str, "capital": self.get_total_asset()})
-            except Exception as e:
-                logger.error(f"❌ 交易日{date_str}回测异常：{e}，跳过该交易日")
-                continue
-        
-        if self.position:
-            logger.info("回测结束，强制卖出剩余持仓")
-            last_date = trade_dates[-1].strftime("%Y-%m-%d") if len(trade_dates) > 0 else datetime.now().strftime("%Y-%m-%d")
-            for ts_code, pos in list(self.position.items()):
-                sell_price = pos.get("close_price", pos["buy_price"]) * (1 - SLIPPAGE_RATE)
-                sell_amount = sell_price * pos["volume"]
-                sell_commission = max(sell_amount * COMMISSION_RATE, MIN_COMMISSION)
-                stamp_tax = sell_amount * STAMP_TAX_RATE
-                sell_income = sell_amount - sell_commission - stamp_tax
-                profit = sell_income - pos["buy_cost"]
-                profit_rate = (sell_price / pos["buy_price"] - 1) * 100
-                self.current_capital = round(self.current_capital + (sell_income - pos["buy_cost"]), 2)
-                self.trade_records.append({
-                    "买入日期": pos["buy_date"].strftime("%Y-%m-%d"),
-                    "卖出日期": last_date,
-                    "股票代码": ts_code,
-                    "股票名称": pos.get("stock_name", "未知"),
-                    "买入价格": round(pos["buy_price"], 2),
-                    "卖出价格": round(sell_price, 2),
-                    "买入数量": pos["volume"],
-                    "买入成本": round(pos["buy_cost"], 2),
-                    "卖出收入": round(sell_income, 2),
-                    "单笔盈亏": round(profit, 2),
-                    "盈亏比例": round(profit_rate, 2),
-                    "卖出原因": "回测结束强制卖出",
-                    "23 维评分": pos.get("total_score", 0),
-                    "所属行业": pos.get("industry", "未知")
-                })
-                del self.position[ts_code]
-        
-        logger.info("\n✅ 回测完成！正在生成详细回测报告...")
-        df_trade = pd.DataFrame(self.trade_records)
-        df_capital = pd.DataFrame(self.daily_capital)
-        total_trades = len(df_trade)
-        win_trades = len(df_trade[df_trade["单笔盈亏"] > 0]) if total_trades > 0 else 0
-        loss_trades = len(df_trade[df_trade["单笔盈亏"] < 0]) if total_trades > 0 else 0
-        win_rate = (win_trades / total_trades * 100) if total_trades > 0 else 0
-        total_profit = self.current_capital - INIT_CAPITAL
-        total_return_rate = (self.current_capital / INIT_CAPITAL - 1) * 100 if INIT_CAPITAL > 0 else 0
-        date_diff = (self.end_date - self.start_date).days
-        if date_diff < 90:
-            annual_return_desc = f"累计收益率{total_return_rate:.2f}%（回测周期不足 3 个月，不计算年化）"
-            annual_return = total_return_rate
-            use_annual = False
-        else:
-            annual_return = (total_return_rate / (date_diff / 365))
-            annual_return_desc = f"年化收益率{annual_return:.2f}%"
-            use_annual = True
-        
-        max_drawdown = 0
-        if not df_capital.empty:
-            df_capital["max_cash"] = df_capital["capital"].cummax()
-            df_capital["drawdown"] = (df_capital["max_cash"] - df_capital["capital"]) / df_capital["max_cash"] * 100
-            max_drawdown = df_capital["drawdown"].max() if not df_capital["drawdown"].empty else 0
-        
-        avg_profit = df_trade["单笔盈亏"].mean() if total_trades > 0 else 0
-        total_commission = 0
-        
-        logger.info("="*80)
-        logger.info(f"📊 【{self.strategy_display}策略】回测核心指标（含滑点{SLIPPAGE_RATE*100}%）")
-        logger.info(f"初始本金：{INIT_CAPITAL}元 | 期末资金：{round(self.current_capital, 2)}元 | 总盈利：{round(total_profit, 2)}元")
-        logger.info(f"总收益率：{round(total_return_rate, 2)}% | {annual_return_desc}")
-        logger.info(f"总交易次数：{total_trades}次 | 盈利：{win_trades}次 | 亏损：{loss_trades}次 | 胜率：{round(win_rate, 2)}%")
-        logger.info(f"最大回撤：{round(max_drawdown, 2)}% | 平均单笔盈亏：{round(avg_profit, 2)}元 | 总交易成本：{round(total_commission, 2)}元")
-        logger.info("="*80)
-        
-        try:
-            with pd.ExcelWriter("一体化回测结果报告.xlsx", engine='openpyxl') as writer:
-                if not df_trade.empty:
-                    df_trade.to_excel(writer, sheet_name='逐笔交易全记录', index=False)
-                if not df_capital.empty:
-                    df_capital.to_excel(writer, sheet_name='每日资金曲线', index=False)
-                df_indicator = pd.DataFrame([
-                    {"指标名称": "初始本金（元）", "指标值": INIT_CAPITAL},
-                    {"指标名称": "期末资金（元）", "指标值": round(self.current_capital, 2)},
-                    {"指标名称": "总盈利（元）", "指标值": round(total_profit, 2)},
-                    {"指标名称": "总收益率", "指标值": f"{round(total_return_rate, 2)}%"},
-                    {"指标名称": "年化收益率", "指标值": f"{round(annual_return, 2)}%"},
-                    {"指标名称": "总交易次数", "指标值": total_trades},
-                    {"指标名称": "盈利次数", "指标值": win_trades},
-                    {"指标名称": "亏损次数", "指标值": loss_trades},
-                    {"指标名称": "胜率", "指标值": f"{round(win_rate, 2)}%"},
-                    {"指标名称": "最大回撤", "指标值": f"{round(max_drawdown, 2)}%"},
-                    {"指标名称": "平均单笔盈亏（元）", "指标值": round(avg_profit, 2)},
-                    {"指标名称": "总交易成本（元）", "指标值": round(total_commission, 2)},
-                    {"指标名称": "策略类型", "指标值": self.strategy_display},
-                    {"指标名称": "回测时间范围", "指标值": f"{START_DATE}至{END_DATE}"},
-                    {"指标名称": "有效交易日", "指标值": df_capital["date"].nunique() if not df_capital.empty else 0},
-                    {"指标名称": "单边滑点", "指标值": f"{SLIPPAGE_RATE*100}%"}
-                ])
-                df_indicator.to_excel(writer, sheet_name='核心回测指标', index=False)
-                if not df_trade.empty and "所属行业" in df_trade.columns:
-                    df_industry = df_trade.groupby("所属行业")["单笔盈亏"].agg(["sum", "mean", "count"]).reset_index()
-                    df_industry.columns = ["所属行业", "行业总盈亏", "行业平均盈亏", "行业交易次数"]
-                    df_industry.to_excel(writer, sheet_name='行业盈亏统计', index=False)
-                
-                workbook = writer.book
-                for sheet_name in workbook.sheetnames:
-                    worksheet = workbook[sheet_name]
-                    for column in worksheet.columns:
-                        max_length = 0
-                        column_letter = column[0].column_letter
-                        for cell in column:
-                            try:
-                                if len(str(cell.value)) > max_length:
-                                    max_length = len(str(cell.value))
-                            except:
-                                pass
-                        adjusted_width = min(max_length + 2, 50)
-                        worksheet.column_dimensions[column_letter].width = adjusted_width
-            
-            logger.info(f"✅ 回测报告已导出：一体化回测结果报告.xlsx")
-        except Exception as e:
-            logger.warning(f"⚠️  回测报告导出失败：{e}")
-        
-        if VISUALIZATION:
-            self.run_visualization(df_capital, df_trade)
-        
-        del df_total
-        gc.collect()
-        
-        return df_trade, df_capital
-    
-    def run_visualization(self, df_capital, df_trade):
-        """运行可视化"""
-        if not VISUALIZATION or df_capital.empty:
-            return
-        logger.info("开始生成回测可视化图表...")
-        try:
-            fig, ((ax1, ax2), (ax3, ax4)) = plt.subplots(2, 2, figsize=(16, 12))
-            fig.suptitle(f"量化策略回测报告 - {self.strategy_display} | {START_DATE}至{END_DATE}", fontsize=16, fontweight='bold')
-            
-            df_capital["date"] = pd.to_datetime(df_capital["date"])
-            df_capital["return_rate"] = (df_capital["capital"] / INIT_CAPITAL - 1) * 100
-            ax1.plot(df_capital["date"], df_capital["capital"], color="#2E86AB", linewidth=2, label=f"初始本金：{INIT_CAPITAL}元")
-            ax1.set_title("账户资金曲线", fontsize=14, fontweight='bold')
-            ax1.set_xlabel("日期")
-            ax1.set_ylabel("资金（元）")
-            ax1.legend()
-            ax1.grid(alpha=0.3)
-            
-            ax2.plot(df_capital["date"], df_capital["return_rate"], color="#E63946", linewidth=2)
-            ax2.set_title("累计收益率曲线", fontsize=14, fontweight='bold')
-            ax2.set_xlabel("日期")
-            ax2.set_ylabel("累计收益率（%）")
-            ax2.grid(alpha=0.3)
-            
-            df_capital["max_cash"] = df_capital["capital"].cummax()
-            df_capital["drawdown"] = (df_capital["max_cash"] - df_capital["capital"]) / df_capital["max_cash"] * 100
-            ax3.fill_between(df_capital["date"], 0, df_capital["drawdown"], color="#F77F00", alpha=0.3)
-            ax3.plot(df_capital["date"], df_capital["drawdown"], color="#F77F00", linewidth=2)
-            ax3.set_title("账户最大回撤曲线", fontsize=14, fontweight='bold')
-            ax3.set_xlabel("日期")
-            ax3.set_ylabel("回撤（%）")
-            ax3.grid(alpha=0.3)
-            
-            if not df_trade.empty:
-                win_num = len(df_trade[df_trade["单笔盈亏"] > 0])
-                loss_num = len(df_trade[df_trade["单笔盈亏"] < 0])
-                neutral_num = len(df_trade[df_trade["单笔盈亏"] == 0])
-                labels = ["盈利", "亏损", "平盘"]
-                sizes = [win_num, loss_num, neutral_num]
-                colors = ["#06D6A0", "#E63946", "#FFD166"]
-                ax4.pie(sizes, labels=labels, colors=colors, autopct='%1.1f%%', startangle=90)
-                ax4.set_title(f"交易胜率（总交易{len(df_trade)}次）", fontsize=14, fontweight='bold')
-            else:
-                ax4.text(0.5, 0.5, "无交易记录", ha='center', va='center', fontsize=16)
-                ax4.set_title("交易胜率", fontsize=14, fontweight='bold')
-            
-            plt.tight_layout()
-            chart_path = os.path.join(CHART_DIR, f"回测报告_{datetime.now().strftime('%Y%m%d')}.png")
-            plt.savefig(chart_path, dpi=300, bbox_inches='tight')
-            plt.close()
-            logger.info(f"✅ 可视化图表已保存：{chart_path}")
-        except Exception as e:
-            logger.warning(f"⚠️  可视化生成失败：{e}")
-
-# ============================================== 【每日选股模块 - 完全保留，仅做小修复】 ==============================================
 class DailyStockPicker:
     def __init__(self, base_url):
         self.base_url = base_url
@@ -3967,39 +3376,42 @@ class DailyStockPicker:
             return {}
     
     def get_latest_data(self):
-        """加载最新交易日数据"""
-        logger.info("="*60)
-        logger.info("开始加载最新交易日数据（仅前一个完整交易日，无未来函数）")
-        logger.info("="*60)
+        """加载最新交易日数据 - 直接读取本地文件，不依赖Flask API"""
+        logger.info("=" * 60)
+        logger.info("开始加载最新交易日数据（直接读取本地文件）")
+        logger.info("=" * 60)
         
-        stock_list_result = self._get("stocks")
-        stock_list = [item["ts_code"] for item in stock_list_result.get("stocks", []) if item["has_data"]]
-        if not stock_list:
-            logger.error("❌ 未找到有效股票数据，请先完成数据抓取！")
+        # 直接读取本地股票列表
+        stock_basic_path = os.path.join(OUTPUT_DIR, "stock_basic.csv")
+        if not os.path.exists(stock_basic_path):
+            logger.error(f"❌ 未找到股票基础信息文件：{stock_basic_path}")
             return pd.DataFrame(), None
-        stock_basic_result = self._get("stock-basic")
-        stock_basic_df = pd.DataFrame(stock_basic_result.get("data", []))
-        logger.info(f"已加载 {len(stock_list)} 只股票基础信息")
+        stock_basic_df = pd.read_csv(stock_basic_path, encoding="utf-8-sig")
+        stock_list = stock_basic_df["ts_code"].tolist()
+        logger.info(f"已从本地加载 {len(stock_list)} 只股票基础信息")
         
         latest_trade_date = self.utils.get_prev_trade_date(datetime.now())
         latest_trade_date_api = latest_trade_date.strftime("%Y%m%d")
         logger.info(f"最新有效交易日：{latest_trade_date.strftime('%Y-%m-%d')}")
         
-        stk_limit_result = self._get("stk-limit", {'start_date': latest_trade_date_api, 'end_date': latest_trade_date_api})
-        stk_limit_df = pd.DataFrame(stk_limit_result.get("data", []))
-        if stk_limit_df.empty:
-            logger.warning("⚠️  未获取到最新交易日涨跌停数据！")
+        # 直接读取本地涨跌停数据
+        stk_limit_path = os.path.join(OUTPUT_DIR, "stk_limit.csv")
+        if os.path.exists(stk_limit_path):
+            stk_limit_df = pd.read_csv(stk_limit_path, encoding="utf-8-sig", dtype={'trade_date': str})
+            stk_limit_df = stk_limit_df[stk_limit_df['trade_date'] == latest_trade_date_api]
+            logger.info(f"已从本地加载 {len(stk_limit_df)} 条涨跌停数据")
         else:
-            stk_limit_df['trade_date'] = stk_limit_df['trade_date'].astype(str)
-            logger.info(f"已加载 {len(stk_limit_df)} 条涨跌停数据")
+            stk_limit_df = pd.DataFrame()
+            logger.warning("⚠️  未找到本地涨跌停数据文件！")
         
         all_stock_data = []
         for ts_code in tqdm(stock_list, desc="个股最新数据加载进度"):
             try:
-                daily_result = self._get(f"stock/{ts_code}/data")
-                if "error" in daily_result:
+                # 直接读取本地个股日线数据
+                daily_path = os.path.join(STOCKS_DIR, ts_code, "daily.csv")
+                if not os.path.exists(daily_path):
                     continue
-                daily_df = pd.DataFrame(daily_result.get("data", []))
+                daily_df = pd.read_csv(daily_path, encoding="utf-8-sig", dtype={'trade_date': str})
                 if daily_df.empty:
                     continue
                 daily_df["trade_date"] = pd.to_datetime(daily_df["trade_date"], format="%Y%m%d", errors="coerce")
@@ -4007,15 +3419,21 @@ class DailyStockPicker:
                 if daily_df.empty:
                     continue
                 
-                daily_basic_result = self._get(f"stock/{ts_code}/daily-basic")
-                daily_basic_df = pd.DataFrame(daily_basic_result.get("data", []))
+                # 直接读取本地个股日线指标数据
+                daily_basic_path = os.path.join(STOCKS_DIR, ts_code, "daily_basic.csv")
+                daily_basic_df = pd.DataFrame()  # 先初始化
+                if os.path.exists(daily_basic_path):
+                    daily_basic_df = pd.read_csv(daily_basic_path, encoding="utf-8-sig", dtype={'trade_date': str})
                 if not daily_basic_df.empty:
                     daily_basic_df["trade_date"] = pd.to_datetime(daily_basic_df["trade_date"], format="%Y%m%d", errors="coerce")
                     daily_basic_df = daily_basic_df[daily_basic_df["trade_date"] == latest_trade_date]
                     daily_df = pd.merge(daily_df, daily_basic_df, on=['ts_code', 'trade_date'], how='left')
                 
-                fina_result = self._get(f"stock/{ts_code}/fina-indicator")
-                fina_df = pd.DataFrame(fina_result.get("data", []))
+                # 直接读取本地个股财务指标数据
+                fina_path = os.path.join(STOCKS_DIR, ts_code, "fina_indicator.csv")
+                fina_df = pd.DataFrame()  # 先初始化
+                if os.path.exists(fina_path):
+                    fina_df = pd.read_csv(fina_path, encoding="utf-8-sig")
                 if not fina_df.empty and 'end_date' in fina_df.columns:
                     fina_df['end_date'] = fina_df['end_date'].astype(str)
                     daily_df = pd.merge(daily_df, fina_df, on='ts_code', how='left')
@@ -4048,7 +3466,7 @@ class DailyStockPicker:
                 ((total_df["open"] - total_df["pre_close"]) / total_df["pre_close"] * 100).fillna(0)
             )
         if 'vol' in total_df.columns:
-            total_df["volume_ratio"] = total_df["vol"] / total_df.groupby("ts_code")["vol"].rolling(5).mean().shift(1).fillna(1)
+            total_df["volume_ratio"] = total_df["vol"] / total_df.groupby("ts_code")["vol"].rolling(5).mean().shift(1).reset_index(0, drop=True).fillna(1)
         if 'order_amount' in total_df.columns and 'float_market_cap' in total_df.columns:
             total_df["order_ratio"] = (total_df["order_amount"] / total_df["float_market_cap"] * 100).fillna(0)
         
@@ -4559,12 +3977,54 @@ def run_by_mode():
         if not wait_for_api_ready():
             return
         
-        backtest_sys = BacktestSystem(API_BASE_URL)
-        df_total = backtest_sys.get_cached_data()
-        backtest_result = backtest_sys.run(df_total)
+        # 使用vnpy回测 + qlib因子增强
+        from vnpy_backtest import VnpyDataLoader, PortfolioStrategy, BacktestEngine
+        from qlib_factors import QlibFactorCalculator
         
-        optimize_suggestion = generate_param_optimize_suggestion(backtest_result)
-        send_backtest_result_with_suggestion(backtest_result, optimize_suggestion)
+        logger.info("使用vnpy回测引擎 + qlib因子增强...")
+        
+        # 初始化数据加载器
+        loader = VnpyDataLoader()
+        
+        # 初始化qlib因子计算器
+        qlib_factor = QlibFactorCalculator()
+        
+        # 初始化策略（使用用户的StrategyCore）
+        strategy_core = StrategyCore(STRATEGY_TYPE)
+        strategy = PortfolioStrategy(
+            strategy_core=strategy_core,
+            qlib_factor=qlib_factor,
+            config={'min_score': 0, 'top_n': 3, 'initial_capital': INIT_CAPITAL}
+        )
+        
+        # 初始化回测引擎
+        engine = BacktestEngine(strategy, initial_capital=INIT_CAPITAL)
+        
+        # 获取回测日期范围
+        start_date = START_DATE.replace('-', '')
+        end_date = END_DATE.replace('-', '')
+        trade_dates = loader.get_trade_dates(start_date, end_date)
+        
+        if not trade_dates:
+            logger.error("无交易日数据，请检查日期范围或数据文件")
+            return
+        
+        logger.info(f"回测日期范围: {start_date} ~ {end_date}, 共{len(trade_dates)}个交易日")
+        
+        # 运行回测
+        result = engine.run(trade_dates, loader)
+        
+        # 生成报告
+        report_path = '/data/agents/master/backtest_results/backtest_report.txt'
+        report = engine.generate_report(result, report_path)
+        logger.info(report)
+        
+        # 保存详细交易记录
+        import json
+        trades_path = '/data/agents/master/backtest_results/trades.json'
+        with open(trades_path, 'w', encoding='utf-8') as f:
+            json.dump(result['trades'], f, ensure_ascii=False, indent=2)
+        logger.info(f"交易记录已保存: {trades_path}")
         
         logger.info("🎉 【仅回测模式】执行完成！所有报告已导出至本地目录")
         print("="*80)
@@ -4789,3 +4249,249 @@ def main():
 
 if __name__ == '__main__':
     main()
+
+# ============================================== 【vnpy回测入口】 ==============================================
+
+def run_vnpy_backtest(start_date: str, end_date: str, initial_capital: float = 5000, min_score: float = 5):
+    """
+    运行vnpy回测
+    
+    Args:
+        start_date: 开始日期，格式 '20231201'
+        end_date: 结束日期，格式 '20231231'
+        initial_capital: 初始资金，默认5000元
+        min_score: 最低评分阈值，默认5分
+    
+    Returns:
+        BacktestResult: 回测结果对象
+    """
+    try:
+        from vnpy_strategies import DataLoader, MultiStockStrategy, BacktestEngine
+        
+        logger.info(f"开始vnpy回测: {start_date} -> {end_date}")
+        
+        # 初始化
+        loader = DataLoader()
+        strategy = MultiStockStrategy(loader, config={'min_score': min_score, 'top_n': 3})
+        engine = BacktestEngine(strategy, initial_capital=initial_capital)
+        
+        # 运行回测
+        result = engine.run(start_date, end_date)
+        
+        # 生成报告
+        report_path = f"/data/agents/master/vnpy_strategies/backtest_report_{start_date}_{end_date}.txt"
+        report = engine.generate_report(result, report_path)
+        
+        logger.info(f"回测完成，报告已保存到: {report_path}")
+        
+        return result
+        
+    except ImportError as e:
+        logger.error(f"vnpy_strategies模块导入失败: {e}")
+        return None
+    except Exception as e:
+        logger.error(f"vnpy回测执行失败: {e}")
+        return None
+
+
+def run_vnpy_stock_picking(date: str = None, min_score: float = 5):
+    """
+    使用vnpy策略进行每日选股
+    
+    Args:
+        date: 选股日期，默认为最近交易日
+        min_score: 最低评分阈值
+    
+    Returns:
+        list: 选股结果列表
+    """
+    try:
+        from vnpy_strategies import DataLoader, MultiStockStrategy
+        
+        loader = DataLoader()
+        strategy = MultiStockStrategy(loader, config={'min_score': min_score, 'top_n': 5})
+        
+        if date is None:
+            # 获取最近交易日
+            trade_dates = loader.get_trade_dates('20260101', '20261231')
+            date = trade_dates[-1] if trade_dates else None
+        
+        if date is None:
+            logger.error("无法获取交易日")
+            return []
+        
+        logger.info(f"开始选股: {date}")
+        
+        results = strategy.select_stocks(date)
+        
+        if results:
+            logger.info(f"选股完成: {len(results)} 只股票达标")
+            for i, r in enumerate(results):
+                logger.info(f"  {i+1}. {r.ts_code} {r.name}: {r.total_score}分")
+        
+        return results
+        
+    except Exception as e:
+        logger.error(f"选股失败: {e}")
+        return []
+
+
+# ============================================== 【vnpy+qlib结合回测入口】 ==============================================
+
+def run_combined_backtest(start_date: str, end_date: str, initial_capital: float = 5000,
+                          vnpy_weight: float = 0.6, qlib_weight: float = 0.4):
+    """
+    运行vnpy+qlib结合策略回测
+    
+    Args:
+        start_date: 开始日期
+        end_date: 结束日期
+        initial_capital: 初始资金
+        vnpy_weight: vnpy评分权重
+        qlib_weight: qlib预测权重
+    """
+    try:
+        from vnpy_strategies import DataLoader, MultiStockStrategyV2, QlibAdapter, CombinedStrategy, BacktestEngine
+        
+        logger.info(f"开始vnpy+qlib结合回测: {start_date} -> {end_date}")
+        
+        # 初始化
+        loader = DataLoader()
+        vnpy_strategy = MultiStockStrategyV2(loader, config={'min_score': 8, 'top_n': 10})
+        qlib_adapter = QlibAdapter()
+        combined = CombinedStrategy(vnpy_strategy, qlib_adapter, vnpy_weight, qlib_weight)
+        
+        # 创建自定义选股函数
+        class CombinedBacktestStrategy:
+            def __init__(self, combined_strategy, loader):
+                self.combined = combined_strategy
+                self.loader = loader
+                self.min_score = 8
+                self.top_n = 3
+            
+            def select_stocks(self, date):
+                return self.combined.select_stocks(date, top_n=self.top_n)
+            
+            def get_buy_plan(self, selected, capital):
+                if not selected:
+                    return {}
+                
+                target = selected[0]
+                price = target.details.get('close', 0)
+                if price <= 0:
+                    return {}
+                
+                shares = int((capital - 10) / price / 100) * 100
+                if shares < 100:
+                    return {}
+                
+                return {
+                    'ts_code': target.ts_code,
+                    'name': target.name,
+                    'price': price,
+                    'shares': shares,
+                    'cost': shares * price,
+                    'score': target.details.get('combined_score', 0)
+                }
+        
+        strategy = CombinedBacktestStrategy(combined, loader)
+        engine = BacktestEngine(strategy, initial_capital=initial_capital)
+        
+        result = engine.run(start_date, end_date)
+        
+        report_path = f"/data/agents/master/vnpy_strategies/backtest_report_combined_{start_date}_{end_date}.txt"
+        report = engine.generate_report(result, report_path)
+        
+        logger.info(f"结合回测完成，报告: {report_path}")
+        
+        return result
+        
+    except Exception as e:
+        logger.error(f"结合回测失败: {e}")
+        return None
+
+
+# ============================================== 【qlib独立回测入口】 ==============================================
+
+def run_qlib_factor_backtest(factors: list, start_date: str, end_date: str, 
+                              top_n: int = 10):
+    """
+    qlib独立回测新因子
+    
+    Args:
+        factors: 因子列表，如 ['momentum', 'volume', 'volatility']
+        start_date: 开始日期，格式 '2023-01-01' 或 '20230101'
+        end_date: 结束日期
+        top_n: 每日选出前N只股票
+    """
+    try:
+        from qlib_factors import QlibFactorCalculator
+        from vnpy_backtest import VnpyDataLoader
+        
+        logger.info(f"开始qlib因子回测: {start_date} -> {end_date}")
+        logger.info(f"因子: {factors}")
+        
+        # 初始化
+        loader = VnpyDataLoader()
+        calculator = QlibFactorCalculator()
+        
+        # 获取交易日
+        trade_dates = loader.get_trade_dates(
+            start_date.replace('-', ''),
+            end_date.replace('-', '')
+        )
+        
+        if not trade_dates:
+            logger.error("无交易日数据")
+            return None
+        
+        logger.info(f"共{len(trade_dates)}个交易日")
+        
+        # 每日信号
+        all_signals = []
+        
+        for date in trade_dates:
+            stock_data = loader.load_all_stocks_daily(date)
+            if stock_data.empty:
+                continue
+            
+            # 计算因子评分
+            scores = calculator.calculate(stock_data, date)
+            
+            if scores.empty:
+                continue
+            
+            # 选出前N只
+            top_stocks = scores.nlargest(top_n)
+            
+            signals = []
+            for idx in top_stocks.index:
+                ts_code = stock_data.loc[idx, 'ts_code']
+                score = top_stocks[idx]
+                signals.append({
+                    'date': date,
+                    'ts_code': ts_code,
+                    'score': score
+                })
+            
+            all_signals.extend(signals)
+            
+            if signals:
+                logger.info(f"[{date}] 选出{len(signals)}只股票")
+        
+        # 汇总结果
+        result = {
+            'start_date': start_date,
+            'end_date': end_date,
+            'factors': factors,
+            'total_signals': len(all_signals),
+            'signals': all_signals
+        }
+        
+        logger.info(f"qlib因子回测完成，共{len(all_signals)}个信号")
+        
+        return result
+        
+    except Exception as e:
+        logger.error(f"qlib因子回测失败: {e}")
+        return None
