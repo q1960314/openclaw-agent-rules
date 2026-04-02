@@ -1,0 +1,14 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "title": "Official Release State Placeholder Schema",
+  "required": ["task_id", "official_release_state", "official_release", "next_step"],
+  "properties": {
+    "task_id": {"type": "string"},
+    "official_release_state": {"type": "string", "enum": ["awaiting_human_decision", "post_approval_ready", "rejected_permanently", "post_approval_but_still_blocked", "manual_release_execution_in_progress", "manual_release_execution_completed_pending_registration", "manual_release_execution_failed", "manual_release_execution_aborted", "manual_rollback_execution_in_progress", "manual_rollback_execution_completed_pending_registration", "manual_rollback_execution_failed", "manual_rollback_execution_aborted", "official_release_registered", "rollback_registered"]},
+    "official_release": {"type": "boolean"},
+    "next_step": {"type": "string"},
+    "note": {"type": "string"}
+  },
+  "additionalProperties": true
+}

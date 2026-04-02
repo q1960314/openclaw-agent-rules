@@ -1,0 +1,18 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "title": "Official Release Rehearsal Schema",
+  "required": ["task_id", "rehearsal_state", "rehearsal_ready", "official_release", "summary"],
+  "properties": {
+    "task_id": {"type": "string"},
+    "rehearsal_state": {"type": "string", "enum": ["not_eligible", "ready_for_rehearsal", "approved_release_placeholder"]},
+    "rehearsal_ready": {"type": "boolean"},
+    "official_release": {"type": "boolean"},
+    "pre_release_ready": {"type": "boolean"},
+    "closure_consistency_ready": {"type": "boolean"},
+    "approval_status": {"type": "string"},
+    "next_step": {"type": "string"},
+    "summary": {"type": "string"}
+  },
+  "additionalProperties": true
+}

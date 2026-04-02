@@ -1,0 +1,31 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "title": "Execution Status Artifact Schema",
+  "required": [
+    "task_id",
+    "status_type",
+    "execution_target",
+    "confirmation_state",
+    "execution_started",
+    "execution_completed",
+    "execution_failed",
+    "execution_aborted"
+  ],
+  "properties": {
+    "task_id": {"type": "string"},
+    "status_type": {"type": "string", "enum": ["manual_execution_status"]},
+    "execution_target": {"type": "string", "enum": ["official_release", "rollback"]},
+    "confirmation_state": {"type": "string", "enum": ["planned_not_started", "in_progress", "completed", "failed", "aborted"]},
+    "execution_started": {"type": "boolean"},
+    "execution_completed": {"type": "boolean"},
+    "execution_failed": {"type": "boolean"},
+    "execution_aborted": {"type": "boolean"},
+    "updated_at": {"type": "string"},
+    "latest_action": {"type": "string"},
+    "latest_actor": {"type": "string"},
+    "latest_note": {"type": "string"},
+    "next_step": {"type": "string"}
+  },
+  "additionalProperties": true
+}

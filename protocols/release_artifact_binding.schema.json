@@ -1,0 +1,16 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "title": "Release Artifact Binding Schema",
+  "required": ["task_id", "binding_ready", "release_artifacts", "rollback_artifacts", "missing_release_artifacts", "missing_rollback_artifacts", "summary"],
+  "properties": {
+    "task_id": {"type": "string"},
+    "binding_ready": {"type": "boolean"},
+    "release_artifacts": {"type": "array", "items": {"type": "string"}},
+    "rollback_artifacts": {"type": "array", "items": {"type": "string"}},
+    "missing_release_artifacts": {"type": "array", "items": {"type": "string"}},
+    "missing_rollback_artifacts": {"type": "array", "items": {"type": "string"}},
+    "summary": {"type": "string"}
+  },
+  "additionalProperties": true
+}

@@ -1,0 +1,30 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "title": "Execution Confirmation Record Schema",
+  "required": [
+    "task_id",
+    "record_type",
+    "execution_target",
+    "action",
+    "confirmation_state",
+    "confirmed_by",
+    "confirmed_at",
+    "precheck_ready"
+  ],
+  "properties": {
+    "task_id": {"type": "string"},
+    "record_type": {"type": "string", "enum": ["manual_execution_confirmation"]},
+    "execution_target": {"type": "string", "enum": ["official_release", "rollback"]},
+    "action": {"type": "string", "enum": ["start", "complete", "fail", "abort"]},
+    "confirmation_state": {"type": "string", "enum": ["in_progress", "completed", "failed", "aborted"]},
+    "confirmed_by": {"type": "string"},
+    "confirmed_at": {"type": "string"},
+    "note": {"type": "string"},
+    "status_before": {"type": ["string", "null"]},
+    "human_approval_state": {"type": ["string", "null"]},
+    "precheck_state": {"type": ["string", "null"]},
+    "precheck_ready": {"type": "boolean"}
+  },
+  "additionalProperties": true
+}

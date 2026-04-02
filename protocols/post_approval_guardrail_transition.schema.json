@@ -1,0 +1,15 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "title": "Post Approval Guardrail Transition Schema",
+  "required": ["task_id", "transition_state", "execution_unblocked", "retained_block_reasons", "next_step"],
+  "properties": {
+    "task_id": {"type": "string"},
+    "transition_state": {"type": "string", "enum": ["awaiting_real_approval", "partial_unblock_placeholder", "still_blocked_after_approval_placeholder"]},
+    "execution_unblocked": {"type": "boolean"},
+    "retained_block_reasons": {"type": "array", "items": {"type": "string"}},
+    "next_step": {"type": "string"},
+    "note": {"type": "string"}
+  },
+  "additionalProperties": true
+}

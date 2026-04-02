@@ -1,0 +1,9 @@
+{
+  "task_id": "TEST-20260318-001",
+  "agent": "coder",
+  "timestamp": "2026-03-18T13:48:23.914205",
+  "params": {
+    "max_workers": 30,
+    "max_requests_per_minute": 4000
+  }
+}

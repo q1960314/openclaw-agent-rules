@@ -1,0 +1,15 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "title": "Approval Transition Stub Schema",
+  "required": ["task_id", "transition_state", "decision_recorded", "approved", "next_step"],
+  "properties": {
+    "task_id": {"type": "string"},
+    "transition_state": {"type": "string", "enum": ["awaiting_human_decision", "approved_transition_placeholder", "rejected_transition_placeholder"]},
+    "decision_recorded": {"type": "boolean"},
+    "approved": {"type": "boolean"},
+    "next_step": {"type": "string"},
+    "note": {"type": "string"}
+  },
+  "additionalProperties": true
+}

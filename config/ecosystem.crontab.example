@@ -1,0 +1,29 @@
+# ===== OpenClaw 生态自动循环（示例） =====
+# 使用前请先确认：
+# 1. /data/agents/master 为正式代码主干
+# 2. 已验证 workflow_engine.py 和相关脚本可用
+# 3. 如需通知用户，请在后续版本接入 openclaw agent/message 通知桥
+
+SHELL=/bin/bash
+PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/home/admin/miniconda3/envs/vnpy_env/bin
+
+# 每个交易日 04:10 执行数据循环（增量数据校验/快照前置）
+10 4 * * 1-5 /home/admin/.openclaw/workspace/master/scripts/run_daily_data_cycle.sh >> /home/admin/.openclaw/workspace/master/logs/cron_daily_data_cycle.log 2>&1
+
+# 每个交易日 18:30 执行每日研究闭环
+30 18 * * 1-5 /home/admin/.openclaw/workspace/master/scripts/run_daily_research_cycle.sh >> /home/admin/.openclaw/workspace/master/logs/cron_daily_research.log 2>&1
+
+# 每周日 21:00 执行周度健康检查
+0 21 * * 0 /home/admin/.openclaw/workspace/master/scripts/run_weekly_health_cycle.sh >> /home/admin/.openclaw/workspace/master/logs/cron_weekly_health.log 2>&1
+
+# 每天 23:20 执行知识沉淀循环
+20 23 * * * /home/admin/.openclaw/workspace/master/scripts/run_knowledge_cycle.sh >> /home/admin/.openclaw/workspace/master/logs/cron_knowledge_cycle.log 2>&1
+
+# 每 10 分钟检查一次自动续流（完成一个小任务后自动接下一个）
+*/10 * * * * /home/admin/.openclaw/workspace/master/scripts/run_auto_dispatcher.sh >> /home/admin/.openclaw/workspace/master/logs/cron_auto_dispatcher.log 2>&1
+
+# 每天 06:10 做状态修复与队列清理
+10 6 * * * /home/admin/.openclaw/workspace/master/scripts/run_workflow_cleanup.sh >> /home/admin/.openclaw/workspace/master/logs/cron_workflow_cleanup.log 2>&1
+
+# 每 15 分钟执行一次 worker runtime 巡检（最小持续运行化骨架）
+*/15 * * * * bash /home/admin/.openclaw/workspace/master/scripts/run_worker_runtime_scheduler.sh run-once --max-age-minutes 30 >> /home/admin/.openclaw/workspace/master/logs/cron_worker_runtime_scheduler.log 2>&1

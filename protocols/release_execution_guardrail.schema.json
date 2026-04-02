@@ -1,0 +1,16 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "title": "Release Execution Guardrail Schema",
+  "required": ["task_id", "execution_blocked", "block_reasons", "execution_state", "official_release"],
+  "properties": {
+    "task_id": {"type": "string"},
+    "execution_blocked": {"type": "boolean"},
+    "block_reasons": {"type": "array", "items": {"type": "string"}},
+    "execution_state": {"type": "string", "enum": ["blocked_pending_human_approval", "blocked_permanently_rejected", "blocked_pending_prereq", "blocked_invalid_state", "allowed_placeholder"]},
+    "official_release": {"type": "boolean"},
+    "next_step": {"type": "string"},
+    "note": {"type": "string"}
+  },
+  "additionalProperties": true
+}

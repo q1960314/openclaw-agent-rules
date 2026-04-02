@@ -1,0 +1,198 @@
+# 任务路由配置
+# 定义任务类型与子智能体的对应关系
+# 更新时间: 2026-03-25
+
+task_routing:
+  # ========== 代码相关 ==========
+  code_develop:
+    agent: coder
+    session_key: "agent:coder:main"
+    description: 代码开发、新增功能
+    priority: P1
+  
+  code_modify:
+    agent: coder
+    session_key: "agent:coder:main"
+    description: 代码修改、重构
+    priority: P1
+  
+  code_review:
+    agent: coder
+    session_key: "agent:coder:main"
+    description: 代码审查
+    priority: P2
+  
+  code_fix:
+    agent: coder
+    session_key: "agent:coder:main"
+    description: Bug修复
+    priority: P0
+
+  # ========== 策略相关 ==========
+  strategy_design:
+    agent: strategy-expert
+    session_key: "agent:strategy-expert:main"
+    description: 策略逻辑设计
+    priority: P1
+  
+  strategy_optimize:
+    agent: strategy-expert
+    session_key: "agent:strategy-expert:main"
+    description: 策略优化
+    priority: P1
+  
+  strategy_analyze:
+    agent: strategy-expert
+    session_key: "agent:strategy-expert:main"
+    description: 策略分析
+    priority: P2
+
+  # ========== 测试相关 ==========
+  test_run:
+    agent: test-expert
+    session_key: "agent:test-expert:main"
+    description: 运行测试
+    priority: P1
+  
+  test_verify:
+    agent: test-expert
+    session_key: "agent:test-expert:main"
+    description: 验证结果
+    priority: P1
+  
+  test_backtest:
+    agent: test-expert
+    session_key: "agent:test-expert:main"
+    description: 回测验证
+    priority: P1
+
+  # ========== 回测相关 ==========
+  backtest_run:
+    agent: backtest-engine
+    session_key: "agent:backtest-engine:main"
+    description: 运行回测
+    priority: P1
+  
+  backtest_analyze:
+    agent: backtest-engine
+    session_key: "agent:backtest-engine:main"
+    description: 回测分析
+    priority: P1
+  
+  backtest_report:
+    agent: backtest-engine
+    session_key: "agent:backtest-engine:main"
+    description: 生成回测报告
+    priority: P2
+
+  # ========== 数据相关 ==========
+  data_fetch:
+    agent: data-collector
+    session_key: "agent:data-collector:main"
+    description: 数据抓取
+    priority: P1
+  
+  data_clean:
+    agent: data-collector
+    session_key: "agent:data-collector:main"
+    description: 数据清洗
+    priority: P1
+  
+  data_validate:
+    agent: data-collector
+    session_key: "agent:data-collector:main"
+    description: 数据验证
+    priority: P1
+
+  # ========== 参数相关 ==========
+  param_optimize:
+    agent: parameter-evolver
+    session_key: "agent:parameter-evolver:main"
+    description: 参数优化
+    priority: P1
+  
+  param_evolve:
+    agent: parameter-evolver
+    session_key: "agent:parameter-evolver:main"
+    description: 参数进化
+    priority: P1
+
+  # ========== 因子相关 ==========
+  factor_mine:
+    agent: factor-miner
+    session_key: "agent:factor-miner:main"
+    description: 因子挖掘
+    priority: P1
+  
+  factor_analyze:
+    agent: factor-miner
+    session_key: "agent:factor-miner:main"
+    description: 因子分析（IC/IR）
+    priority: P1
+
+  # ========== 文档相关 ==========
+  doc_manage:
+    agent: doc-manager
+    session_key: "agent:doc-manager:main"
+    description: 文档管理
+    priority: P2
+  
+  doc_archive:
+    agent: doc-manager
+    session_key: "agent:doc-manager:main"
+    description: 文档归档
+    priority: P2
+
+  # ========== 知识库相关 ==========
+  knowledge_archive:
+    agent: knowledge-steward
+    session_key: "agent:knowledge-steward:main"
+    description: 知识库归档
+    priority: P2
+  
+  knowledge_sync:
+    agent: knowledge-steward
+    session_key: "agent:knowledge-steward:main"
+    description: 知识库同步
+    priority: P2
+
+  # ========== 学习相关 ==========
+  finance_learn:
+    agent: finance-learner
+    session_key: "agent:finance-learner:main"
+    description: 金融知识学习
+    priority: P3
+
+  # ========== 舆情相关 ==========
+  sentiment_analyze:
+    agent: sentiment-analyst
+    session_key: "agent:sentiment-analyst:main"
+    description: 舆情分析
+    priority: P2
+
+  # ========== 运维相关 ==========
+  ops_monitor:
+    agent: ops-monitor
+    session_key: "agent:ops-monitor:main"
+    description: 系统监控
+    priority: P2
+
+# ========== 权限配置 ==========
+permissions:
+  # master-quant 可以直接执行的操作
+  master_direct_exec:
+    - quick_query      # 快速查询 (ls, cat, grep)
+    - kb_search         # 知识库检索
+    - status_check      # 状态检查
+    - env_check         # 环境检查
+    - config_read       # 配置读取
+  
+  # 必须派发子智能体的操作
+  must_dispatch:
+    - code_*            # 所有代码相关
+    - strategy_*        # 所有策略相关
+    - test_*            # 所有测试相关
+    - backtest_*        # 所有回测相关
+    - data_*            # 所有数据相关
+    - param_*           # 所有参数相关
+    - factor_*          # 所有因子相关

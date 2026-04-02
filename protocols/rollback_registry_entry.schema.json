@@ -1,0 +1,16 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "title": "Rollback Registry Entry Schema",
+  "required": ["task_id", "entry_type", "official_release", "rollback_supported", "rollback_artifacts"],
+  "properties": {
+    "task_id": {"type": "string"},
+    "entry_type": {"type": "string", "enum": ["candidate_stub", "official_release_stub"]},
+    "official_release": {"type": "boolean"},
+    "rollback_supported": {"type": "boolean"},
+    "rollback_artifacts": {"type": "array", "items": {"type": "string"}},
+    "formalization_state": {"type": "string"},
+    "note": {"type": "string"}
+  },
+  "additionalProperties": true
+}

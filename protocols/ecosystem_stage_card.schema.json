@@ -1,0 +1,48 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "title": "Ecosystem Stage Card Schema",
+  "required": [
+    "generated_at",
+    "stage_id",
+    "stage_label",
+    "maturity_band",
+    "summary",
+    "phase_completion_state",
+    "closure_readiness_state",
+    "capability_axes",
+    "signals",
+    "completion_definition",
+    "next_action_card",
+    "remaining_gaps",
+    "claims_allowed",
+    "not_yet_claimable"
+  ],
+  "properties": {
+    "generated_at": { "type": "string" },
+    "stage_id": { "type": "string" },
+    "stage_label": { "type": "string" },
+    "maturity_band": { "type": "string", "enum": ["early", "mid", "late"] },
+    "summary": { "type": "string" },
+    "phase_completion_state": { "type": "string", "enum": ["in_progress", "mostly_ready_for_next_phase", "ready_for_next_phase"] },
+    "closure_readiness_state": { "type": "string", "enum": ["none", "observable", "approvable_candidates_present"] },
+    "capability_axes": {
+      "type": "object",
+      "properties": {
+        "skeleton": { "type": "integer" },
+        "agent_depth": { "type": "integer" },
+        "runtime": { "type": "integer" },
+        "formalization": { "type": "integer" },
+        "evaluation": { "type": "integer" }
+      },
+      "additionalProperties": true
+    },
+    "signals": { "type": "object", "additionalProperties": true },
+    "completion_definition": { "type": "object", "additionalProperties": true },
+    "next_action_card": { "type": "object", "additionalProperties": true },
+    "remaining_gaps": { "type": "array", "items": { "type": "string" } },
+    "claims_allowed": { "type": "array", "items": { "type": "string" } },
+    "not_yet_claimable": { "type": "array", "items": { "type": "string" } }
+  },
+  "additionalProperties": true
+}

@@ -1,0 +1,586 @@
+{
+  "version": "1.0.0",
+  "paths": {
+    "workspace_root": "/home/admin/.openclaw/workspace/master",
+    "codebase_root": "/data/agents/master",
+    "python_bin": "/home/admin/miniconda3/envs/vnpy_env/bin/python",
+    "trace_root": "/home/admin/.openclaw/workspace/master/traces/cycles",
+    "reports_root": "/home/admin/.openclaw/workspace/master/reports/workflow",
+    "lock_root": "/home/admin/.openclaw/workspace/master/traces/locks"
+  },
+  "approval": {
+    "auto_research": true,
+    "auto_validate": true,
+    "require_manual_for": [
+      "code_merge",
+      "prod_param_change",
+      "trading_action",
+      "release"
+    ]
+  },
+  "notifications": {
+    "mode": "summary_and_exception",
+    "channel": "feishu",
+    "account_id": "master-feishu",
+    "target": "user:ou_61884ea8aa288c6514cc8b4cb3cd16d8"
+  },
+  "cycle_types": {
+    "daily_research": {
+      "description": "每日研究闭环：预检查 -> 数据校验 -> 冒烟回测 -> 生成工单 -> 入队派发 -> 回执采集 -> 汇总",
+      "lock_name": "daily_research",
+      "stages": [
+        {
+          "id": "preflight",
+          "owner": "master-quant",
+          "mode": "command",
+          "timeout_seconds": 120,
+          "retry": 0,
+          "command": "{python_bin} {workspace_root}/scripts/workflow_preflight.py --code-root {codebase_root} --workspace-root {workspace_root} --cycle-dir {cycle_dir} --stage-id preflight"
+        },
+        {
+          "id": "data_validate",
+          "owner": "validation-center",
+          "mode": "command",
+          "timeout_seconds": 300,
+          "retry": 1,
+          "command": "{python_bin} {workspace_root}/scripts/workflow_data_check.py --code-root {codebase_root} --cycle-dir {cycle_dir} --stage-id data_validate"
+        },
+        {
+          "id": "smoke_backtest",
+          "owner": "validation-center",
+          "mode": "command",
+          "timeout_seconds": 1800,
+          "retry": 1,
+          "command": "{python_bin} {workspace_root}/scripts/run_smoke_backtest.py --code-root {codebase_root} --cycle-dir {cycle_dir} --stage-id smoke_backtest --strategy '打板策略' --days 60"
+        },
+        {
+          "id": "followup_ticket",
+          "owner": "master-quant",
+          "mode": "command",
+          "timeout_seconds": 120,
+          "retry": 0,
+          "command": "{python_bin} {workspace_root}/scripts/workflow_followup.py --cycle-dir {cycle_dir} --stage-id followup_ticket"
+        },
+        {
+          "id": "queue_ticket",
+          "owner": "master-quant",
+          "mode": "command",
+          "timeout_seconds": 120,
+          "retry": 0,
+          "command": "{python_bin} {workspace_root}/scripts/workflow_queue_ticket.py --cycle-dir {cycle_dir} --stage-id queue_ticket"
+        },
+        {
+          "id": "dispatch_ticket",
+          "owner": "master-quant",
+          "mode": "command",
+          "timeout_seconds": 600,
+          "retry": 0,
+          "command": "{python_bin} {workspace_root}/scripts/workflow_dispatch_ticket.py --cycle-dir {cycle_dir} --stage-id dispatch_ticket --limit 5 --timeout 240"
+        },
+        {
+          "id": "collect_reply",
+          "owner": "master-quant",
+          "mode": "command",
+          "timeout_seconds": 120,
+          "retry": 0,
+          "command": "{python_bin} {workspace_root}/scripts/workflow_collect_reply.py --cycle-dir {cycle_dir} --stage-id collect_reply"
+        },
+        {
+          "id": "summarize",
+          "owner": "doc-knowledge-manager",
+          "mode": "command",
+          "timeout_seconds": 120,
+          "retry": 0,
+          "command": "{python_bin} {workspace_root}/scripts/workflow_summary.py --cycle-dir {cycle_dir} --stage-id summarize"
+        },
+        {
+          "id": "notify_user",
+          "owner": "master-quant",
+          "mode": "command",
+          "timeout_seconds": 120,
+          "retry": 0,
+          "command": "{python_bin} {workspace_root}/scripts/workflow_notify.py --cycle-dir {cycle_dir} --mode success"
+        }
+      ]
+    },
+    "weekly_health": {
+      "description": "周度健康检查闭环：预检查 -> 数据校验 -> 健康检查 -> 生成工单 -> 入队派发 -> 回执采集 -> 汇总",
+      "lock_name": "weekly_health",
+      "stages": [
+        {
+          "id": "preflight",
+          "owner": "master-quant",
+          "mode": "command",
+          "timeout_seconds": 120,
+          "retry": 0,
+          "command": "{python_bin} {workspace_root}/scripts/workflow_preflight.py --code-root {codebase_root} --workspace-root {workspace_root} --cycle-dir {cycle_dir} --stage-id preflight"
+        },
+        {
+          "id": "data_validate",
+          "owner": "validation-center",
+          "mode": "command",
+          "timeout_seconds": 300,
+          "retry": 1,
+          "command": "{python_bin} {workspace_root}/scripts/workflow_data_check.py --code-root {codebase_root} --cycle-dir {cycle_dir} --stage-id data_validate"
+        },
+        {
+          "id": "health_check",
+          "owner": "validation-center",
+          "mode": "command",
+          "timeout_seconds": 3600,
+          "retry": 1,
+          "command": "{python_bin} {workspace_root}/scripts/run_weekly_health_check.py --code-root {codebase_root} --cycle-dir {cycle_dir} --stage-id health_check --strategy '打板策略'"
+        },
+        {
+          "id": "followup_ticket",
+          "owner": "master-quant",
+          "mode": "command",
+          "timeout_seconds": 120,
+          "retry": 0,
+          "command": "{python_bin} {workspace_root}/scripts/workflow_followup.py --cycle-dir {cycle_dir} --stage-id followup_ticket"
+        },
+        {
+          "id": "queue_ticket",
+          "owner": "master-quant",
+          "mode": "command",
+          "timeout_seconds": 120,
+          "retry": 0,
+          "command": "{python_bin} {workspace_root}/scripts/workflow_queue_ticket.py --cycle-dir {cycle_dir} --stage-id queue_ticket"
+        },
+        {
+          "id": "dispatch_ticket",
+          "owner": "master-quant",
+          "mode": "command",
+          "timeout_seconds": 600,
+          "retry": 0,
+          "command": "{python_bin} {workspace_root}/scripts/workflow_dispatch_ticket.py --cycle-dir {cycle_dir} --stage-id dispatch_ticket --limit 5 --timeout 240"
+        },
+        {
+          "id": "collect_reply",
+          "owner": "master-quant",
+          "mode": "command",
+          "timeout_seconds": 120,
+          "retry": 0,
+          "command": "{python_bin} {workspace_root}/scripts/workflow_collect_reply.py --cycle-dir {cycle_dir} --stage-id collect_reply"
+        },
+        {
+          "id": "summarize",
+          "owner": "doc-knowledge-manager",
+          "mode": "command",
+          "timeout_seconds": 120,
+          "retry": 0,
+          "command": "{python_bin} {workspace_root}/scripts/workflow_summary.py --cycle-dir {cycle_dir} --stage-id summarize"
+        },
+        {
+          "id": "notify_user",
+          "owner": "master-quant",
+          "mode": "command",
+          "timeout_seconds": 120,
+          "retry": 0,
+          "command": "{python_bin} {workspace_root}/scripts/workflow_notify.py --cycle-dir {cycle_dir} --mode success"
+        }
+      ]
+    },
+    "optimization_cycle": {
+      "description": "优化支线：选择工单 -> OpenCode计划 -> 低风险验证 -> 决策门 -> 汇总 -> 通知",
+      "lock_name": "optimization_cycle",
+      "stages": [
+        {
+          "id": "preflight",
+          "owner": "master-quant",
+          "mode": "command",
+          "timeout_seconds": 120,
+          "retry": 0,
+          "command": "{python_bin} {workspace_root}/scripts/workflow_preflight.py --code-root {codebase_root} --workspace-root {workspace_root} --cycle-dir {cycle_dir} --stage-id preflight"
+        },
+        {
+          "id": "select_target",
+          "owner": "master-quant",
+          "mode": "command",
+          "timeout_seconds": 120,
+          "retry": 0,
+          "command": "{python_bin} {workspace_root}/scripts/workflow_select_optimization.py --cycle-dir {cycle_dir} --stage-id select_target"
+        },
+        {
+          "id": "prepare_task",
+          "owner": "coder",
+          "mode": "command",
+          "timeout_seconds": 120,
+          "retry": 0,
+          "command": "{python_bin} {workspace_root}/scripts/workflow_prepare_opencode_task.py --cycle-dir {cycle_dir} --stage-id prepare_task"
+        },
+        {
+          "id": "opencode_plan",
+          "owner": "coder",
+          "mode": "command",
+          "timeout_seconds": 900,
+          "retry": 0,
+          "command": "{python_bin} {workspace_root}/scripts/workflow_run_opencode.py --cycle-dir {cycle_dir} --stage-id opencode_plan"
+        },
+        {
+          "id": "create_optimization_ticket",
+          "owner": "master-quant",
+          "mode": "command",
+          "timeout_seconds": 120,
+          "retry": 0,
+          "command": "{python_bin} {workspace_root}/scripts/workflow_create_optimization_ticket.py --cycle-dir {cycle_dir} --stage-id create_optimization_ticket"
+        },
+        {
+          "id": "split_ticket",
+          "owner": "master-quant",
+          "mode": "command",
+          "timeout_seconds": 120,
+          "retry": 0,
+          "command": "/home/admin/miniconda3/envs/vnpy_env/bin/python {workspace_root}/scripts/workflow_split_latest_optimization_ticket.py"
+        },
+        {
+          "id": "low_risk_validation",
+          "owner": "master-quant",
+          "mode": "command",
+          "timeout_seconds": 900,
+          "retry": 0,
+          "command": "{python_bin} {workspace_root}/scripts/workflow_low_risk_validation.py --cycle-dir {cycle_dir} --stage-id low_risk_validation"
+        },
+        {
+          "id": "decide_next_path",
+          "owner": "master-quant",
+          "mode": "command",
+          "timeout_seconds": 120,
+          "retry": 0,
+          "command": "{python_bin} {workspace_root}/scripts/workflow_decide_optimization_path.py --cycle-dir {cycle_dir} --stage-id decide_next_path"
+        },
+        {
+          "id": "summarize",
+          "owner": "doc-knowledge-manager",
+          "mode": "command",
+          "timeout_seconds": 120,
+          "retry": 0,
+          "command": "{python_bin} {workspace_root}/scripts/workflow_summary.py --cycle-dir {cycle_dir} --stage-id summarize"
+        },
+        {
+          "id": "notify_user",
+          "owner": "master-quant",
+          "mode": "command",
+          "timeout_seconds": 120,
+          "retry": 0,
+          "command": "{python_bin} {workspace_root}/scripts/workflow_notify.py --cycle-dir {cycle_dir} --mode success"
+        }
+      ]
+    },
+    "daily_data_cycle": {
+      "description": "数据循环：预检查 -> 数据校验 -> 数据快照 -> 质量评分 -> 汇总 -> 通知",
+      "lock_name": "daily_data_cycle",
+      "stages": [
+        {
+          "id": "preflight",
+          "owner": "master-quant",
+          "mode": "command",
+          "timeout_seconds": 120,
+          "retry": 0,
+          "command": "{python_bin} {workspace_root}/scripts/workflow_preflight.py --code-root {codebase_root} --workspace-root {workspace_root} --cycle-dir {cycle_dir} --stage-id preflight"
+        },
+        {
+          "id": "data_validate",
+          "owner": "validation-center",
+          "mode": "command",
+          "timeout_seconds": 300,
+          "retry": 1,
+          "command": "{python_bin} {workspace_root}/scripts/workflow_data_check.py --code-root {codebase_root} --cycle-dir {cycle_dir} --stage-id data_validate"
+        },
+        {
+          "id": "data_snapshot",
+          "owner": "data-collector",
+          "mode": "command",
+          "timeout_seconds": 180,
+          "retry": 0,
+          "command": "{python_bin} {workspace_root}/scripts/workflow_data_snapshot.py --code-root {codebase_root} --cycle-dir {cycle_dir} --stage-id data_snapshot"
+        },
+        {
+          "id": "data_quality_score",
+          "owner": "validation-center",
+          "mode": "command",
+          "timeout_seconds": 120,
+          "retry": 0,
+          "command": "{python_bin} {workspace_root}/scripts/workflow_data_quality_score.py --cycle-dir {cycle_dir} --stage-id data_quality_score"
+        },
+        {
+          "id": "summarize",
+          "owner": "doc-knowledge-manager",
+          "mode": "command",
+          "timeout_seconds": 120,
+          "retry": 0,
+          "command": "{python_bin} {workspace_root}/scripts/workflow_summary.py --cycle-dir {cycle_dir} --stage-id summarize"
+        },
+        {
+          "id": "notify_user",
+          "owner": "master-quant",
+          "mode": "command",
+          "timeout_seconds": 120,
+          "retry": 0,
+          "command": "{python_bin} {workspace_root}/scripts/workflow_notify.py --cycle-dir {cycle_dir} --mode success"
+        }
+      ]
+    },
+    "knowledge_cycle": {
+      "description": "知识循环：收集各循环报告 -> 汇总 -> 通知",
+      "lock_name": "knowledge_cycle",
+      "stages": [
+        {
+          "id": "collect_cycle_reports",
+          "owner": "knowledge-steward",
+          "mode": "command",
+          "timeout_seconds": 120,
+          "retry": 0,
+          "command": "{python_bin} {workspace_root}/scripts/workflow_knowledge_rollup.py --cycle-dir {cycle_dir} --stage-id collect_cycle_reports"
+        },
+        {
+          "id": "archive_knowledge",
+          "owner": "knowledge-steward",
+          "mode": "command",
+          "timeout_seconds": 120,
+          "retry": 0,
+          "command": "{python_bin} {workspace_root}/scripts/workflow_knowledge_archive.py --cycle-dir {cycle_dir} --stage-id archive_knowledge"
+        },
+        {
+          "id": "summarize",
+          "owner": "doc-knowledge-manager",
+          "mode": "command",
+          "timeout_seconds": 120,
+          "retry": 0,
+          "command": "{python_bin} {workspace_root}/scripts/workflow_summary.py --cycle-dir {cycle_dir} --stage-id summarize"
+        },
+        {
+          "id": "notify_user",
+          "owner": "master-quant",
+          "mode": "command",
+          "timeout_seconds": 120,
+          "retry": 0,
+          "command": "{python_bin} {workspace_root}/scripts/workflow_notify.py --cycle-dir {cycle_dir} --mode success"
+        }
+      ]
+    },
+    "diagnosis_cycle": {
+      "description": "专项诊断支线：专项agent先诊断 -> 诊断门 -> 汇总 -> 通知",
+      "lock_name": "diagnosis_cycle",
+      "stages": [
+        {
+          "id": "preflight",
+          "owner": "master-quant",
+          "mode": "command",
+          "timeout_seconds": 120,
+          "retry": 0,
+          "command": "{python_bin} {workspace_root}/scripts/workflow_preflight.py --code-root {codebase_root} --workspace-root {workspace_root} --cycle-dir {cycle_dir} --stage-id preflight"
+        },
+        {
+          "id": "specialist_diagnosis",
+          "owner": "master-quant",
+          "mode": "command",
+          "timeout_seconds": 1200,
+          "retry": 0,
+          "command": "{python_bin} {workspace_root}/scripts/workflow_specialist_diagnosis.py --cycle-dir {cycle_dir} --stage-id specialist_diagnosis"
+        },
+        {
+          "id": "diagnosis_gate",
+          "owner": "master-quant",
+          "mode": "command",
+          "timeout_seconds": 120,
+          "retry": 0,
+          "command": "{python_bin} {workspace_root}/scripts/workflow_diagnosis_gate.py --cycle-dir {cycle_dir} --stage-id diagnosis_gate"
+        },
+        {
+          "id": "summarize",
+          "owner": "doc-knowledge-manager",
+          "mode": "command",
+          "timeout_seconds": 120,
+          "retry": 0,
+          "command": "{python_bin} {workspace_root}/scripts/workflow_summary.py --cycle-dir {cycle_dir} --stage-id summarize"
+        },
+        {
+          "id": "notify_user",
+          "owner": "master-quant",
+          "mode": "command",
+          "timeout_seconds": 120,
+          "retry": 0,
+          "command": "{python_bin} {workspace_root}/scripts/workflow_notify.py --cycle-dir {cycle_dir} --mode success"
+        }
+      ]
+    },
+    "execution_cycle": {
+      "description": "执行支线：从 diagnosis candidate 进入 coder/OpenCode 执行计划",
+      "lock_name": "execution_cycle",
+      "stages": [
+        {
+          "id": "preflight",
+          "owner": "master-quant",
+          "mode": "command",
+          "timeout_seconds": 120,
+          "retry": 0,
+          "command": "{python_bin} {workspace_root}/scripts/workflow_preflight.py --code-root {codebase_root} --workspace-root {workspace_root} --cycle-dir {cycle_dir} --stage-id preflight"
+        },
+        {
+          "id": "select_execution_target",
+          "owner": "master-quant",
+          "mode": "command",
+          "timeout_seconds": 120,
+          "retry": 0,
+          "command": "{python_bin} {workspace_root}/scripts/workflow_select_execution_target.py --cycle-dir {cycle_dir} --stage-id select_execution_target"
+        },
+        {
+          "id": "prepare_execution_task",
+          "owner": "coder",
+          "mode": "command",
+          "timeout_seconds": 120,
+          "retry": 0,
+          "command": "{python_bin} {workspace_root}/scripts/workflow_prepare_execution_task.py --cycle-dir {cycle_dir} --stage-id prepare_execution_task"
+        },
+        {
+          "id": "opencode_execution_plan",
+          "owner": "coder",
+          "mode": "command",
+          "timeout_seconds": 420,
+          "retry": 0,
+          "command": "{python_bin} {workspace_root}/scripts/workflow_run_execution_opencode.py --cycle-dir {cycle_dir} --stage-id opencode_execution_plan"
+        },
+        {
+          "id": "execution_gate",
+          "owner": "master-quant",
+          "mode": "command",
+          "timeout_seconds": 120,
+          "retry": 0,
+          "command": "{python_bin} {workspace_root}/scripts/workflow_execution_gate.py --cycle-dir {cycle_dir} --stage-id execution_gate"
+        },
+        {
+          "id": "summarize",
+          "owner": "doc-knowledge-manager",
+          "mode": "command",
+          "timeout_seconds": 120,
+          "retry": 0,
+          "command": "{python_bin} {workspace_root}/scripts/workflow_summary.py --cycle-dir {cycle_dir} --stage-id summarize"
+        },
+        {
+          "id": "notify_user",
+          "owner": "master-quant",
+          "mode": "command",
+          "timeout_seconds": 120,
+          "retry": 0,
+          "command": "{python_bin} {workspace_root}/scripts/workflow_notify.py --cycle-dir {cycle_dir} --mode success"
+        }
+      ]
+    },
+    "build_candidate_cycle": {
+      "description": "build候选支线：选择 build candidate -> worktree -> OpenCode build -> diff 收集 -> 汇总 -> 通知",
+      "lock_name": "build_candidate_cycle",
+      "stages": [
+        {
+          "id": "select_build_candidate",
+          "owner": "master-quant",
+          "mode": "command",
+          "timeout_seconds": 120,
+          "retry": 0,
+          "command": "{python_bin} {workspace_root}/scripts/workflow_select_build_candidate.py --cycle-dir {cycle_dir} --stage-id select_build_candidate"
+        },
+        {
+          "id": "create_worktree",
+          "owner": "coder",
+          "mode": "command",
+          "timeout_seconds": 180,
+          "retry": 0,
+          "command": "{python_bin} {workspace_root}/scripts/workflow_create_worktree.py --cycle-dir {cycle_dir} --stage-id create_worktree"
+        },
+        {
+          "id": "prepare_build_task",
+          "owner": "coder",
+          "mode": "command",
+          "timeout_seconds": 120,
+          "retry": 0,
+          "command": "{python_bin} {workspace_root}/scripts/workflow_prepare_build_task.py --cycle-dir {cycle_dir} --stage-id prepare_build_task"
+        },
+        {
+          "id": "opencode_build",
+          "owner": "coder",
+          "mode": "command",
+          "timeout_seconds": 900,
+          "retry": 0,
+          "command": "{python_bin} {workspace_root}/scripts/workflow_run_opencode_build.py --cycle-dir {cycle_dir} --stage-id opencode_build"
+        },
+        {
+          "id": "collect_build_diff",
+          "owner": "coder",
+          "mode": "command",
+          "timeout_seconds": 120,
+          "retry": 0,
+          "command": "{python_bin} {workspace_root}/scripts/workflow_collect_build_diff.py --cycle-dir {cycle_dir} --stage-id collect_build_diff"
+        },
+        {
+          "id": "build_gate",
+          "owner": "master-quant",
+          "mode": "command",
+          "timeout_seconds": 120,
+          "retry": 0,
+          "command": "{python_bin} {workspace_root}/scripts/workflow_build_gate.py --cycle-dir {cycle_dir} --stage-id build_gate"
+        },
+        {
+          "id": "summarize",
+          "owner": "doc-knowledge-manager",
+          "mode": "command",
+          "timeout_seconds": 120,
+          "retry": 0,
+          "command": "{python_bin} {workspace_root}/scripts/workflow_summary.py --cycle-dir {cycle_dir} --stage-id summarize"
+        },
+        {
+          "id": "notify_user",
+          "owner": "master-quant",
+          "mode": "command",
+          "timeout_seconds": 120,
+          "retry": 0,
+          "command": "{python_bin} {workspace_root}/scripts/workflow_notify.py --cycle-dir {cycle_dir} --mode success"
+        }
+      ]
+    },
+    "validation_cycle": {
+      "description": "验证支线：选取 build candidate -> 准备验证简报 -> 汇总 -> 通知",
+      "lock_name": "validation_cycle",
+      "stages": [
+        {
+          "id": "select_validation_target",
+          "owner": "master-quant",
+          "mode": "command",
+          "timeout_seconds": 120,
+          "retry": 0,
+          "command": "{python_bin} {workspace_root}/scripts/workflow_select_validation_target.py --cycle-dir {cycle_dir} --stage-id select_validation_target"
+        },
+        {
+          "id": "prepare_validation_brief",
+          "owner": "master-quant",
+          "mode": "command",
+          "timeout_seconds": 120,
+          "retry": 0,
+          "command": "{python_bin} {workspace_root}/scripts/workflow_prepare_validation_brief.py --cycle-dir {cycle_dir} --stage-id prepare_validation_brief"
+        },
+        {
+          "id": "summarize",
+          "owner": "doc-knowledge-manager",
+          "mode": "command",
+          "timeout_seconds": 120,
+          "retry": 0,
+          "command": "{python_bin} {workspace_root}/scripts/workflow_summary.py --cycle-dir {cycle_dir} --stage-id summarize"
+        },
+        {
+          "id": "notify_user",
+          "owner": "master-quant",
+          "mode": "command",
+          "timeout_seconds": 120,
+          "retry": 0,
+          "command": "{python_bin} {workspace_root}/scripts/workflow_notify.py --cycle-dir {cycle_dir} --mode success"
+        }
+      ]
+    }
+  },
+  "opencode": {
+    "enabled": true,
+    "mode": "plan",
+    "plan_model": "bailian/qwen3-coder-plus",
+    "build_model": "bailian/qwen3-coder-plus",
+    "small_model": "bailian/qwen3.5-plus"
+  }
+}

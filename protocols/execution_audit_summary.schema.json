@@ -1,0 +1,18 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "title": "Execution Audit Summary Schema",
+  "required": ["task_id", "record_type"],
+  "properties": {
+    "task_id": {"type": "string"},
+    "record_type": {"type": "string", "enum": ["execution_audit_summary"]},
+    "release_protocol_state": {"type": ["string", "null"]},
+    "rollback_protocol_state": {"type": ["string", "null"]},
+    "release_timeline_event_count": {"type": ["integer", "null"]},
+    "rollback_timeline_event_count": {"type": ["integer", "null"]},
+    "release_registration_expected": {"type": ["boolean", "null"]},
+    "rollback_registration_expected": {"type": ["boolean", "null"]},
+    "generated_at": {"type": "string"}
+  },
+  "additionalProperties": true
+}

@@ -1,0 +1,45 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "title": "Controlled Execution Receipt Schema",
+  "required": [
+    "task_id",
+    "record_type",
+    "execution_target",
+    "batch_id",
+    "run_id",
+    "receipt_state",
+    "execution_mode",
+    "contract_reference",
+    "request_reference",
+    "receipt_trace",
+    "generated_at"
+  ],
+  "properties": {
+    "task_id": {"type": "string"},
+    "record_type": {"type": "string", "enum": ["controlled_execution_receipt"]},
+    "execution_target": {"type": "string", "enum": ["official_release", "rollback"]},
+    "batch_id": {"type": "string"},
+    "run_id": {"type": "string"},
+    "receipt_state": {"type": "string", "enum": ["recorded_dry_run_only"]},
+    "execution_mode": {"type": "string", "enum": ["dry_run"]},
+    "contract_reference": {"type": "string"},
+    "request_reference": {"type": "string"},
+    "dry_run_reference": {"type": ["string", "null"]},
+    "receipt_trace": {
+      "type": "object",
+      "required": ["proposal_ref", "approval_ref", "batch_id", "run_id", "command_receipt_id", "command_digest_sha256"],
+      "properties": {
+        "proposal_ref": {"type": ["string", "null"]},
+        "approval_ref": {"type": ["string", "null"]},
+        "batch_id": {"type": "string"},
+        "run_id": {"type": "string"},
+        "command_receipt_id": {"type": "string"},
+        "command_digest_sha256": {"type": "string"}
+      },
+      "additionalProperties": true
+    },
+    "generated_at": {"type": "string"}
+  },
+  "additionalProperties": true
+}

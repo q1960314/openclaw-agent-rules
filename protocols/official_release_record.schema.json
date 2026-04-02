@@ -1,0 +1,33 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "title": "Official Release Record Schema",
+  "required": [
+    "task_id",
+    "record_type",
+    "result_tier",
+    "approval_state",
+    "official_release",
+    "formalization_pending",
+    "technical_validation_passed",
+    "requires_human_approval"
+  ],
+  "properties": {
+    "task_id": { "type": "string" },
+    "record_type": { "type": "string", "enum": ["release_readiness", "official_release_stub", "official_release_registration"] },
+    "result_tier": { "type": "string", "enum": ["candidate", "official"] },
+    "approval_state": { "type": "string", "enum": ["manual_review_required", "technically_validated_candidate", "officially_approved", "approved"] },
+    "official_release": { "type": "boolean" },
+    "formalization_pending": { "type": "boolean" },
+    "technical_validation_passed": { "type": "boolean" },
+    "requires_human_approval": { "type": "boolean" },
+    "release_ready": { "type": "boolean" },
+    "formalization_state": { "type": "string" },
+    "quality_score": { "type": "integer" },
+    "quality_grade": { "type": "string" },
+    "note": { "type": "string" },
+    "rollback_artifacts": { "type": "array", "items": { "type": "string" } },
+    "generated_at": { "type": "string" }
+  },
+  "additionalProperties": true
+}

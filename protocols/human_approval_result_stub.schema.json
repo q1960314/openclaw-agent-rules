@@ -1,0 +1,16 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "title": "Human Approval Result Stub Schema",
+  "required": ["task_id", "ingestion_state", "decision_recorded", "approved", "next_step"],
+  "properties": {
+    "task_id": {"type": "string"},
+    "ingestion_state": {"type": "string", "enum": ["no_human_decision_recorded", "approved_ingest_placeholder", "rejected_ingest_placeholder"]},
+    "decision_recorded": {"type": "boolean"},
+    "approved": {"type": ["boolean", "null"]},
+    "decision_source": {"type": "string"},
+    "next_step": {"type": "string"},
+    "note": {"type": "string"}
+  },
+  "additionalProperties": true
+}

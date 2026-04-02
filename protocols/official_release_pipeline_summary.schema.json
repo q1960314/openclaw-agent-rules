@@ -1,0 +1,27 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "title": "Official Release Pipeline Summary Schema",
+  "required": [
+    "task_id",
+    "pipeline_state",
+    "official_release_executable",
+    "ready_signals",
+    "blockers",
+    "blocker_count",
+    "official_release_state",
+    "next_step"
+  ],
+  "properties": {
+    "task_id": {"type": "string"},
+    "pipeline_state": {"type": "string", "enum": ["candidate_not_ready", "awaiting_human_approval", "approved_but_blocked", "ready_but_execution_not_implemented", "rejected", "manual_release_execution_in_progress", "manual_release_execution_completed_pending_registration", "manual_release_execution_failed", "manual_release_execution_aborted", "manual_rollback_execution_in_progress", "manual_rollback_execution_completed_pending_registration", "manual_rollback_execution_failed", "manual_rollback_execution_aborted", "official_release_registered", "rollback_registered"]},
+    "official_release_executable": {"type": "boolean"},
+    "ready_signals": {"type": "object"},
+    "blockers": {"type": "array", "items": {"type": "string"}},
+    "blocker_count": {"type": "integer"},
+    "official_release_state": {"type": ["string", "null"]},
+    "next_step": {"type": "string"},
+    "note": {"type": "string"}
+  },
+  "additionalProperties": true
+}

@@ -1,0 +1,14 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "title": "Execution Timeline Schema",
+  "required": ["task_id", "execution_target", "event_count", "events"],
+  "properties": {
+    "task_id": {"type": "string"},
+    "execution_target": {"type": "string", "enum": ["official_release", "rollback"]},
+    "event_count": {"type": "integer", "minimum": 0},
+    "events": {"type": "array", "items": {"type": "object"}},
+    "generated_at": {"type": "string"}
+  },
+  "additionalProperties": true
+}

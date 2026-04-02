@@ -1,0 +1,13 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "title": "P1 Stop Criteria Schema",
+  "properties": {
+    "min_total_return": {"type": "number"},
+    "min_sharpe_ratio": {"type": "number"},
+    "max_drawdown": {"type": "number", "minimum": 0},
+    "min_total_trades": {"type": "integer", "minimum": 0},
+    "mode": {"type": "string", "enum": ["review_pass", "backtest_thresholds"]}
+  },
+  "additionalProperties": true
+}

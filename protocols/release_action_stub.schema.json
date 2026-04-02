@@ -1,0 +1,16 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "title": "Release Action Stub Schema",
+  "required": ["task_id", "action_allowed", "official_release", "formalization_state", "next_step"],
+  "properties": {
+    "task_id": {"type": "string"},
+    "action_allowed": {"type": "boolean"},
+    "official_release": {"type": "boolean"},
+    "formalization_state": {"type": "string"},
+    "next_step": {"type": "string"},
+    "release_note": {"type": "string"},
+    "generated_at": {"type": "string"}
+  },
+  "additionalProperties": true
+}

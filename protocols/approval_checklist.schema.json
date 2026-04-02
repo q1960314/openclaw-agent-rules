@@ -1,0 +1,13 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "title": "Approval Checklist Schema",
+  "required": ["task_id", "checklist_ready", "checks", "summary"],
+  "properties": {
+    "task_id": {"type": "string"},
+    "checklist_ready": {"type": "boolean"},
+    "checks": {"type": "array", "items": {"type": "object"}},
+    "summary": {"type": "string"}
+  },
+  "additionalProperties": true
+}

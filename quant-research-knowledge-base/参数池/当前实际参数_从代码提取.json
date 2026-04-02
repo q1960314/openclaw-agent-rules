@@ -1,0 +1,31 @@
+{
+  "source": "从代码自动提取",
+  "code_file": "/data/agents/master/fetch_data_optimized.py",
+  "extracted_at": "2026-03-18T14:19:47.546319",
+  "current_params": {
+    "strategy_type": "打板策略",
+    "stop_loss_rate": 0.06,
+    "stop_profit_rate": 0.12,
+    "auto_run_mode": "全量抓取",
+    "allowed_market": [
+      "主板",
+      "创业板"
+    ],
+    "max_workers": 30,
+    "max_requests_per_minute": 4000
+  },
+  "strategy_specific": {
+    "打板策略": {
+      "pass_score": 18
+    },
+    "缩量潜伏策略": {
+      "pass_score": 12
+    },
+    "板块轮动策略": {
+      "pass_score": 17
+    }
+  },
+  "risk_control": {
+    "单股仓位上限": 0.2
+  }
+}

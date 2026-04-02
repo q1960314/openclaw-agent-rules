@@ -1,0 +1,49 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "title": "Execution Protocol Schema",
+  "required": [
+    "task_id",
+    "record_type",
+    "execution_target",
+    "protocol_state",
+    "latest_stage",
+    "timeline_event_count",
+    "timeline",
+    "auto_execution_enabled"
+  ],
+  "properties": {
+    "task_id": {"type": "string"},
+    "record_type": {"type": "string", "enum": ["execution_protocol"]},
+    "execution_target": {"type": "string", "enum": ["official_release", "rollback"]},
+    "protocol_state": {"type": ["string", "null"]},
+    "latest_stage": {"type": ["string", "null"]},
+    "timeline_event_count": {"type": "integer", "minimum": 0},
+    "timeline": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["stage", "detail", "refs"],
+        "properties": {
+          "at": {"type": ["string", "null"]},
+          "stage": {"type": "string"},
+          "actor": {"type": ["string", "null"]},
+          "state": {"type": ["string", "null"]},
+          "detail": {"type": "string"},
+          "refs": {"type": "object"}
+        },
+        "additionalProperties": true
+      }
+    },
+    "approved_for_execution_by": {"type": ["string", "null"]},
+    "execution_started_by": {"type": ["string", "null"]},
+    "execution_completed_by": {"type": ["string", "null"]},
+    "execution_registered_by": {"type": ["string", "null"]},
+    "version_ref": {},
+    "rollback_target_ref": {},
+    "registration_expected": {"type": "boolean"},
+    "auto_execution_enabled": {"type": "boolean", "enum": [false]},
+    "generated_at": {"type": "string"}
+  },
+  "additionalProperties": true
+}

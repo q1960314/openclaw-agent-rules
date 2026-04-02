@@ -1,0 +1,18 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "title": "Approval Record Schema",
+  "required": ["task_id", "approval_required", "approved", "approval_state", "review_decision", "formalization_state", "official_release"],
+  "properties": {
+    "task_id": {"type": "string"},
+    "approval_required": {"type": "boolean"},
+    "approved": {"type": "boolean"},
+    "approval_state": {"type": "string"},
+    "review_decision": {"type": "string"},
+    "formalization_state": {"type": "string"},
+    "official_release": {"type": "boolean"},
+    "approval_note": {"type": "string"},
+    "generated_at": {"type": "string"}
+  },
+  "additionalProperties": true
+}

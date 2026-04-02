@@ -1,0 +1,148 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "title": "Intake Analysis Schema",
+  "description": "Structured demand analysis produced by main/master before specialist routing.",
+  "required": [
+    "analysis_version",
+    "objective_summary",
+    "main_objective",
+    "sub_objectives",
+    "objective_hierarchy",
+    "constraints",
+    "acceptance_criteria",
+    "acceptance_contract",
+    "stop_criteria_hints",
+    "stop_policy",
+    "clarification_questions",
+    "clarification_priority",
+    "needs_clarification",
+    "manual_review_required",
+    "intake_type",
+    "suggested_role",
+    "execution_mode",
+    "risk_tags",
+    "risk_assessment",
+    "dependency_plan",
+    "execution_sequence",
+    "recent_learning_context",
+    "recent_learning_guidance"
+  ],
+  "properties": {
+    "analysis_version": { "type": "integer" },
+    "objective_summary": { "type": "string" },
+    "main_objective": { "type": "string" },
+    "sub_objectives": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "objective_hierarchy": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "level": { "type": "string" },
+          "order": { "type": "integer" },
+          "objective": { "type": "string" },
+          "intent": { "type": "string" },
+          "success_signal": { "type": "string" }
+        },
+        "required": ["level", "objective", "success_signal"],
+        "additionalProperties": true
+      }
+    },
+    "constraints": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "acceptance_criteria": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "acceptance_hints": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "acceptance_contract": {
+      "type": "object",
+      "properties": {
+        "validation_focus": { "type": "string" },
+        "required_outcomes": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "manual_gate_required": { "type": "boolean" }
+      },
+      "required": ["validation_focus", "required_outcomes", "manual_gate_required"],
+      "additionalProperties": true
+    },
+    "stop_criteria_hints": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "stop_policy": {
+      "type": "object",
+      "properties": {
+        "stop_when": { "type": "array", "items": { "type": "string" } },
+        "continue_when": { "type": "array", "items": { "type": "string" } },
+        "escalate_when": { "type": "array", "items": { "type": "string" } }
+      },
+      "required": ["stop_when", "continue_when", "escalate_when"],
+      "additionalProperties": true
+    },
+    "clarification_questions": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "clarification_priority": { "type": "string", "enum": ["none", "low", "medium", "high"] },
+    "needs_clarification": { "type": "boolean" },
+    "manual_review_required": { "type": "boolean" },
+    "intake_type": { "type": "string" },
+    "suggested_role": { "type": "string" },
+    "execution_mode": {
+      "type": "string",
+      "enum": ["native", "plan", "build"]
+    },
+    "risk_tags": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "risk_assessment": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "tag": { "type": "string" },
+          "priority": { "type": "string" },
+          "rationale": { "type": "string" }
+        },
+        "required": ["tag", "priority", "rationale"],
+        "additionalProperties": true
+      }
+    },
+    "dependency_plan": { "$ref": "./dependency_plan.schema.json" },
+    "execution_sequence": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "recent_learning_context": {
+      "type": "object",
+      "properties": {
+        "available": { "type": "boolean" },
+        "recent_task_count": { "type": "integer" },
+        "dominant_expert_role": { "type": ["string", "null"] },
+        "adaptive_dominant_next_role": { "type": ["string", "null"] },
+        "focus_signals": { "type": "array", "items": { "type": "string" } },
+        "relevant_signal_counts": { "type": "object" },
+        "sample_examples": { "type": "array", "items": { "type": "object" } }
+      },
+      "required": ["available", "recent_task_count", "focus_signals", "relevant_signal_counts", "sample_examples"],
+      "additionalProperties": true
+    },
+    "recent_learning_guidance": {
+      "type": "array",
+      "items": { "type": "string" }
+    }
+  },
+  "additionalProperties": true
+}

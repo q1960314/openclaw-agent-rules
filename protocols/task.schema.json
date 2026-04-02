@@ -1,0 +1,78 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "title": "P1 Task Schema",
+  "description": "Canonical task payload for worker-based execution.",
+  "required": [
+    "task_id",
+    "role",
+    "objective",
+    "constraints",
+    "acceptance_criteria",
+    "input_artifacts",
+    "upstream",
+    "downstream",
+    "engine"
+  ],
+  "properties": {
+    "task_id": {
+      "type": "string"
+    },
+    "role": {
+      "type": "string"
+    },
+    "objective": {
+      "type": "string"
+    },
+    "constraints": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "acceptance_criteria": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "input_artifacts": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "upstream": {
+      "type": "string"
+    },
+    "downstream": {
+      "type": "string"
+    },
+    "engine": {
+      "type": "string",
+      "enum": [
+        "native",
+        "opencode",
+        "mixed"
+      ]
+    },
+    "priority": {
+      "type": "string",
+      "enum": [
+        "low",
+        "medium",
+        "high",
+        "critical"
+      ]
+    },
+    "metadata": {
+      "type": "object",
+      "additionalProperties": true
+    },
+    "created_at": {
+      "type": "string",
+      "format": "date-time"
+    }
+  },
+  "additionalProperties": true
+}

@@ -1,0 +1,18 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "title": "Pre Release Gate Schema",
+  "required": ["task_id", "gate_state", "pre_release_ready", "requires_human_approval", "approval_status", "formalization_state", "summary"],
+  "properties": {
+    "task_id": {"type": "string"},
+    "gate_state": {"type": "string", "enum": ["not_ready", "ready_for_human_release_review", "post_approval_placeholder"]},
+    "pre_release_ready": {"type": "boolean"},
+    "requires_human_approval": {"type": "boolean"},
+    "approval_status": {"type": "string"},
+    "formalization_state": {"type": "string"},
+    "rollback_supported": {"type": "boolean"},
+    "release_preflight_ready": {"type": "boolean"},
+    "summary": {"type": "string"}
+  },
+  "additionalProperties": true
+}

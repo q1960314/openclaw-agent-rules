@@ -1,0 +1,41 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "title": "Dependency Plan Schema",
+  "description": "Execution dependency plan produced during intake analysis.",
+  "required": [
+    "kickoff_role",
+    "execution_mode",
+    "serial",
+    "parallel_groups",
+    "support_roles",
+    "review_checkpoints"
+  ],
+  "properties": {
+    "kickoff_role": { "type": "string" },
+    "execution_mode": {
+      "type": "string",
+      "enum": ["native", "plan", "build"]
+    },
+    "serial": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "parallel_groups": {
+      "type": "array",
+      "items": {
+        "type": "array",
+        "items": { "type": "string" }
+      }
+    },
+    "support_roles": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "review_checkpoints": {
+      "type": "array",
+      "items": { "type": "string" }
+    }
+  },
+  "additionalProperties": true
+}

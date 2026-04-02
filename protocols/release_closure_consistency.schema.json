@@ -1,0 +1,13 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "title": "Release Closure Consistency Schema",
+  "required": ["task_id", "consistency_ready", "contradictions", "summary"],
+  "properties": {
+    "task_id": {"type": "string"},
+    "consistency_ready": {"type": "boolean"},
+    "contradictions": {"type": "array", "items": {"type": "string"}},
+    "summary": {"type": "string"}
+  },
+  "additionalProperties": true
+}

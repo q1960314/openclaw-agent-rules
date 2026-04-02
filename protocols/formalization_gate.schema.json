@@ -1,0 +1,31 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "title": "Formalization Gate Schema",
+  "required": [
+    "task_id",
+    "formalization_state",
+    "release_ready",
+    "candidate_only",
+    "requires_human_approval",
+    "stop_at_manual_gate",
+    "technical_validation_passed",
+    "quality_gate_passed"
+  ],
+  "properties": {
+    "task_id": { "type": "string" },
+    "formalization_state": { "type": "string", "enum": ["blocked_candidate", "manual_review_gate", "candidate_only", "release_ready_candidate", "official"] },
+    "release_ready": { "type": "boolean" },
+    "candidate_only": { "type": "boolean" },
+    "requires_human_approval": { "type": "boolean" },
+    "stop_at_manual_gate": { "type": "boolean" },
+    "technical_validation_passed": { "type": "boolean" },
+    "quality_gate_passed": { "type": "boolean" },
+    "quality_score": { "type": "integer" },
+    "quality_grade": { "type": "string" },
+    "review_decision": { "type": "string" },
+    "approval_state": { "type": "string" },
+    "summary": { "type": "string" }
+  },
+  "additionalProperties": true
+}

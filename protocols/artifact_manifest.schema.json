@@ -1,0 +1,25 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "title": "P1 Artifact Manifest Schema",
+  "required": ["task_id", "generated_at", "artifacts"],
+  "properties": {
+    "task_id": {"type": "string"},
+    "generated_at": {"type": "string", "format": "date-time"},
+    "artifacts": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["path", "kind", "size_bytes", "updated_at"],
+        "properties": {
+          "path": {"type": "string"},
+          "kind": {"type": "string", "enum": ["text", "json", "binary", "log", "other"]},
+          "size_bytes": {"type": "integer", "minimum": 0},
+          "updated_at": {"type": "string", "format": "date-time"}
+        },
+        "additionalProperties": true
+      }
+    }
+  },
+  "additionalProperties": true
+}

@@ -1,0 +1,17 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "title": "Approval Recompute Snapshot Schema",
+  "required": ["task_id", "recompute_state", "would_unblock_execution", "would_mark_official_release_ready", "summary"],
+  "properties": {
+    "task_id": {"type": "string"},
+    "recompute_state": {"type": "string", "enum": ["awaiting_real_human_decision", "approved_recompute", "rejected_recompute"]},
+    "would_unblock_execution": {"type": "boolean"},
+    "would_mark_official_release_ready": {"type": "boolean"},
+    "would_keep_candidate_blocked": {"type": "boolean"},
+    "decision_recorded": {"type": "boolean"},
+    "approved": {"type": ["boolean", "null"]},
+    "summary": {"type": "string"}
+  },
+  "additionalProperties": true
+}

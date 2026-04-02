@@ -1,0 +1,40 @@
+# Python
+__pycache__/
+*.py[cod]
+*.so
+*.egg-info/
+.venv/
+venv/
+
+# Local state / secrets
+.openclaw/
+auth-profiles.json
+*.pem
+*.key
+*.secret
+.env
+.env.*
+
+# Logs / runtime
+logs/
+*.log
+.last_heartbeat
+*.pid
+
+# Backups / temp
+*.bak
+*.tmp
+*.swp
+.DS_Store
+
+# Data artifacts / cache
+*.parquet
+*.feather
+*.pkl
+*.pickle
+.pytest_cache/
+.mypy_cache/
+
+# OS / editors
+.vscode/
+.idea/

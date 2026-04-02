@@ -1,0 +1,15 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "title": "Approval Decision Placeholder Schema",
+  "required": ["task_id", "decision_recorded", "decision_state", "approved", "next_step"],
+  "properties": {
+    "task_id": {"type": "string"},
+    "decision_recorded": {"type": "boolean"},
+    "decision_state": {"type": "string", "enum": ["pending_human_decision", "approved_placeholder", "rejected_placeholder"]},
+    "approved": {"type": "boolean"},
+    "next_step": {"type": "string"},
+    "note": {"type": "string"}
+  },
+  "additionalProperties": true
+}
