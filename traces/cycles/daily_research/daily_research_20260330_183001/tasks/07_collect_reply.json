@@ -1,0 +1,26 @@
+{
+  "task_id": "daily_research_20260330_183001::collect_reply",
+  "cycle_id": "daily_research_20260330_183001",
+  "cycle_type": "daily_research",
+  "stage": "collect_reply",
+  "owner_agent": "master-quant",
+  "mode": "command",
+  "status": "completed",
+  "timeout_seconds": 120,
+  "retry_limit": 0,
+  "attempts": [
+    {
+      "attempt": 1,
+      "started_at": "2026-03-30 18:32:49",
+      "finished_at": "2026-03-30 18:32:51",
+      "exit_code": 0,
+      "result": "success"
+    }
+  ],
+  "created_at": "2026-03-30 18:32:49",
+  "updated_at": "2026-03-30 18:32:51",
+  "command": "/home/admin/miniconda3/envs/vnpy_env/bin/python /home/admin/.openclaw/workspace/master/scripts/workflow_collect_reply.py --cycle-dir /home/admin/.openclaw/workspace/master/traces/cycles/daily_research/daily_research_20260330_183001 --stage-id collect_reply",
+  "log_file": "/home/admin/.openclaw/workspace/master/traces/cycles/daily_research/daily_research_20260330_183001/logs/07_collect_reply.log",
+  "finished_at": "2026-03-30 18:32:51",
+  "exit_code": 0
+}

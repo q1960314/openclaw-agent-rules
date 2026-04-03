@@ -1,0 +1,17 @@
+{
+  "stage": "dispatch_ticket_manual",
+  "generated_at": "2026-03-25 20:07:03",
+  "pending_scanned": 1,
+  "dispatched": [],
+  "blocked": [],
+  "failed": [
+    {
+      "ticket_id": "daily_research_20260325_192554::strategy_review",
+      "status": "failed",
+      "agent_id": "strategy-research",
+      "returncode": 1,
+      "stdout": "",
+      "stderr": "Gateway agent failed; falling back to embedded: Error: Unknown agent id \"strategy-research\". Use \"openclaw agents list\" to see configured agents.\nError: Unknown agent id \"strategy-research\". Use \"openclaw agents list\" to see configured agents.\n"
+    }
+  ]
+}

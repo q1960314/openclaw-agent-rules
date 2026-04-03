@@ -1,0 +1,13 @@
+{
+  "stage": "collect_reply_manual",
+  "generated_at": "2026-03-25 20:40:57",
+  "done": [],
+  "failed": [
+    {
+      "ticket_id": "daily_research_20260325_201449::strategy_review",
+      "agent_id": "strategy-expert",
+      "reason": "agent_aborted_or_overloaded"
+    }
+  ],
+  "pending_followup": []
+}

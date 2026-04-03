@@ -1,0 +1,8 @@
+{
+  "stage": "create_worktree",
+  "generated_at": "2026-03-26 09:30:04",
+  "worktree": "/data/agents/worktrees/build_candidate_cycle_20260326_093001",
+  "returncode": 0,
+  "stdout": "HEAD is now at ca2fa36 feat: 集成qlib因子增强模块\n",
+  "stderr": "Preparing worktree (detached HEAD ca2fa36)\n"
+}

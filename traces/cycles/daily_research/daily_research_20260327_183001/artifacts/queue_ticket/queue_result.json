@@ -1,0 +1,13 @@
+{
+  "stage": "queue_ticket",
+  "generated_at": "2026-03-27 18:31:55",
+  "cycle_id": "daily_research_20260327_183001",
+  "cycle_type": "daily_research",
+  "enqueued": [],
+  "skipped": [
+    {
+      "ticket_id": "daily_research_20260327_183001::strategy_review",
+      "reason": "merged_into:daily_research_20260326_183001____strategy_review.json"
+    }
+  ]
+}

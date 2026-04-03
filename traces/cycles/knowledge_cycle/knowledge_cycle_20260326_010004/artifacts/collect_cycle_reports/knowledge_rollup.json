@@ -1,0 +1,231 @@
+{
+  "stage": "collect_cycle_reports",
+  "generated_at": "2026-03-26 01:00:04",
+  "collected_cycles": [
+    {
+      "cycle_type": "daily_data_cycle",
+      "cycle_id": "daily_data_cycle_20260326_005911",
+      "status": "dry_run_completed",
+      "updated_at": "2026-03-26 00:59:11",
+      "cycle_dir": "/home/admin/.openclaw/workspace/master/traces/cycles/daily_data_cycle/daily_data_cycle_20260326_005911",
+      "report_path": null,
+      "summary": {}
+    },
+    {
+      "cycle_type": "daily_research",
+      "cycle_id": "daily_research_20260325_224940",
+      "status": "completed",
+      "updated_at": "2026-03-25 22:52:11",
+      "cycle_dir": "/home/admin/.openclaw/workspace/master/traces/cycles/daily_research/daily_research_20260325_224940",
+      "report_path": "/home/admin/.openclaw/workspace/master/traces/cycles/daily_research/daily_research_20260325_224940/reports/cycle_summary.md",
+      "summary": {
+        "cycle_id": "daily_research_20260325_224940",
+        "cycle_type": "daily_research",
+        "generated_at": "2026-03-25 22:51:57",
+        "status": "completed",
+        "task_total": 8,
+        "task_completed": 8,
+        "task_failed": 0,
+        "artifacts": {
+          "data_check": "/home/admin/.openclaw/workspace/master/traces/cycles/daily_research/daily_research_20260325_224940/artifacts/data_validate/data_check.json",
+          "smoke_backtest": "/home/admin/.openclaw/workspace/master/traces/cycles/daily_research/daily_research_20260325_224940/artifacts/smoke_backtest/smoke_backtest.json",
+          "weekly_health": null,
+          "followup_ticket": "/home/admin/.openclaw/workspace/master/traces/cycles/daily_research/daily_research_20260325_224940/artifacts/followup_ticket/followup_tickets.json",
+          "queue_result": "/home/admin/.openclaw/workspace/master/traces/cycles/daily_research/daily_research_20260325_224940/artifacts/queue_ticket/queue_result.json",
+          "dispatch_result": "/home/admin/.openclaw/workspace/master/traces/cycles/daily_research/daily_research_20260325_224940/artifacts/dispatch_ticket/dispatch_result.json",
+          "collect_result": "/home/admin/.openclaw/workspace/master/traces/cycles/daily_research/daily_research_20260325_224940/artifacts/collect_reply/collect_result.json"
+        },
+        "data_check": {
+          "sample_stock_count": 20,
+          "latest_sample_trade_date": "20260320",
+          "limit_list_latest_trade_date": "20260320",
+          "sample_trade_date_spread_days": 0,
+          "warnings": 0,
+          "errors": 0,
+          "status": "ok"
+        },
+        "smoke_backtest": {
+          "total_return": -0.17148248350000012,
+          "annual_return": -0.546197255862186,
+          "max_drawdown": 0.1692785795716037,
+          "sharpe_ratio": -4.446659151292172,
+          "win_rate": 0.16666666666666666,
+          "total_trades": 24
+        },
+        "smoke_strategy": "打板策略",
+        "smoke_range": [
+          "20251216",
+          "20260320"
+        ],
+        "followup_ticket_count": 1,
+        "followup_tickets": [
+          {
+            "ticket_id": "daily_research_20260325_224940::strategy_review",
+            "category": "strategy_review",
+            "priority": "P1",
+            "owner": "strategy-expert",
+            "dispatch_agent_id": "strategy-expert",
+            "title": "每日闭环触发策略复核",
+            "reason": "smoke_backtest total_return=-0.1715, sharpe=-4.4467, max_drawdown=0.1693",
+            "suggested_next_step": "复核近 60 交易日策略表现，确认是否需要进入周度优化/参数审查",
+            "approval_required": false
+          }
+        ],
+        "queue_enqueued_count": 1,
+        "queue_skipped_count": 0,
+        "dispatch_done_count": 1,
+        "dispatch_dispatched_count": 0,
+        "dispatch_blocked_count": 0,
+        "dispatch_failed_count": 0,
+        "collect_done_count": 0,
+        "collect_failed_count": 0,
+        "collect_pending_followup_count": 0
+      }
+    },
+    {
+      "cycle_type": "weekly_health",
+      "cycle_id": "weekly_health_20260325_231434",
+      "status": "completed",
+      "updated_at": "2026-03-25 23:23:03",
+      "cycle_dir": "/home/admin/.openclaw/workspace/master/traces/cycles/weekly_health/weekly_health_20260325_231434",
+      "report_path": "/home/admin/.openclaw/workspace/master/traces/cycles/weekly_health/weekly_health_20260325_231434/reports/cycle_summary.md",
+      "summary": {
+        "cycle_id": "weekly_health_20260325_231434",
+        "cycle_type": "weekly_health",
+        "generated_at": "2026-03-26 00:00:43",
+        "status": "completed",
+        "task_total": 9,
+        "task_completed": 9,
+        "task_failed": 0,
+        "artifacts": {
+          "data_check": "/home/admin/.openclaw/workspace/master/traces/cycles/weekly_health/weekly_health_20260325_231434/artifacts/data_validate/data_check.json",
+          "smoke_backtest": null,
+          "weekly_health": "/home/admin/.openclaw/workspace/master/traces/cycles/weekly_health/weekly_health_20260325_231434/artifacts/health_check/weekly_health.json",
+          "followup_ticket": "/home/admin/.openclaw/workspace/master/traces/cycles/weekly_health/weekly_health_20260325_231434/artifacts/followup_ticket/followup_tickets.json",
+          "queue_result": "/home/admin/.openclaw/workspace/master/traces/cycles/weekly_health/weekly_health_20260325_231434/artifacts/queue_ticket/queue_result.json",
+          "dispatch_result": "/home/admin/.openclaw/workspace/master/traces/cycles/weekly_health/weekly_health_20260325_231434/artifacts/dispatch_ticket/dispatch_result.json",
+          "collect_result": "/home/admin/.openclaw/workspace/master/traces/cycles/weekly_health/weekly_health_20260325_231434/artifacts/collect_reply/collect_result.json"
+        },
+        "data_check": {
+          "sample_stock_count": 20,
+          "latest_sample_trade_date": "20260320",
+          "limit_list_latest_trade_date": "20260320",
+          "sample_trade_date_spread_days": 0,
+          "warnings": 0,
+          "errors": 0,
+          "status": "ok"
+        },
+        "weekly_health": {
+          "check_time": "2026-03-25 23:20:58",
+          "overall_status": "健康",
+          "issues": [],
+          "recommendations": [],
+          "overfit_check": {
+            "is_overfit": "False",
+            "severity": "轻微",
+            "train_return": -0.3230824009999996,
+            "test_return": -0.4069417069999993,
+            "return_diff": 0.08385930599999974,
+            "return_ratio": 0.20607203576702912,
+            "sharpe_diff": 1.580659022813717,
+            "recommendation": "策略泛化能力正常"
+          }
+        },
+        "weekly_strategy": "打板策略",
+        "followup_ticket_count": 1,
+        "followup_tickets": [
+          {
+            "ticket_id": "weekly_health_20260325_231434::weekly_stable",
+            "category": "monitoring",
+            "priority": "P3",
+            "owner": "knowledge-steward",
+            "dispatch_agent_id": "knowledge-steward",
+            "title": "周度健康检查通过，无需优化，仅做归档",
+            "reason": "health_status=健康",
+            "suggested_next_step": "沉淀本周稳定性结果，等待下一个周期",
+            "approval_required": false
+          }
+        ],
+        "queue_enqueued_count": 1,
+        "queue_skipped_count": 0,
+        "dispatch_done_count": 1,
+        "dispatch_dispatched_count": 0,
+        "dispatch_blocked_count": 0,
+        "dispatch_failed_count": 0,
+        "dispatch_done_items": [
+          {
+            "ticket_id": "weekly_health_20260325_231434::weekly_stable",
+            "status": "done",
+            "agent_id": "knowledge-steward",
+            "returncode": 0,
+            "assistant_text": "收到自动工单，先检查 cycle 产物内容：\n基于 cycle 产物分析，给出结构化回复：\n\n---\n\n## 1. 当前结果判断\n\n| 指标 | 数值 | 判断 |\n|------|------|------|\n| **整体状态** | 健康 | ✅ 系统运行正常 |\n| **训练集收益** | -32.3% | ⚠️ 策略亏损（非过拟合）|\n| **测试集收益** | -40.7% | ⚠️ 策略亏损（非过拟合）|\n| **Sharpe(训练)** | -4.44 | ⚠️ 风险调整后负收益 |\n| **Sharpe(测试)** | -6.02 | ⚠️ 风险调整后负收益 |\n| **胜率** | 17.4% / 14.9% | ⚠️ 远低于基准(55%)|\n| **过拟合检测** | 否 | ✅ 泛化能力正常 |\n| **过拟合程度** | 轻微 | ✅ IS/OOS差异可控 |\n\n**核心判断**：\n- ✅ **系统健康**：无技术故障、数据异常、流程错误\n- ⚠️ **策略亏损**：策略本身表现不佳，但**非过拟合**导致\n- ✅ **稳定性通过**：训练/测试差异 < 50%，泛化能力正常\n\n---\n\n## 2. 是否需要下一步动作\n\n**结论**：需要，但**非紧急**\n\n| 动作类型 | 是否需要 | 优先级 | 说明 |\n|---------|---------|--------|------|\n| 技术修复 | ❌ 否 | - | 系统无故障 |\n| 参数优化 | ⚠️ 建议 | P3 | 策略表现差，需调优 |\n| 策略重构 | ⚠️ 建议 | P3 | 当前策略不适应市场 |\n| 风险排查 | ❌ 否 | - | 无异常风险暴露 |\n| 归档沉淀 | ✅ 是 | P3 | 按工单要求执行 |\n\n---\n\n## 3. 最小可执行建议\n\n### 建议1：归档本周稳定性结果（立即执行）\n\n```bash\n# 归档路径\n/data/quant_knowledge/weekly_health/20260325/\n\n# 归档内容\n├── weekly_health_20260325_231434.json    # 健康检查报告\n├── train_result.json                      # 训练集结果\n├── test_result.json                       # 测试集结果\n└── meta.json                              # 元数据\n```\n\n### 建议2：策略优化（本周内）\n\n| 优化方向 | 具体动作 | 预期效果 |\n|---------|---------|---------|\n| **参数重调** | 网格搜索最优参数组合 | 提升Sharpe至>0 |\n| **阈值调整** | 调低买入评分阈值(当前36→32) | 增加交易机会 |\n| **风控加强** | 收紧止损(-5%→-3%) | 降低单笔亏损 |\n| **因子重选** | 替换低IC因子 | 提升胜率 |\n\n### 建议3：下周期监控重点\n\n- 监控训练/测试收益差异（阈值：>50%触发告警）\n- 监控Sharpe变化（目标：>-2）\n- 监控胜率（目标：>40%）\n\n---\n\n## 4. 风险与验收要点\n\n### 风险标注\n\n| 风险类型 | 等级 | 描述 |  mitigation |\n|---------|------|------|-------------|\n| **策略失效** | 🟡 中 | 连续亏损可能策略不适应市场 | 下周期评估是否重构 |\n| **过拟合累积** | 🟢 低 | 当前无过拟合，但持续优化可能引入 | 严格执行三阶段验证 |\n| **数据质量** | 🟢 低 | 本周数据校验通过 | 保持现有监控 |\n\n### 验收要点\n\n- ✅ **必须满足**：\n  - [ ] 归档文档已保存至指定路径\n  - [ ] 无技术故障遗留\n  - [ ] 过拟合检测通过\n\n- ⚠️ **建议满足**：\n  - [ ] 下周期Sharpe提升至>-2\n  - [ ] 胜率提升至>40%\n  - [ ] 训练/测试差异保持<50%\n\n---\n\n## 执行确认\n\n| 项目 | 状态 |\n|------|------|\n| 归档沉淀 | ⏳ 待执行（knowledge-steward负责）|\n| 参数优化 | ⏳ 待parameter-evolver执行 |\n| 下周期监控 | ⏳ 已纳入weekly_health循环 |\n\n---\n\n**合规提示**：本内容仅为量化研究回测使用，不构成任何投资建议，投资有风险，入市需谨慎。",
+            "parsed_json": true,
+            "summary": "completed",
+            "recovery": null,
+            "stderr": "",
+            "stdout_tail": "ame\": \"feishu_app_scopes\",\n              \"summaryChars\": 102,\n              \"schemaChars\": 33,\n              \"propertiesCount\": 0\n            },\n            {\n              \"name\": \"feishu_wiki\",\n              \"summaryChars\": 83,\n              \"schemaChars\": 971,\n              \"propertiesCount\": 10\n            },\n            {\n              \"name\": \"feishu_drive\",\n              \"summaryChars\": 81,\n              \"schemaChars\": 486,\n              \"propertiesCount\": 5\n            },\n            {\n              \"name\": \"feishu_bitable_get_meta\",\n              \"summaryChars\": 114,\n              \"schemaChars\": 170,\n              \"propertiesCount\": 1\n            },\n            {\n              \"name\": \"feishu_bitable_list_fields\",\n              \"summaryChars\": 76,\n              \"schemaChars\": 255,\n              \"propertiesCount\": 2\n            },\n            {\n              \"name\": \"feishu_bitable_list_records\",\n              \"summaryChars\": 64,\n              \"schemaChars\": 462,\n              \"propertiesCount\": 4\n            },\n            {\n              \"name\": \"feishu_bitable_get_record\",\n              \"summaryChars\": 46,\n              \"schemaChars\": 335,\n              \"propertiesCount\": 3\n            },\n            {\n              \"name\": \"feishu_bitable_create_record\",\n              \"summaryChars\": 44,\n              \"schemaChars\": 549,\n              \"propertiesCount\": 3\n            },\n            {\n              \"name\": \"feishu_bitable_update_record\",\n              \"summaryChars\": 50,\n              \"schemaChars\": 473,\n              \"propertiesCount\": 4\n            },\n            {\n              \"name\": \"feishu_bitable_create_app\",\n              \"summaryChars\": 57,\n              \"schemaChars\": 243,\n              \"propertiesCount\": 2\n            },\n            {\n              \"name\": \"feishu_bitable_create_field\",\n              \"summaryChars\": 46,\n              \"schemaChars\": 911,\n              \"propertiesCount\": 5\n            }\n          ]\n        }\n      }\n    }\n  }\n}\n"
+          }
+        ],
+        "dispatch_failed_items": [],
+        "dispatch_blocked_items": [],
+        "collect_done_count": 0,
+        "collect_failed_count": 0,
+        "collect_pending_followup_count": 0,
+        "recommended_actions": [
+          {
+            "type": "archive",
+            "ticket_id": "weekly_health_20260325_231434::weekly_stable",
+            "owner": "knowledge-steward",
+            "action": "保持归档与监控，无需立即优化"
+          }
+        ]
+      }
+    },
+    {
+      "cycle_type": "optimization_cycle",
+      "cycle_id": "optimization_cycle_20260326_001859",
+      "status": "completed",
+      "updated_at": "2026-03-26 00:26:58",
+      "cycle_dir": "/home/admin/.openclaw/workspace/master/traces/cycles/optimization_cycle/optimization_cycle_20260326_001859",
+      "report_path": "/home/admin/.openclaw/workspace/master/traces/cycles/optimization_cycle/optimization_cycle_20260326_001859/reports/cycle_summary.md",
+      "summary": {
+        "cycle_id": "optimization_cycle_20260326_001859",
+        "cycle_type": "optimization_cycle",
+        "generated_at": "2026-03-26 00:26:44",
+        "status": "completed",
+        "task_total": 5,
+        "task_completed": 5,
+        "task_failed": 0,
+        "artifacts": {
+          "data_check": null,
+          "smoke_backtest": null,
+          "weekly_health": null,
+          "followup_ticket": null,
+          "queue_result": null,
+          "dispatch_result": null,
+          "collect_result": null,
+          "select_target": "/home/admin/.openclaw/workspace/master/traces/cycles/optimization_cycle/optimization_cycle_20260326_001859/artifacts/select_target/selected_target.json",
+          "opencode_result": "/home/admin/.openclaw/workspace/master/traces/cycles/optimization_cycle/optimization_cycle_20260326_001859/artifacts/opencode_plan/opencode_result.json"
+        },
+        "optimization_selected": true,
+        "optimization_ticket": {
+          "ticket_id": "daily_research_20260325_224940::strategy_review",
+          "category": "strategy_review",
+          "priority": "P1",
+          "owner": "strategy-expert",
+          "dispatch_agent_id": "strategy-expert",
+          "title": "每日闭环触发策略复核",
+          "reason": "smoke_backtest total_return=-0.1715, sharpe=-4.4467, max_drawdown=0.1693",
+          "suggested_next_step": "复核近 60 交易日策略表现，确认是否需要进入周度优化/参数审查",
+          "approval_required": false
+        },
+        "opencode_mode": "plan",
+        "opencode_model": "bailian/qwen3-coder-plus",
+        "opencode_text": "# OpenCode Optimization Plan\n\n## 1. Diagnosis\n# OpenCode Optimization Plan\n\n## 1. Diagnosis\n\n根据分析，smoke_backtest出现负面收益(-0.1715)、负夏普(-4.4467)和较大回撤(0.1693)的根本原因是：\n\n**策略参数未经优化** - 当前系统虽具备贝叶斯优化能力，但参数仍使用默认配置，未能适应回测期间的市场环境。主要问题包括：\n- 固定风险参数(止损-6%，止盈+12%)不适用于特定市场周期\n- 策略权重分配不当，单一策略失效影响整体表现\n- 缺乏动态风控和市场状态感知\n\n## 2. Minimal Change Path\n\n1. **立即参数优化** - 使用现有贝叶斯优化器对关键参数进行寻优\n2. **策略权重调整** - 在多策略融合引擎中动态调整权重配比\n3. **风控参数微调** - 基于回测结果调整止损、止盈阈值\n4. **市场状态检测** - 启用动态风险管理模式\n\n## 3. Files To Touch\n\n- `/data/agents/master/modules/param_optimizer.py` - 参数优化器配置\n- `/data/agents/master/fetch_data_optimized.py` - 策略核心参数\n- `/data/agents/master/run_backtest_v4.py` - 回测配置调整\n- `/data/agents/master/modules/backtest_engine.py` - 风控参数优化\n- `/data/agents/master/modules/strategy_core.py` - 策略评分参数\n\n## 4. Validation Plan\n\n1. **分阶段回测验证** - 运行30天滚动窗口回测检验稳定性\n2. **参数敏感性测试** - 验证优化参数的鲁棒性\n3. **样本外测试** - 在未参与训练的数据上验证表现\n4. **对比基准测试** - 与基准策略比较关键指标\n\n## 5. Approval Gates\n\n- **策略参数变更** - 需人工审批参数优化结果\n- **风控阈值调整** - 需确认新的止损止盈设置\n- **实盘应用** - 所有改动仅限回测使用，不得直接应用实盘\n- **参数空间定义** - 需审批贝叶斯优化的参数边界",
+        "opencode_returncode": 0,
+        "recommended_actions": []
+      }
+    }
+  ],
+  "count": 4
+}

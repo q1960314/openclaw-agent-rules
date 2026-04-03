@@ -1,0 +1,26 @@
+{
+  "task_id": "weekly_health_20260329_210001::queue_ticket",
+  "cycle_id": "weekly_health_20260329_210001",
+  "cycle_type": "weekly_health",
+  "stage": "queue_ticket",
+  "owner_agent": "master-quant",
+  "mode": "command",
+  "status": "completed",
+  "timeout_seconds": 120,
+  "retry_limit": 0,
+  "attempts": [
+    {
+      "attempt": 1,
+      "started_at": "2026-03-29 21:06:33",
+      "finished_at": "2026-03-29 21:06:35",
+      "exit_code": 0,
+      "result": "success"
+    }
+  ],
+  "created_at": "2026-03-29 21:06:33",
+  "updated_at": "2026-03-29 21:06:35",
+  "command": "/home/admin/miniconda3/envs/vnpy_env/bin/python /home/admin/.openclaw/workspace/master/scripts/workflow_queue_ticket.py --cycle-dir /home/admin/.openclaw/workspace/master/traces/cycles/weekly_health/weekly_health_20260329_210001 --stage-id queue_ticket",
+  "log_file": "/home/admin/.openclaw/workspace/master/traces/cycles/weekly_health/weekly_health_20260329_210001/logs/05_queue_ticket.log",
+  "finished_at": "2026-03-29 21:06:35",
+  "exit_code": 0
+}

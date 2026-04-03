@@ -38,3 +38,45 @@ logs/
 # OS / editors
 .vscode/
 .idea/
+
+# Runtime traces / jobs (too large, transient)
+traces/jobs/
+traces/loops/
+traces/receipts/
+traces/requests/
+traces/states/
+traces/tasks/
+traces/probes/
+traces/session_history_*.md
+
+# Reports (runtime state)
+reports/
+
+# Memory (local state)
+memory/
+MEMORY.md
+
+# Sessions (runtime)
+sessions/
+
+# tmp
+tmp/
+*.pid
+
+# models config (local)
+models.json
+scheduler_config.json
+task_progress.json
+
+# Knowledge base (large, local)
+quant-research-knowledge-base/
+knowledge-base/
+
+# data
+data/
+data_all_stocks/
+charts/
+
+# vnpy backtest outputs
+vnpy_backtest/*.parquet
+vnpy_backtest/*.pkl

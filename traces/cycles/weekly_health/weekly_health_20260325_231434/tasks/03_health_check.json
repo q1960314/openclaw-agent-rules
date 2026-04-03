@@ -1,0 +1,26 @@
+{
+  "task_id": "weekly_health_20260325_231434::health_check",
+  "cycle_id": "weekly_health_20260325_231434",
+  "cycle_type": "weekly_health",
+  "stage": "health_check",
+  "owner_agent": "validation-center",
+  "mode": "command",
+  "status": "completed",
+  "timeout_seconds": 3600,
+  "retry_limit": 1,
+  "attempts": [
+    {
+      "attempt": 1,
+      "started_at": "2026-03-25 23:14:38",
+      "finished_at": "2026-03-25 23:20:59",
+      "exit_code": 0,
+      "result": "success"
+    }
+  ],
+  "created_at": "2026-03-25 23:14:38",
+  "updated_at": "2026-03-25 23:20:59",
+  "command": "/home/admin/miniconda3/envs/vnpy_env/bin/python /home/admin/.openclaw/workspace/master/scripts/run_weekly_health_check.py --code-root /data/agents/master --cycle-dir /home/admin/.openclaw/workspace/master/traces/cycles/weekly_health/weekly_health_20260325_231434 --stage-id health_check --strategy '打板策略'",
+  "log_file": "/home/admin/.openclaw/workspace/master/traces/cycles/weekly_health/weekly_health_20260325_231434/logs/03_health_check.log",
+  "finished_at": "2026-03-25 23:20:59",
+  "exit_code": 0
+}

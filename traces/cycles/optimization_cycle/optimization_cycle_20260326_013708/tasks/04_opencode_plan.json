@@ -1,0 +1,26 @@
+{
+  "task_id": "optimization_cycle_20260326_013708::opencode_plan",
+  "cycle_id": "optimization_cycle_20260326_013708",
+  "cycle_type": "optimization_cycle",
+  "stage": "opencode_plan",
+  "owner_agent": "coder",
+  "mode": "command",
+  "status": "failed",
+  "timeout_seconds": 900,
+  "retry_limit": 0,
+  "attempts": [
+    {
+      "attempt": 1,
+      "started_at": "2026-03-26 01:37:14",
+      "finished_at": "2026-03-26 01:52:16",
+      "exit_code": 1,
+      "result": "failed"
+    }
+  ],
+  "created_at": "2026-03-26 01:37:14",
+  "updated_at": "2026-03-26 01:52:16",
+  "command": "/home/admin/miniconda3/envs/vnpy_env/bin/python /home/admin/.openclaw/workspace/master/scripts/workflow_run_opencode.py --cycle-dir /home/admin/.openclaw/workspace/master/traces/cycles/optimization_cycle/optimization_cycle_20260326_013708 --stage-id opencode_plan",
+  "log_file": "/home/admin/.openclaw/workspace/master/traces/cycles/optimization_cycle/optimization_cycle_20260326_013708/logs/04_opencode_plan.log",
+  "finished_at": "2026-03-26 01:52:16",
+  "exit_code": 1
+}

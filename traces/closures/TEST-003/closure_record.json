@@ -1,0 +1,29 @@
+{
+  "closure_id": "CLOSURE-TEST-003-20260331-093234",
+  "request_id": "TEST-003",
+  "executor_type": "release",
+  "closure_type": "minimal",
+  "result_summary": "Test execution",
+  "status": "completed",
+  "execution_success": true,
+  "generated_at": "2026-03-31T09:32:34.744027",
+  "artifacts_referenced": [],
+  "execution_log_summary": "No execution log available",
+  "execution_result_binding": {
+    "request_id": "TEST-003",
+    "status": "completed",
+    "success": true,
+    "executor_type": "release",
+    "result_summary": "Test execution"
+  },
+  "next_action": "notify_completion",
+  "followup_required": false,
+  "closure_reason": "execution_completed_successfully",
+  "version": "1.0.0",
+  "checksum": "6f85e3754ea2f7d2",
+  "metadata": {
+    "source": "followup_closer",
+    "generator": "FollowUpCloser.generate_closure_record",
+    "trace_path": "traces/closures/TEST-003/closure_record.json"
+  }
+}

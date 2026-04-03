@@ -1,0 +1,26 @@
+{
+  "task_id": "build_candidate_cycle_20260326_045001::opencode_build",
+  "cycle_id": "build_candidate_cycle_20260326_045001",
+  "cycle_type": "build_candidate_cycle",
+  "stage": "opencode_build",
+  "owner_agent": "coder",
+  "mode": "command",
+  "status": "failed",
+  "timeout_seconds": 900,
+  "retry_limit": 0,
+  "attempts": [
+    {
+      "attempt": 1,
+      "started_at": "2026-03-26 04:50:07",
+      "finished_at": "2026-03-26 04:50:09",
+      "exit_code": 1,
+      "result": "failed"
+    }
+  ],
+  "created_at": "2026-03-26 04:50:07",
+  "updated_at": "2026-03-26 04:50:09",
+  "command": "/home/admin/miniconda3/envs/vnpy_env/bin/python /home/admin/.openclaw/workspace/master/scripts/workflow_run_opencode_build.py --cycle-dir /home/admin/.openclaw/workspace/master/traces/cycles/build_candidate_cycle/build_candidate_cycle_20260326_045001 --stage-id opencode_build",
+  "log_file": "/home/admin/.openclaw/workspace/master/traces/cycles/build_candidate_cycle/build_candidate_cycle_20260326_045001/logs/04_opencode_build.log",
+  "finished_at": "2026-03-26 04:50:09",
+  "exit_code": 1
+}

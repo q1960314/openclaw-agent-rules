@@ -1,0 +1,26 @@
+{
+  "task_id": "diagnosis_cycle_20260326_121001::specialist_diagnosis",
+  "cycle_id": "diagnosis_cycle_20260326_121001",
+  "cycle_type": "diagnosis_cycle",
+  "stage": "specialist_diagnosis",
+  "owner_agent": "master-quant",
+  "mode": "command",
+  "status": "failed",
+  "timeout_seconds": 1200,
+  "retry_limit": 0,
+  "attempts": [
+    {
+      "attempt": 1,
+      "started_at": "2026-03-26 12:10:03",
+      "finished_at": "2026-03-26 12:10:05",
+      "exit_code": 1,
+      "result": "failed"
+    }
+  ],
+  "created_at": "2026-03-26 12:10:03",
+  "updated_at": "2026-03-26 12:10:05",
+  "command": "/home/admin/miniconda3/envs/vnpy_env/bin/python /home/admin/.openclaw/workspace/master/scripts/workflow_specialist_diagnosis.py --cycle-dir /home/admin/.openclaw/workspace/master/traces/cycles/diagnosis_cycle/diagnosis_cycle_20260326_121001 --stage-id specialist_diagnosis",
+  "log_file": "/home/admin/.openclaw/workspace/master/traces/cycles/diagnosis_cycle/diagnosis_cycle_20260326_121001/logs/02_specialist_diagnosis.log",
+  "finished_at": "2026-03-26 12:10:05",
+  "exit_code": 1
+}

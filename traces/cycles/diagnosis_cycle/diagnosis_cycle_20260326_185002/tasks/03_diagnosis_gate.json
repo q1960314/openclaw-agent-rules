@@ -1,0 +1,26 @@
+{
+  "task_id": "diagnosis_cycle_20260326_185002::diagnosis_gate",
+  "cycle_id": "diagnosis_cycle_20260326_185002",
+  "cycle_type": "diagnosis_cycle",
+  "stage": "diagnosis_gate",
+  "owner_agent": "master-quant",
+  "mode": "command",
+  "status": "completed",
+  "timeout_seconds": 120,
+  "retry_limit": 0,
+  "attempts": [
+    {
+      "attempt": 1,
+      "started_at": "2026-03-26 18:51:00",
+      "finished_at": "2026-03-26 18:51:02",
+      "exit_code": 0,
+      "result": "success"
+    }
+  ],
+  "created_at": "2026-03-26 18:51:00",
+  "updated_at": "2026-03-26 18:51:02",
+  "command": "/home/admin/miniconda3/envs/vnpy_env/bin/python /home/admin/.openclaw/workspace/master/scripts/workflow_diagnosis_gate.py --cycle-dir /home/admin/.openclaw/workspace/master/traces/cycles/diagnosis_cycle/diagnosis_cycle_20260326_185002 --stage-id diagnosis_gate",
+  "log_file": "/home/admin/.openclaw/workspace/master/traces/cycles/diagnosis_cycle/diagnosis_cycle_20260326_185002/logs/03_diagnosis_gate.log",
+  "finished_at": "2026-03-26 18:51:02",
+  "exit_code": 0
+}

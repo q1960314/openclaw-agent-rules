@@ -1,0 +1,15 @@
+{
+  "stage": "dispatch_ticket",
+  "generated_at": "2026-03-26 18:31:55",
+  "pending_scanned": 1,
+  "done": [],
+  "dispatched": [],
+  "blocked": [],
+  "failed": [
+    {
+      "ticket_id": "daily_research_20260326_183001::strategy_review",
+      "status": "failed",
+      "error": "[Errno 2] No such file or directory: 'openclaw'"
+    }
+  ]
+}

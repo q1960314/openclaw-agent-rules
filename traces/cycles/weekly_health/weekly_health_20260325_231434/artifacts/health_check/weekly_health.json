@@ -1,0 +1,4158 @@
+{
+  "stage": "health_check",
+  "executed_at": "2026-03-25 23:20:58",
+  "strategy_type": "打板策略",
+  "train_range": [
+    "20250324",
+    "20250912"
+  ],
+  "test_range": [
+    "20250915",
+    "20260320"
+  ],
+  "train_result": {
+    "initial_capital": 10000,
+    "final_capital": 6769.175990000004,
+    "total_return": -0.3230824009999996,
+    "annual_return": -0.5593181223124326,
+    "max_drawdown": 0.3261173171956605,
+    "sharpe_ratio": -4.439128061991146,
+    "sortino_ratio": -6.952266433235088,
+    "calmar_ratio": -1.7150825571671764,
+    "alpha": -0.8795287957495073,
+    "beta": 1.0,
+    "information_ratio": -4.9039507948705445,
+    "win_rate": 0.17391304347826086,
+    "profit_factor": 0.30494019114114124,
+    "total_trades": 46,
+    "win_trades": 8,
+    "loss_trades": 38,
+    "trades": [
+      {
+        "date": "20250325",
+        "ts_code": "000601.SZ",
+        "action": "buy",
+        "price": 6.09,
+        "shares": 300,
+        "commission": 5,
+        "score": 36.39999999999999,
+        "name": ""
+      },
+      {
+        "date": "20250326",
+        "ts_code": "002165.SZ",
+        "action": "buy",
+        "price": 6.292999999999999,
+        "shares": 200,
+        "commission": 5,
+        "score": 32.3,
+        "name": ""
+      },
+      {
+        "date": "20250326",
+        "ts_code": "000601.SZ",
+        "action": "sell",
+        "price": 5.50615,
+        "shares": 300,
+        "commission": 5,
+        "stamp_duty": 1.651845,
+        "pnl": -181.806845,
+        "pnl_ratio": -0.09587027914614121,
+        "reason": "止损",
+        "hold_days": 0
+      },
+      {
+        "date": "20250327",
+        "ts_code": "002115.SZ",
+        "action": "buy",
+        "price": 9.947,
+        "shares": 100,
+        "commission": 5,
+        "score": 32.3,
+        "name": ""
+      },
+      {
+        "date": "20250331",
+        "ts_code": "002165.SZ",
+        "action": "sell",
+        "price": 5.99865,
+        "shares": 200,
+        "commission": 5,
+        "stamp_duty": 1.19973,
+        "pnl": -65.06972999999994,
+        "pnl_ratio": -0.04677419354838705,
+        "reason": "持股超时",
+        "hold_days": 0
+      },
+      {
+        "date": "20250331",
+        "ts_code": "002115.SZ",
+        "action": "sell",
+        "price": 9.0423,
+        "shares": 100,
+        "commission": 5,
+        "stamp_duty": 0.90423,
+        "pnl": -96.37423,
+        "pnl_ratio": -0.09095204584296775,
+        "reason": "止损",
+        "hold_days": 0
+      },
+      {
+        "date": "20250401",
+        "ts_code": "600571.SH",
+        "action": "buy",
+        "price": 16.635849999999998,
+        "shares": 100,
+        "commission": 5,
+        "score": 32.3,
+        "name": ""
+      },
+      {
+        "date": "20250407",
+        "ts_code": "600571.SH",
+        "action": "sell",
+        "price": 15.6615,
+        "shares": 100,
+        "commission": 5,
+        "stamp_duty": 1.5661500000000002,
+        "pnl": -104.00114999999975,
+        "pnl_ratio": -0.0585692946257629,
+        "reason": "持股超时",
+        "hold_days": 0
+      },
+      {
+        "date": "20250408",
+        "ts_code": "603336.SH",
+        "action": "buy",
+        "price": 6.0697,
+        "shares": 300,
+        "commission": 5,
+        "score": 32.3,
+        "name": ""
+      },
+      {
+        "date": "20250410",
+        "ts_code": "002094.SZ",
+        "action": "buy",
+        "price": 7.0035,
+        "shares": 200,
+        "commission": 5,
+        "score": 33.699999999999996,
+        "name": ""
+      },
+      {
+        "date": "20250411",
+        "ts_code": "603336.SH",
+        "action": "sell",
+        "price": 5.722849999999999,
+        "shares": 300,
+        "commission": 5,
+        "stamp_duty": 1.7168549999999998,
+        "pnl": -110.77185500000023,
+        "pnl_ratio": -0.057144504670741676,
+        "reason": "持股超时",
+        "hold_days": 0
+      },
+      {
+        "date": "20250414",
+        "ts_code": "000016.SZ",
+        "action": "buy",
+        "price": 5.409949999999999,
+        "shares": 200,
+        "commission": 5,
+        "score": 36.39999999999999,
+        "name": ""
+      },
+      {
+        "date": "20250415",
+        "ts_code": "002094.SZ",
+        "action": "sell",
+        "price": 7.37765,
+        "shares": 200,
+        "commission": 5,
+        "stamp_duty": 1.47553,
+        "pnl": 68.35447000000003,
+        "pnl_ratio": 0.05342328835582212,
+        "reason": "持股超时",
+        "hold_days": 0
+      },
+      {
+        "date": "20250417",
+        "ts_code": "002693.SZ",
+        "action": "buy",
+        "price": 11.753699999999998,
+        "shares": 100,
+        "commission": 5,
+        "score": 34.15,
+        "name": ""
+      },
+      {
+        "date": "20250417",
+        "ts_code": "000016.SZ",
+        "action": "sell",
+        "price": 5.1023,
+        "shares": 200,
+        "commission": 5,
+        "stamp_duty": 1.02046,
+        "pnl": -67.55045999999994,
+        "pnl_ratio": -0.05686743870091217,
+        "reason": "持股超时",
+        "hold_days": 0
+      },
+      {
+        "date": "20250418",
+        "ts_code": "002127.SZ",
+        "action": "buy",
+        "price": 4.5675,
+        "shares": 300,
+        "commission": 5,
+        "score": 36.528571428571425,
+        "name": ""
+      },
+      {
+        "date": "20250422",
+        "ts_code": "002693.SZ",
+        "action": "sell",
+        "price": 10.470550000000001,
+        "shares": 100,
+        "commission": 5,
+        "stamp_duty": 1.047055,
+        "pnl": -134.36205499999974,
+        "pnl_ratio": -0.10916987842126288,
+        "reason": "持股超时",
+        "hold_days": 0
+      },
+      {
+        "date": "20250423",
+        "ts_code": "002127.SZ",
+        "action": "sell",
+        "price": 4.491599999999999,
+        "shares": 300,
+        "commission": 5,
+        "stamp_duty": 1.3474799999999998,
+        "pnl": -29.117480000000224,
+        "pnl_ratio": -0.01661740558292299,
+        "reason": "持股超时",
+        "hold_days": 0
+      },
+      {
+        "date": "20250424",
+        "ts_code": "002278.SZ",
+        "action": "buy",
+        "price": 8.221499999999999,
+        "shares": 200,
+        "commission": 5,
+        "score": 32.3,
+        "name": ""
+      },
+      {
+        "date": "20250425",
+        "ts_code": "002584.SZ",
+        "action": "buy",
+        "price": 11.012749999999999,
+        "shares": 100,
+        "commission": 5,
+        "score": 33.699999999999996,
+        "name": ""
+      },
+      {
+        "date": "20250429",
+        "ts_code": "002584.SZ",
+        "action": "sell",
+        "price": 9.46585,
+        "shares": 100,
+        "commission": 5,
+        "stamp_duty": 0.9465849999999999,
+        "pnl": -160.6365849999999,
+        "pnl_ratio": -0.1404644616467276,
+        "reason": "止损",
+        "hold_days": 0
+      },
+      {
+        "date": "20250429",
+        "ts_code": "002278.SZ",
+        "action": "sell",
+        "price": 7.8012,
+        "shares": 200,
+        "commission": 5,
+        "stamp_duty": 1.56024,
+        "pnl": -90.62023999999984,
+        "pnl_ratio": -0.051122058018609653,
+        "reason": "持股超时",
+        "hold_days": 0
+      },
+      {
+        "date": "20250506",
+        "ts_code": "002164.SZ",
+        "action": "buy",
+        "price": 9.825199999999999,
+        "shares": 100,
+        "commission": 5,
+        "score": 31.449999999999996,
+        "name": ""
+      },
+      {
+        "date": "20250507",
+        "ts_code": "600589.SH",
+        "action": "buy",
+        "price": 7.9779,
+        "shares": 200,
+        "commission": 5,
+        "score": 32.75,
+        "name": ""
+      },
+      {
+        "date": "20250509",
+        "ts_code": "002164.SZ",
+        "action": "sell",
+        "price": 9.3772,
+        "shares": 100,
+        "commission": 5,
+        "stamp_duty": 0.93772,
+        "pnl": -50.73771999999986,
+        "pnl_ratio": -0.04559703619264734,
+        "reason": "持股超时",
+        "hold_days": 0
+      },
+      {
+        "date": "20250512",
+        "ts_code": "600589.SH",
+        "action": "sell",
+        "price": 7.6633000000000004,
+        "shares": 200,
+        "commission": 5,
+        "stamp_duty": 1.5326600000000001,
+        "pnl": -69.45265999999991,
+        "pnl_ratio": -0.0394339362488875,
+        "reason": "持股超时",
+        "hold_days": 0
+      },
+      {
+        "date": "20250514",
+        "ts_code": "000767.SZ",
+        "action": "buy",
+        "price": 3.3088999999999995,
+        "shares": 500,
+        "commission": 5,
+        "score": 37.81428571428571,
+        "name": ""
+      },
+      {
+        "date": "20250516",
+        "ts_code": "000420.SZ",
+        "action": "buy",
+        "price": 4.7501999999999995,
+        "shares": 300,
+        "commission": 5,
+        "score": 34.99999999999999,
+        "name": ""
+      },
+      {
+        "date": "20250519",
+        "ts_code": "000767.SZ",
+        "action": "sell",
+        "price": 3.2308,
+        "shares": 500,
+        "commission": 5,
+        "stamp_duty": 1.6154,
+        "pnl": -45.665399999999806,
+        "pnl_ratio": -0.0236030100637673,
+        "reason": "持股超时",
+        "hold_days": 0
+      },
+      {
+        "date": "20250521",
+        "ts_code": "600468.SH",
+        "action": "buy",
+        "price": 6.597499999999999,
+        "shares": 200,
+        "commission": 5,
+        "score": 36.900000000000006,
+        "name": ""
+      },
+      {
+        "date": "20250521",
+        "ts_code": "000420.SZ",
+        "action": "sell",
+        "price": 4.50145,
+        "shares": 300,
+        "commission": 5,
+        "stamp_duty": 1.350435,
+        "pnl": -80.9754349999998,
+        "pnl_ratio": -0.05236621615931948,
+        "reason": "持股超时",
+        "hold_days": 0
+      },
+      {
+        "date": "20250522",
+        "ts_code": "600698.SH",
+        "action": "buy",
+        "price": 8.8711,
+        "shares": 100,
+        "commission": 5,
+        "score": 36.0,
+        "name": ""
+      },
+      {
+        "date": "20250522",
+        "ts_code": "600468.SH",
+        "action": "sell",
+        "price": 5.4174999999999995,
+        "shares": 200,
+        "commission": 5,
+        "stamp_duty": 1.0835000000000001,
+        "pnl": -242.08349999999993,
+        "pnl_ratio": -0.17885562713148917,
+        "reason": "止损",
+        "hold_days": 0
+      },
+      {
+        "date": "20250523",
+        "ts_code": "600698.SH",
+        "action": "sell",
+        "price": 7.289000000000001,
+        "shares": 100,
+        "commission": 5,
+        "stamp_duty": 0.7289000000000001,
+        "pnl": -163.93889999999996,
+        "pnl_ratio": -0.1783431592474439,
+        "reason": "止损",
+        "hold_days": 0
+      },
+      {
+        "date": "20250527",
+        "ts_code": "603390.SH",
+        "action": "buy",
+        "price": 13.560399999999998,
+        "shares": 100,
+        "commission": 5,
+        "score": 33.4,
+        "name": ""
+      },
+      {
+        "date": "20250529",
+        "ts_code": "002574.SZ",
+        "action": "buy",
+        "price": 7.510999999999999,
+        "shares": 100,
+        "commission": 5,
+        "score": 32.3,
+        "name": ""
+      },
+      {
+        "date": "20250529",
+        "ts_code": "603390.SH",
+        "action": "sell",
+        "price": 17.296599999999998,
+        "shares": 100,
+        "commission": 5,
+        "stamp_duty": 1.72966,
+        "pnl": 366.89034,
+        "pnl_ratio": 0.2755228459337483,
+        "reason": "止盈",
+        "hold_days": 0
+      },
+      {
+        "date": "20250530",
+        "ts_code": "002574.SZ",
+        "action": "sell",
+        "price": 6.9540999999999995,
+        "shares": 100,
+        "commission": 5,
+        "stamp_duty": 0.69541,
+        "pnl": -61.38540999999997,
+        "pnl_ratio": -0.07414458793769135,
+        "reason": "止损",
+        "hold_days": 0
+      },
+      {
+        "date": "20250603",
+        "ts_code": "002743.SZ",
+        "action": "buy",
+        "price": 8.526,
+        "shares": 200,
+        "commission": 5,
+        "score": 30.5,
+        "name": ""
+      },
+      {
+        "date": "20250606",
+        "ts_code": "300368.SZ",
+        "action": "buy",
+        "price": 10.3936,
+        "shares": 100,
+        "commission": 5,
+        "score": 33.699999999999996,
+        "name": ""
+      },
+      {
+        "date": "20250606",
+        "ts_code": "002743.SZ",
+        "action": "sell",
+        "price": 7.55495,
+        "shares": 200,
+        "commission": 5,
+        "stamp_duty": 1.51099,
+        "pnl": -200.72098999999997,
+        "pnl_ratio": -0.11389279849870983,
+        "reason": "持股超时",
+        "hold_days": 0
+      },
+      {
+        "date": "20250609",
+        "ts_code": "002467.SZ",
+        "action": "buy",
+        "price": 7.094849999999999,
+        "shares": 200,
+        "commission": 5,
+        "score": 32.3,
+        "name": ""
+      },
+      {
+        "date": "20250610",
+        "ts_code": "300368.SZ",
+        "action": "sell",
+        "price": 11.6427,
+        "shares": 100,
+        "commission": 5,
+        "stamp_duty": 1.16427,
+        "pnl": 118.74573000000002,
+        "pnl_ratio": 0.12017972598522171,
+        "reason": "止盈",
+        "hold_days": 0
+      },
+      {
+        "date": "20250612",
+        "ts_code": "002467.SZ",
+        "action": "sell",
+        "price": 6.15625,
+        "shares": 200,
+        "commission": 5,
+        "stamp_duty": 1.23125,
+        "pnl": -193.95124999999985,
+        "pnl_ratio": -0.13229314220878516,
+        "reason": "持股超时",
+        "hold_days": 0
+      },
+      {
+        "date": "20250616",
+        "ts_code": "002172.SZ",
+        "action": "buy",
+        "price": 4.9532,
+        "shares": 300,
+        "commission": 5,
+        "score": 33.699999999999996,
+        "name": ""
+      },
+      {
+        "date": "20250616",
+        "ts_code": "002615.SZ",
+        "action": "buy",
+        "price": 9.8049,
+        "shares": 100,
+        "commission": 5,
+        "score": 29.199999999999996,
+        "name": ""
+      },
+      {
+        "date": "20250618",
+        "ts_code": "002172.SZ",
+        "action": "sell",
+        "price": 4.491599999999999,
+        "shares": 300,
+        "commission": 5,
+        "stamp_duty": 1.3474799999999998,
+        "pnl": -144.82748000000018,
+        "pnl_ratio": -0.0931922797383511,
+        "reason": "止损",
+        "hold_days": 0
+      },
+      {
+        "date": "20250619",
+        "ts_code": "002615.SZ",
+        "action": "sell",
+        "price": 8.36265,
+        "shares": 100,
+        "commission": 5,
+        "stamp_duty": 0.836265,
+        "pnl": -150.06126499999996,
+        "pnl_ratio": -0.14709481993697024,
+        "reason": "持股超时",
+        "hold_days": 0
+      },
+      {
+        "date": "20250620",
+        "ts_code": "600551.SH",
+        "action": "buy",
+        "price": 9.886099999999999,
+        "shares": 100,
+        "commission": 5,
+        "score": 39.1,
+        "name": ""
+      },
+      {
+        "date": "20250623",
+        "ts_code": "002930.SZ",
+        "action": "buy",
+        "price": 12.687499999999998,
+        "shares": 100,
+        "commission": 5,
+        "score": 33.1,
+        "name": ""
+      },
+      {
+        "date": "20250623",
+        "ts_code": "600551.SH",
+        "action": "sell",
+        "price": 8.392199999999999,
+        "shares": 100,
+        "commission": 5,
+        "stamp_duty": 0.83922,
+        "pnl": -155.22922,
+        "pnl_ratio": -0.1511111560676101,
+        "reason": "止损",
+        "hold_days": 0
+      },
+      {
+        "date": "20250625",
+        "ts_code": "002930.SZ",
+        "action": "sell",
+        "price": 10.9138,
+        "shares": 100,
+        "commission": 5,
+        "stamp_duty": 1.0913800000000002,
+        "pnl": -183.4613799999998,
+        "pnl_ratio": -0.139799014778325,
+        "reason": "止损",
+        "hold_days": 0
+      },
+      {
+        "date": "20250627",
+        "ts_code": "600435.SH",
+        "action": "buy",
+        "price": 15.224999999999998,
+        "shares": 100,
+        "commission": 5,
+        "score": 35.24285714285714,
+        "name": ""
+      },
+      {
+        "date": "20250630",
+        "ts_code": "600435.SH",
+        "action": "sell",
+        "price": 13.76045,
+        "shares": 100,
+        "commission": 5,
+        "stamp_duty": 1.3760450000000002,
+        "pnl": -152.83104499999973,
+        "pnl_ratio": -0.09619376026272562,
+        "reason": "止损",
+        "hold_days": 0
+      },
+      {
+        "date": "20250701",
+        "ts_code": "600152.SH",
+        "action": "buy",
+        "price": 7.713999999999999,
+        "shares": 100,
+        "commission": 5,
+        "score": 32.3,
+        "name": ""
+      },
+      {
+        "date": "20250704",
+        "ts_code": "600152.SH",
+        "action": "sell",
+        "price": 6.9639500000000005,
+        "shares": 100,
+        "commission": 5,
+        "stamp_duty": 0.6963950000000001,
+        "pnl": -80.7013949999998,
+        "pnl_ratio": -0.09723230490018125,
+        "reason": "止损",
+        "hold_days": 0
+      },
+      {
+        "date": "20250707",
+        "ts_code": "002721.SZ",
+        "action": "buy",
+        "price": 4.080299999999999,
+        "shares": 300,
+        "commission": 5,
+        "score": 37.5,
+        "name": ""
+      },
+      {
+        "date": "20250709",
+        "ts_code": "002721.SZ",
+        "action": "sell",
+        "price": 4.56055,
+        "shares": 300,
+        "commission": 5,
+        "stamp_duty": 1.368165,
+        "pnl": 137.7068350000002,
+        "pnl_ratio": 0.1176996789451758,
+        "reason": "止盈",
+        "hold_days": 0
+      },
+      {
+        "date": "20250710",
+        "ts_code": "601519.SH",
+        "action": "buy",
+        "price": 15.021999999999998,
+        "shares": 100,
+        "commission": 5,
+        "score": 39.1,
+        "name": ""
+      },
+      {
+        "date": "20250714",
+        "ts_code": "002356.SZ",
+        "action": "buy",
+        "price": 4.06,
+        "shares": 200,
+        "commission": 5,
+        "score": 36.39999999999999,
+        "name": ""
+      },
+      {
+        "date": "20250715",
+        "ts_code": "002356.SZ",
+        "action": "sell",
+        "price": 3.6248,
+        "shares": 200,
+        "commission": 5,
+        "stamp_duty": 0.72496,
+        "pnl": -92.76495999999992,
+        "pnl_ratio": -0.1071921182266009,
+        "reason": "止损",
+        "hold_days": 0
+      },
+      {
+        "date": "20250715",
+        "ts_code": "601519.SH",
+        "action": "sell",
+        "price": 13.494499999999999,
+        "shares": 100,
+        "commission": 5,
+        "stamp_duty": 1.3494499999999998,
+        "pnl": -159.09945,
+        "pnl_ratio": -0.10168419651178272,
+        "reason": "持股超时",
+        "hold_days": 0
+      },
+      {
+        "date": "20250721",
+        "ts_code": "600620.SH",
+        "action": "buy",
+        "price": 7.713999999999999,
+        "shares": 100,
+        "commission": 5,
+        "score": 36.39999999999999,
+        "name": ""
+      },
+      {
+        "date": "20250723",
+        "ts_code": "600620.SH",
+        "action": "sell",
+        "price": 6.5207,
+        "shares": 100,
+        "commission": 5,
+        "stamp_duty": 0.6520699999999999,
+        "pnl": -124.9820699999999,
+        "pnl_ratio": -0.1546927663987554,
+        "reason": "止损",
+        "hold_days": 0
+      },
+      {
+        "date": "20250724",
+        "ts_code": "600774.SH",
+        "action": "buy",
+        "price": 11.3883,
+        "shares": 100,
+        "commission": 5,
+        "score": 31.9,
+        "name": ""
+      },
+      {
+        "date": "20250728",
+        "ts_code": "600774.SH",
+        "action": "sell",
+        "price": 10.638,
+        "shares": 100,
+        "commission": 5,
+        "stamp_duty": 1.0638,
+        "pnl": -81.09379999999993,
+        "pnl_ratio": -0.06588340665419767,
+        "reason": "止损",
+        "hold_days": 0
+      },
+      {
+        "date": "20250729",
+        "ts_code": "002297.SZ",
+        "action": "buy",
+        "price": 10.4545,
+        "shares": 100,
+        "commission": 5,
+        "score": 33.699999999999996,
+        "name": ""
+      },
+      {
+        "date": "20250731",
+        "ts_code": "002297.SZ",
+        "action": "sell",
+        "price": 9.2393,
+        "shares": 100,
+        "commission": 5,
+        "stamp_duty": 0.92393,
+        "pnl": -127.44392999999994,
+        "pnl_ratio": -0.11623702711750915,
+        "reason": "止损",
+        "hold_days": 0
+      },
+      {
+        "date": "20250804",
+        "ts_code": "300289.SZ",
+        "action": "buy",
+        "price": 9.0335,
+        "shares": 100,
+        "commission": 5,
+        "score": 34.99999999999999,
+        "name": ""
+      },
+      {
+        "date": "20250805",
+        "ts_code": "300289.SZ",
+        "action": "sell",
+        "price": 9.633299999999998,
+        "shares": 100,
+        "commission": 5,
+        "stamp_duty": 0.9633299999999998,
+        "pnl": 54.016669999999834,
+        "pnl_ratio": 0.06639729894282374,
+        "reason": "止盈",
+        "hold_days": 0
+      },
+      {
+        "date": "20250806",
+        "ts_code": "600203.SH",
+        "action": "buy",
+        "price": 13.2153,
+        "shares": 100,
+        "commission": 5,
+        "score": 34.99999999999999,
+        "name": ""
+      },
+      {
+        "date": "20250808",
+        "ts_code": "600203.SH",
+        "action": "sell",
+        "price": 15.37585,
+        "shares": 100,
+        "commission": 5,
+        "stamp_duty": 1.537585,
+        "pnl": 209.51741500000006,
+        "pnl_ratio": 0.1634885322315801,
+        "reason": "止盈",
+        "hold_days": 0
+      },
+      {
+        "date": "20250812",
+        "ts_code": "600246.SH",
+        "action": "buy",
+        "price": 9.14515,
+        "shares": 100,
+        "commission": 5,
+        "score": 34.6,
+        "name": ""
+      },
+      {
+        "date": "20250813",
+        "ts_code": "002307.SZ",
+        "action": "buy",
+        "price": 5.69415,
+        "shares": 200,
+        "commission": 5,
+        "score": 36.0,
+        "name": ""
+      },
+      {
+        "date": "20250815",
+        "ts_code": "600246.SH",
+        "action": "sell",
+        "price": 11.5245,
+        "shares": 100,
+        "commission": 5,
+        "stamp_duty": 1.15245,
+        "pnl": 231.78255000000007,
+        "pnl_ratio": 0.260176158947639,
+        "reason": "止盈",
+        "hold_days": 0
+      },
+      {
+        "date": "20250815",
+        "ts_code": "002307.SZ",
+        "action": "sell",
+        "price": 4.8856,
+        "shares": 200,
+        "commission": 5,
+        "stamp_duty": 0.97712,
+        "pnl": -167.6871199999999,
+        "pnl_ratio": -0.1419966105564482,
+        "reason": "止损",
+        "hold_days": 0
+      },
+      {
+        "date": "20250820",
+        "ts_code": "603222.SH",
+        "action": "buy",
+        "price": 10.3733,
+        "shares": 100,
+        "commission": 5,
+        "score": 36.5,
+        "name": ""
+      },
+      {
+        "date": "20250821",
+        "ts_code": "603222.SH",
+        "action": "sell",
+        "price": 11.780600000000002,
+        "shares": 100,
+        "commission": 5,
+        "stamp_duty": 1.17806,
+        "pnl": 134.55194000000012,
+        "pnl_ratio": 0.13566560303857028,
+        "reason": "止盈",
+        "hold_days": 0
+      },
+      {
+        "date": "20250825",
+        "ts_code": "002212.SZ",
+        "action": "buy",
+        "price": 11.0635,
+        "shares": 100,
+        "commission": 5,
+        "score": 36.85,
+        "name": ""
+      },
+      {
+        "date": "20250826",
+        "ts_code": "000753.SZ",
+        "action": "buy",
+        "price": 7.3892,
+        "shares": 100,
+        "commission": 5,
+        "score": 39.1,
+        "name": ""
+      },
+      {
+        "date": "20250826",
+        "ts_code": "002212.SZ",
+        "action": "sell",
+        "price": 10.0864,
+        "shares": 100,
+        "commission": 5,
+        "stamp_duty": 1.00864,
+        "pnl": -103.71864000000001,
+        "pnl_ratio": -0.08831744023139153,
+        "reason": "止损",
+        "hold_days": 0
+      },
+      {
+        "date": "20250827",
+        "ts_code": "002685.SZ",
+        "action": "buy",
+        "price": 9.95715,
+        "shares": 100,
+        "commission": 5,
+        "score": 32.3,
+        "name": ""
+      },
+      {
+        "date": "20250829",
+        "ts_code": "002685.SZ",
+        "action": "sell",
+        "price": 8.9438,
+        "shares": 100,
+        "commission": 5,
+        "stamp_duty": 0.8943800000000001,
+        "pnl": -107.22938000000009,
+        "pnl_ratio": -0.10177108911686585,
+        "reason": "止损",
+        "hold_days": 0
+      },
+      {
+        "date": "20250829",
+        "ts_code": "000753.SZ",
+        "action": "sell",
+        "price": 6.9738,
+        "shares": 100,
+        "commission": 5,
+        "stamp_duty": 0.69738,
+        "pnl": -47.23738,
+        "pnl_ratio": -0.05621718183294538,
+        "reason": "持股超时",
+        "hold_days": 0
+      },
+      {
+        "date": "20250903",
+        "ts_code": "002256.SZ",
+        "action": "buy",
+        "price": 3.9584999999999995,
+        "shares": 300,
+        "commission": 5,
+        "score": 33.9,
+        "name": ""
+      },
+      {
+        "date": "20250904",
+        "ts_code": "600721.SH",
+        "action": "buy",
+        "price": 10.89095,
+        "shares": 100,
+        "commission": 5,
+        "score": 39.1,
+        "name": ""
+      },
+      {
+        "date": "20250904",
+        "ts_code": "002256.SZ",
+        "action": "sell",
+        "price": 3.29975,
+        "shares": 300,
+        "commission": 5,
+        "stamp_duty": 0.9899249999999999,
+        "pnl": -203.61492499999986,
+        "pnl_ratio": -0.16641404572439045,
+        "reason": "止损",
+        "hold_days": 0
+      },
+      {
+        "date": "20250909",
+        "ts_code": "600721.SH",
+        "action": "sell",
+        "price": 10.09625,
+        "shares": 100,
+        "commission": 5,
+        "stamp_duty": 1.009625,
+        "pnl": -85.47962500000006,
+        "pnl_ratio": -0.07296884110201594,
+        "reason": "持股超时",
+        "hold_days": 0
+      },
+      {
+        "date": "20250910",
+        "ts_code": "600173.SH",
+        "action": "buy",
+        "price": 8.06925,
+        "shares": 100,
+        "commission": 5,
+        "score": 34.6,
+        "name": ""
+      },
+      {
+        "date": "20250910",
+        "ts_code": "002547.SZ",
+        "action": "buy",
+        "price": 6.617799999999999,
+        "shares": 100,
+        "commission": 5,
+        "score": 33.699999999999996,
+        "name": ""
+      },
+      {
+        "date": "20250912",
+        "ts_code": "600173.SH",
+        "action": "sell",
+        "price": 8.08,
+        "shares": 100,
+        "commission": 5,
+        "stamp_duty": 0.808,
+        "pnl": -4.733000000000018,
+        "pnl_ratio": 0.001332217988040997,
+        "reason": "清算",
+        "hold_days": 0
+      },
+      {
+        "date": "20250912",
+        "ts_code": "002547.SZ",
+        "action": "sell",
+        "price": 6.55,
+        "shares": 100,
+        "commission": 5,
+        "stamp_duty": 0.655,
+        "pnl": -12.434999999999919,
+        "pnl_ratio": -0.010245096557768323,
+        "reason": "清算",
+        "hold_days": 0
+      }
+    ],
+    "daily_capital": [
+      {
+        "date": "20250324",
+        "cash": 8168.0,
+        "position_value": 1788.0,
+        "total": 9956.0,
+        "positions": 1
+      },
+      {
+        "date": "20250325",
+        "cash": 6904.4,
+        "position_value": 2915.0,
+        "total": 9819.4,
+        "positions": 2
+      },
+      {
+        "date": "20250326",
+        "cash": 7549.893154999999,
+        "position_value": 2178.999999999999,
+        "total": 9728.893154999998,
+        "positions": 2
+      },
+      {
+        "date": "20250327",
+        "cash": 7549.893154999999,
+        "position_value": 2324.999999999999,
+        "total": 9874.893154999998,
+        "positions": 2
+      },
+      {
+        "date": "20250328",
+        "cash": 7549.893154999999,
+        "position_value": 2272.999999999999,
+        "total": 9822.893154999998,
+        "positions": 2
+      },
+      {
+        "date": "20250331",
+        "cash": 7973.1641949999985,
+        "position_value": 1593.999999999999,
+        "total": 9567.164194999998,
+        "positions": 1
+      },
+      {
+        "date": "20250401",
+        "cash": 7973.1641949999985,
+        "position_value": 1657.999999999999,
+        "total": 9631.164194999998,
+        "positions": 1
+      },
+      {
+        "date": "20250402",
+        "cash": 7973.1641949999985,
+        "position_value": 1823.999999999999,
+        "total": 9797.164194999998,
+        "positions": 1
+      },
+      {
+        "date": "20250403",
+        "cash": 7973.1641949999985,
+        "position_value": 1767.000000000001,
+        "total": 9740.164195,
+        "positions": 1
+      },
+      {
+        "date": "20250407",
+        "cash": 7706.838044999999,
+        "position_value": 1728.0,
+        "total": 9434.838044999999,
+        "positions": 1
+      },
+      {
+        "date": "20250408",
+        "cash": 7706.838044999999,
+        "position_value": 1902.0,
+        "total": 9608.838044999999,
+        "positions": 1
+      },
+      {
+        "date": "20250409",
+        "cash": 6301.138044999999,
+        "position_value": 3271.000000000001,
+        "total": 9572.138045,
+        "positions": 2
+      },
+      {
+        "date": "20250410",
+        "cash": 6301.138044999999,
+        "position_value": 3338.000000000001,
+        "total": 9639.138045,
+        "positions": 2
+      },
+      {
+        "date": "20250411",
+        "cash": 6924.286189999999,
+        "position_value": 2500.0,
+        "total": 9424.286189999999,
+        "positions": 2
+      },
+      {
+        "date": "20250414",
+        "cash": 6924.286189999999,
+        "position_value": 2616.0,
+        "total": 9540.286189999999,
+        "positions": 2
+      },
+      {
+        "date": "20250415",
+        "cash": 8393.340659999998,
+        "position_value": 1136.0,
+        "total": 9529.340659999998,
+        "positions": 1
+      },
+      {
+        "date": "20250416",
+        "cash": 7212.970659999998,
+        "position_value": 2173.000000000001,
+        "total": 9385.970659999999,
+        "positions": 2
+      },
+      {
+        "date": "20250417",
+        "cash": 6852.160199999998,
+        "position_value": 2540.0,
+        "total": 9392.160199999998,
+        "positions": 2
+      },
+      {
+        "date": "20250418",
+        "cash": 6852.160199999998,
+        "position_value": 2641.0,
+        "total": 9493.160199999998,
+        "positions": 2
+      },
+      {
+        "date": "20250421",
+        "cash": 6852.160199999998,
+        "position_value": 2528.0,
+        "total": 9380.160199999998,
+        "positions": 2
+      },
+      {
+        "date": "20250422",
+        "cash": 7893.168144999999,
+        "position_value": 1389.000000000001,
+        "total": 9282.168145,
+        "positions": 1
+      },
+      {
+        "date": "20250423",
+        "cash": 7585.000665,
+        "position_value": 1626.0,
+        "total": 9211.000665,
+        "positions": 1
+      },
+      {
+        "date": "20250424",
+        "cash": 6478.725665,
+        "position_value": 2642.0,
+        "total": 9120.725665,
+        "positions": 2
+      },
+      {
+        "date": "20250425",
+        "cash": 6478.725665,
+        "position_value": 2648.0,
+        "total": 9126.725665,
+        "positions": 2
+      },
+      {
+        "date": "20250428",
+        "cash": 6478.725665,
+        "position_value": 2586.0,
+        "total": 9064.725665,
+        "positions": 2
+      },
+      {
+        "date": "20250429",
+        "cash": 8973.043839999998,
+        "position_value": 0.0,
+        "total": 8973.043839999998,
+        "positions": 0
+      },
+      {
+        "date": "20250430",
+        "cash": 7985.523839999999,
+        "position_value": 898.9999999999991,
+        "total": 8884.523839999998,
+        "positions": 1
+      },
+      {
+        "date": "20250506",
+        "cash": 6384.943839999999,
+        "position_value": 2508.000000000001,
+        "total": 8892.94384,
+        "positions": 2
+      },
+      {
+        "date": "20250507",
+        "cash": 6384.943839999999,
+        "position_value": 2589.000000000001,
+        "total": 8973.94384,
+        "positions": 2
+      },
+      {
+        "date": "20250508",
+        "cash": 6384.943839999999,
+        "position_value": 2589.000000000001,
+        "total": 8973.94384,
+        "positions": 2
+      },
+      {
+        "date": "20250509",
+        "cash": 7316.726119999999,
+        "position_value": 1520.0,
+        "total": 8836.72612,
+        "positions": 1
+      },
+      {
+        "date": "20250512",
+        "cash": 8842.853459999998,
+        "position_value": 0.0,
+        "total": 8842.853459999998,
+        "positions": 0
+      },
+      {
+        "date": "20250513",
+        "cash": 7183.403459999999,
+        "position_value": 1644.999999999999,
+        "total": 8828.403459999998,
+        "positions": 1
+      },
+      {
+        "date": "20250514",
+        "cash": 7183.403459999999,
+        "position_value": 1674.999999999999,
+        "total": 8858.403459999998,
+        "positions": 1
+      },
+      {
+        "date": "20250515",
+        "cash": 5753.343459999998,
+        "position_value": 3103.0,
+        "total": 8856.343459999998,
+        "positions": 2
+      },
+      {
+        "date": "20250516",
+        "cash": 5753.343459999998,
+        "position_value": 3039.0,
+        "total": 8792.343459999998,
+        "positions": 2
+      },
+      {
+        "date": "20250519",
+        "cash": 7362.128059999998,
+        "position_value": 1512.000000000001,
+        "total": 8874.12806,
+        "positions": 1
+      },
+      {
+        "date": "20250520",
+        "cash": 6037.628059999998,
+        "position_value": 2613.000000000001,
+        "total": 8650.62806,
+        "positions": 2
+      },
+      {
+        "date": "20250521",
+        "cash": 6489.602624999999,
+        "position_value": 2085.000000000001,
+        "total": 8574.602625,
+        "positions": 2
+      },
+      {
+        "date": "20250522",
+        "cash": 7567.019124999999,
+        "position_value": 795.0,
+        "total": 8362.019124999999,
+        "positions": 1
+      },
+      {
+        "date": "20250523",
+        "cash": 8290.190224999998,
+        "position_value": 0.0,
+        "total": 8290.190224999998,
+        "positions": 0
+      },
+      {
+        "date": "20250526",
+        "cash": 6929.1502249999985,
+        "position_value": 1318.999999999999,
+        "total": 8248.150224999998,
+        "positions": 1
+      },
+      {
+        "date": "20250527",
+        "cash": 6929.1502249999985,
+        "position_value": 1450.999999999999,
+        "total": 8380.150224999998,
+        "positions": 1
+      },
+      {
+        "date": "20250528",
+        "cash": 6173.050224999999,
+        "position_value": 2341.0,
+        "total": 8514.050224999999,
+        "positions": 2
+      },
+      {
+        "date": "20250529",
+        "cash": 7895.980564999999,
+        "position_value": 697.9999999999991,
+        "total": 8593.980564999998,
+        "positions": 1
+      },
+      {
+        "date": "20250530",
+        "cash": 6875.495155,
+        "position_value": 1650.000000000001,
+        "total": 8525.495155,
+        "positions": 1
+      },
+      {
+        "date": "20250603",
+        "cash": 6875.495155,
+        "position_value": 1657.999999999999,
+        "total": 8533.495154999999,
+        "positions": 1
+      },
+      {
+        "date": "20250604",
+        "cash": 6875.495155,
+        "position_value": 1612.000000000001,
+        "total": 8487.495155,
+        "positions": 1
+      },
+      {
+        "date": "20250605",
+        "cash": 5831.135155,
+        "position_value": 2572.0,
+        "total": 8403.135155,
+        "positions": 2
+      },
+      {
+        "date": "20250606",
+        "cash": 5911.644165,
+        "position_value": 2444.0,
+        "total": 8355.644165,
+        "positions": 2
+      },
+      {
+        "date": "20250609",
+        "cash": 5911.644165,
+        "position_value": 2523.0,
+        "total": 8434.644165,
+        "positions": 2
+      },
+      {
+        "date": "20250610",
+        "cash": 7069.749895,
+        "position_value": 1404.000000000001,
+        "total": 8473.749895,
+        "positions": 1
+      },
+      {
+        "date": "20250611",
+        "cash": 7069.749895,
+        "position_value": 1292.000000000001,
+        "total": 8361.749895,
+        "positions": 1
+      },
+      {
+        "date": "20250612",
+        "cash": 8294.768645,
+        "position_value": 0.0,
+        "total": 8294.768645,
+        "positions": 0
+      },
+      {
+        "date": "20250613",
+        "cash": 5818.318645,
+        "position_value": 2551.999999999999,
+        "total": 8370.318645,
+        "positions": 2
+      },
+      {
+        "date": "20250616",
+        "cash": 5818.318645,
+        "position_value": 2493.999999999999,
+        "total": 8312.318645,
+        "positions": 2
+      },
+      {
+        "date": "20250617",
+        "cash": 5818.318645,
+        "position_value": 2321.0,
+        "total": 8139.318645,
+        "positions": 2
+      },
+      {
+        "date": "20250618",
+        "cash": 7159.451165,
+        "position_value": 881.0,
+        "total": 8040.451165,
+        "positions": 1
+      },
+      {
+        "date": "20250619",
+        "cash": 6996.2699,
+        "position_value": 1020.0,
+        "total": 8016.2699,
+        "positions": 1
+      },
+      {
+        "date": "20250620",
+        "cash": 5722.5199,
+        "position_value": 2109.0,
+        "total": 7831.5199,
+        "positions": 2
+      },
+      {
+        "date": "20250623",
+        "cash": 6555.900680000001,
+        "position_value": 1210.0,
+        "total": 7765.900680000001,
+        "positions": 1
+      },
+      {
+        "date": "20250624",
+        "cash": 6555.900680000001,
+        "position_value": 1124.0,
+        "total": 7679.900680000001,
+        "positions": 1
+      },
+      {
+        "date": "20250625",
+        "cash": 7641.189300000001,
+        "position_value": 0.0,
+        "total": 7641.189300000001,
+        "positions": 0
+      },
+      {
+        "date": "20250626",
+        "cash": 6113.689300000001,
+        "position_value": 1429.0,
+        "total": 7542.689300000001,
+        "positions": 1
+      },
+      {
+        "date": "20250627",
+        "cash": 6113.689300000001,
+        "position_value": 1417.0,
+        "total": 7530.689300000001,
+        "positions": 1
+      },
+      {
+        "date": "20250630",
+        "cash": 6706.958255000001,
+        "position_value": 761.0,
+        "total": 7467.958255000001,
+        "positions": 1
+      },
+      {
+        "date": "20250701",
+        "cash": 6706.958255000001,
+        "position_value": 788.0,
+        "total": 7494.958255000001,
+        "positions": 1
+      },
+      {
+        "date": "20250702",
+        "cash": 6706.958255000001,
+        "position_value": 740.0,
+        "total": 7446.958255000001,
+        "positions": 1
+      },
+      {
+        "date": "20250703",
+        "cash": 6706.958255000001,
+        "position_value": 707.0,
+        "total": 7413.958255000001,
+        "positions": 1
+      },
+      {
+        "date": "20250704",
+        "cash": 6168.566860000001,
+        "position_value": 1206.0,
+        "total": 7374.566860000001,
+        "positions": 1
+      },
+      {
+        "date": "20250707",
+        "cash": 6168.566860000001,
+        "position_value": 1326.0,
+        "total": 7494.566860000001,
+        "positions": 1
+      },
+      {
+        "date": "20250708",
+        "cash": 6168.566860000001,
+        "position_value": 1425.0,
+        "total": 7593.566860000001,
+        "positions": 1
+      },
+      {
+        "date": "20250709",
+        "cash": 6023.163695000001,
+        "position_value": 1425.0,
+        "total": 7448.163695000001,
+        "positions": 1
+      },
+      {
+        "date": "20250710",
+        "cash": 6023.163695000001,
+        "position_value": 1475.0,
+        "total": 7498.163695000001,
+        "positions": 1
+      },
+      {
+        "date": "20250711",
+        "cash": 5206.163695000001,
+        "position_value": 2396.0,
+        "total": 7602.163695000001,
+        "positions": 2
+      },
+      {
+        "date": "20250714",
+        "cash": 5206.163695000001,
+        "position_value": 2166.0,
+        "total": 7372.163695000001,
+        "positions": 2
+      },
+      {
+        "date": "20250715",
+        "cash": 7268.499285000001,
+        "position_value": 0.0,
+        "total": 7268.499285000001,
+        "positions": 0
+      },
+      {
+        "date": "20250716",
+        "cash": 7268.499285000001,
+        "position_value": 0.0,
+        "total": 7268.499285000001,
+        "positions": 0
+      },
+      {
+        "date": "20250717",
+        "cash": 7268.499285000001,
+        "position_value": 0.0,
+        "total": 7268.499285000001,
+        "positions": 0
+      },
+      {
+        "date": "20250718",
+        "cash": 6492.099285000001,
+        "position_value": 774.0,
+        "total": 7266.099285000001,
+        "positions": 1
+      },
+      {
+        "date": "20250721",
+        "cash": 6492.099285000001,
+        "position_value": 760.0,
+        "total": 7252.099285000001,
+        "positions": 1
+      },
+      {
+        "date": "20250722",
+        "cash": 6492.099285000001,
+        "position_value": 684.0,
+        "total": 7176.099285000001,
+        "positions": 1
+      },
+      {
+        "date": "20250723",
+        "cash": 5994.687215000001,
+        "position_value": 1092.0,
+        "total": 7086.687215000001,
+        "positions": 1
+      },
+      {
+        "date": "20250724",
+        "cash": 5994.687215000001,
+        "position_value": 1092.0,
+        "total": 7086.687215000001,
+        "positions": 1
+      },
+      {
+        "date": "20250725",
+        "cash": 5994.687215000001,
+        "position_value": 1061.0,
+        "total": 7055.687215000001,
+        "positions": 1
+      },
+      {
+        "date": "20250728",
+        "cash": 6001.973415000001,
+        "position_value": 1089.0,
+        "total": 7090.973415000001,
+        "positions": 1
+      },
+      {
+        "date": "20250729",
+        "cash": 6001.973415000001,
+        "position_value": 1022.0,
+        "total": 7023.973415000001,
+        "positions": 1
+      },
+      {
+        "date": "20250730",
+        "cash": 6001.973415000001,
+        "position_value": 966.0,
+        "total": 6967.973415000001,
+        "positions": 1
+      },
+      {
+        "date": "20250731",
+        "cash": 6919.979485000002,
+        "position_value": 0.0,
+        "total": 6919.979485000002,
+        "positions": 0
+      },
+      {
+        "date": "20250801",
+        "cash": 6011.629485000001,
+        "position_value": 845.0,
+        "total": 6856.629485000001,
+        "positions": 1
+      },
+      {
+        "date": "20250804",
+        "cash": 6011.629485000001,
+        "position_value": 1014.0,
+        "total": 7025.629485000001,
+        "positions": 1
+      },
+      {
+        "date": "20250805",
+        "cash": 5642.466155000001,
+        "position_value": 1290.0,
+        "total": 6932.466155000001,
+        "positions": 1
+      },
+      {
+        "date": "20250806",
+        "cash": 5642.466155000001,
+        "position_value": 1419.0,
+        "total": 7061.466155000001,
+        "positions": 1
+      },
+      {
+        "date": "20250807",
+        "cash": 5642.466155000001,
+        "position_value": 1561.0,
+        "total": 7203.466155000001,
+        "positions": 1
+      },
+      {
+        "date": "20250808",
+        "cash": 7173.513570000001,
+        "position_value": 0.0,
+        "total": 7173.513570000001,
+        "positions": 0
+      },
+      {
+        "date": "20250811",
+        "cash": 6253.998570000002,
+        "position_value": 839.0,
+        "total": 7092.998570000002,
+        "positions": 1
+      },
+      {
+        "date": "20250812",
+        "cash": 5110.168570000002,
+        "position_value": 2039.0,
+        "total": 7149.168570000002,
+        "positions": 2
+      },
+      {
+        "date": "20250813",
+        "cash": 5110.168570000002,
+        "position_value": 2151.0,
+        "total": 7261.168570000002,
+        "positions": 2
+      },
+      {
+        "date": "20250814",
+        "cash": 5110.168570000002,
+        "position_value": 2117.0,
+        "total": 7227.168570000002,
+        "positions": 2
+      },
+      {
+        "date": "20250815",
+        "cash": 7227.609000000002,
+        "position_value": 0.0,
+        "total": 7227.609000000002,
+        "positions": 0
+      },
+      {
+        "date": "20250818",
+        "cash": 7227.609000000002,
+        "position_value": 0.0,
+        "total": 7227.609000000002,
+        "positions": 0
+      },
+      {
+        "date": "20250819",
+        "cash": 6185.279000000002,
+        "position_value": 1078.0,
+        "total": 7263.279000000002,
+        "positions": 1
+      },
+      {
+        "date": "20250820",
+        "cash": 6185.279000000002,
+        "position_value": 1186.0,
+        "total": 7371.279000000002,
+        "positions": 1
+      },
+      {
+        "date": "20250821",
+        "cash": 7357.1609400000025,
+        "position_value": 0.0,
+        "total": 7357.1609400000025,
+        "positions": 0
+      },
+      {
+        "date": "20250822",
+        "cash": 6245.810940000003,
+        "position_value": 1015.0,
+        "total": 7260.810940000003,
+        "positions": 1
+      },
+      {
+        "date": "20250825",
+        "cash": 5501.890940000003,
+        "position_value": 1751.0,
+        "total": 7252.890940000003,
+        "positions": 2
+      },
+      {
+        "date": "20250826",
+        "cash": 5503.807300000003,
+        "position_value": 1721.0,
+        "total": 7224.807300000003,
+        "positions": 2
+      },
+      {
+        "date": "20250827",
+        "cash": 5503.807300000003,
+        "position_value": 1653.0,
+        "total": 7156.807300000003,
+        "positions": 2
+      },
+      {
+        "date": "20250828",
+        "cash": 5503.807300000003,
+        "position_value": 1630.0,
+        "total": 7133.807300000003,
+        "positions": 2
+      },
+      {
+        "date": "20250829",
+        "cash": 7083.975540000003,
+        "position_value": 0.0,
+        "total": 7083.975540000003,
+        "positions": 0
+      },
+      {
+        "date": "20250901",
+        "cash": 7083.975540000003,
+        "position_value": 0.0,
+        "total": 7083.975540000003,
+        "positions": 0
+      },
+      {
+        "date": "20250902",
+        "cash": 5891.425540000004,
+        "position_value": 1167.0,
+        "total": 7058.425540000004,
+        "positions": 1
+      },
+      {
+        "date": "20250903",
+        "cash": 4797.330540000004,
+        "position_value": 2098.0,
+        "total": 6895.330540000004,
+        "positions": 2
+      },
+      {
+        "date": "20250904",
+        "cash": 5781.265615000004,
+        "position_value": 1107.0,
+        "total": 6888.265615000004,
+        "positions": 1
+      },
+      {
+        "date": "20250905",
+        "cash": 5781.265615000004,
+        "position_value": 1086.0,
+        "total": 6867.265615000004,
+        "positions": 1
+      },
+      {
+        "date": "20250908",
+        "cash": 5781.265615000004,
+        "position_value": 1073.0,
+        "total": 6854.265615000004,
+        "positions": 1
+      },
+      {
+        "date": "20250909",
+        "cash": 5306.175990000004,
+        "position_value": 1403.0,
+        "total": 6709.175990000004,
+        "positions": 2
+      },
+      {
+        "date": "20250910",
+        "cash": 5306.175990000004,
+        "position_value": 1516.0,
+        "total": 6822.175990000004,
+        "positions": 2
+      },
+      {
+        "date": "20250911",
+        "cash": 5306.175990000004,
+        "position_value": 1563.0,
+        "total": 6869.175990000004,
+        "positions": 2
+      },
+      {
+        "date": "20250912",
+        "cash": 5306.175990000004,
+        "position_value": 1463.0,
+        "total": 6769.175990000004,
+        "positions": 2
+      }
+    ],
+    "daily_returns": [
+      -0.013720369626356003,
+      -0.009217146159643329,
+      0.01500684586354675,
+      -0.005265879760296,
+      -0.026033975526836565,
+      0.006689547570788819,
+      0.017235714877146275,
+      -0.005818010075720507,
+      -0.03134712556044347,
+      0.018442287951324344,
+      -0.0038194004132576587,
+      0.0069994811697264864,
+      -0.022289529831087798,
+      0.01230862451132758,
+      -0.0011472957710088228,
+      -0.015045112260683837,
+      0.000659445913929524,
+      0.010753649623651012,
+      -0.01190330697252955,
+      -0.010446735760440298,
+      -0.007667118165526409,
+      -0.009800780966505298,
+      0.0006578423932894379,
+      -0.006793235852126382,
+      -0.010114131236645812,
+      -0.009865102809973617,
+      0.0009477153927026767,
+      0.009108344936989953,
+      0.0,
+      -0.015290681828024517,
+      0.0006933948067182028,
+      -0.0016340879180418682,
+      0.00339812290363993,
+      -0.00023254754756897144,
+      -0.007226458672143685,
+      0.009301797680228575,
+      -0.025185572992508745,
+      -0.008788429518954439,
+      -0.024792227616495598,
+      -0.008589899033506508,
+      -0.005071053722413334,
+      0.016003588246963584,
+      0.015978233850813994,
+      0.009388051266751716,
+      -0.00796899754217649,
+      0.0009383619196952298,
+      -0.005390522776947447,
+      -0.009939328206897878,
+      -0.005651579931062079,
+      0.009454686968470252,
+      0.004636322438150079,
+      -0.013217288849425026,
+      -0.008010434519221017,
+      0.009108150357579897,
+      -0.0069292463596527755,
+      -0.020812484144127646,
+      -0.012146898814526002,
+      -0.0030074512615984733,
+      -0.023046878698532842,
+      -0.008378861426375178,
+      -0.011074053550733796,
+      -0.0050406094574649805,
+      -0.012890663499201621,
+      -0.0015909444924372,
+      -0.008330053531753001,
+      0.0036154460266194935,
+      -0.006404305183151416,
+      -0.004431339463712355,
+      -0.00531313957337632,
+      0.016272142117374468,
+      0.013209569258549518,
+      -0.019148203694093726,
+      0.006713064058133592,
+      0.013870062622045754,
+      -0.030254544525431977,
+      -0.014061599048635924,
+      0.0,
+      0.0,
+      -0.0003301919565366836,
+      -0.0019267559457797855,
+      -0.010479724147902367,
+      -0.012459703586723759,
+      0.0,
+      -0.004374399357485964,
+      0.00500110037828547,
+      -0.009448632236904246,
+      -0.007972695323762127,
+      -0.006887788908132571,
+      -0.009154651417293956,
+      0.024647678625440553,
+      -0.013260495760402358,
+      0.018608096616087984,
+      0.020109138369155007,
+      -0.0041580795072118995,
+      -0.011223928025551836,
+      0.007919076741051714,
+      0.015666157386466546,
+      -0.0046824419061792955,
+      6.0940878261617806e-05,
+      0.0,
+      0.004935242069680314,
+      0.014869317287687828,
+      -0.0019152795600329037,
+      -0.01309608431645909,
+      -0.0010907872502737372,
+      -0.003872061531370527,
+      -0.009412015736392025,
+      -0.003213723527249363,
+      -0.006985296617137389,
+      0.0,
+      -0.003606731821098194,
+      -0.0231064277827602,
+      -0.0010245955518761356,
+      -0.0030486629252899373,
+      -0.0018930387622701546,
+      -0.021167785602367487,
+      0.016842604839763627,
+      0.006889297501104185,
+      -0.014557786864913318
+    ],
+    "stats": {
+      "start_time": "2026-03-25 23:15:14.123432",
+      "end_time": "2026-03-25 23:18:05.200953",
+      "total_days": 120,
+      "trading_days": 120,
+      "total_stocks_analyzed": 444535,
+      "total_signals_generated": 245,
+      "total_buy_attempts": 126,
+      "successful_buys": 46,
+      "failed_buys_high_open": 12,
+      "failed_buys_limit_up": 30
+    }
+  },
+  "test_result": {
+    "initial_capital": 10000,
+    "final_capital": 5930.582930000007,
+    "total_return": -0.4069417069999993,
+    "annual_return": -0.6661860323351784,
+    "max_drawdown": 0.4032204883551378,
+    "sharpe_ratio": -6.019787084804863,
+    "sortino_ratio": -9.716546892018107,
+    "calmar_ratio": -1.6521631503715475,
+    "alpha": -1.1549355708016016,
+    "beta": 1.0,
+    "information_ratio": -6.495146196558834,
+    "win_rate": 0.14893617021276595,
+    "profit_factor": 0.09430818313519546,
+    "total_trades": 47,
+    "win_trades": 7,
+    "loss_trades": 40,
+    "trades": [
+      {
+        "date": "20250916",
+        "ts_code": "002642.SZ",
+        "action": "buy",
+        "price": 11.743549999999999,
+        "shares": 100,
+        "commission": 5,
+        "score": 32.3,
+        "name": ""
+      },
+      {
+        "date": "20250917",
+        "ts_code": "002183.SZ",
+        "action": "buy",
+        "price": 6.0697,
+        "shares": 200,
+        "commission": 5,
+        "score": 34.99999999999999,
+        "name": ""
+      },
+      {
+        "date": "20250918",
+        "ts_code": "002642.SZ",
+        "action": "sell",
+        "price": 10.3425,
+        "shares": 100,
+        "commission": 5,
+        "stamp_duty": 1.0342500000000001,
+        "pnl": -146.13924999999995,
+        "pnl_ratio": -0.11930378803683722,
+        "reason": "止损",
+        "hold_days": 0
+      },
+      {
+        "date": "20250919",
+        "ts_code": "002183.SZ",
+        "action": "sell",
+        "price": 5.4372,
+        "shares": 200,
+        "commission": 5,
+        "stamp_duty": 1.0874400000000002,
+        "pnl": -132.58744000000004,
+        "pnl_ratio": -0.10420613868889736,
+        "reason": "止损",
+        "hold_days": 0
+      },
+      {
+        "date": "20250922",
+        "ts_code": "600400.SH",
+        "action": "buy",
+        "price": 3.6844499999999996,
+        "shares": 500,
+        "commission": 5,
+        "score": 34.99999999999999,
+        "name": ""
+      },
+      {
+        "date": "20250925",
+        "ts_code": "600400.SH",
+        "action": "sell",
+        "price": 3.546,
+        "shares": 500,
+        "commission": 5,
+        "stamp_duty": 1.7730000000000001,
+        "pnl": -75.99799999999986,
+        "pnl_ratio": -0.03757684321947638,
+        "reason": "持股超时",
+        "hold_days": 0
+      },
+      {
+        "date": "20250926",
+        "ts_code": "002298.SZ",
+        "action": "buy",
+        "price": 13.702499999999999,
+        "shares": 100,
+        "commission": 5,
+        "score": 33.699999999999996,
+        "name": ""
+      },
+      {
+        "date": "20250929",
+        "ts_code": "002298.SZ",
+        "action": "sell",
+        "price": 12.65725,
+        "shares": 100,
+        "commission": 5,
+        "stamp_duty": 1.265725,
+        "pnl": -110.79072499999994,
+        "pnl_ratio": -0.0762817004196314,
+        "reason": "止损",
+        "hold_days": 0
+      },
+      {
+        "date": "20251009",
+        "ts_code": "002298.SZ",
+        "action": "buy",
+        "price": 13.42845,
+        "shares": 100,
+        "commission": 5,
+        "score": 36.39999999999999,
+        "name": ""
+      },
+      {
+        "date": "20251014",
+        "ts_code": "002298.SZ",
+        "action": "sell",
+        "price": 13.593,
+        "shares": 100,
+        "commission": 5,
+        "stamp_duty": 1.3593,
+        "pnl": 10.09570000000002,
+        "pnl_ratio": 0.01225383421020298,
+        "reason": "持股超时",
+        "hold_days": 0
+      },
+      {
+        "date": "20251015",
+        "ts_code": "601011.SH",
+        "action": "buy",
+        "price": 4.06,
+        "shares": 400,
+        "commission": 5,
+        "score": 34.5,
+        "name": ""
+      },
+      {
+        "date": "20251016",
+        "ts_code": "601011.SH",
+        "action": "sell",
+        "price": 3.4672,
+        "shares": 400,
+        "commission": 5,
+        "stamp_duty": 1.3868800000000001,
+        "pnl": -243.50687999999982,
+        "pnl_ratio": -0.14600985221674867,
+        "reason": "止损",
+        "hold_days": 0
+      },
+      {
+        "date": "20251017",
+        "ts_code": "601011.SH",
+        "action": "buy",
+        "price": 3.9381999999999997,
+        "shares": 400,
+        "commission": 5,
+        "score": 33.699999999999996,
+        "name": ""
+      },
+      {
+        "date": "20251021",
+        "ts_code": "603861.SH",
+        "action": "buy",
+        "price": 13.69235,
+        "shares": 100,
+        "commission": 5,
+        "score": 39.1,
+        "name": ""
+      },
+      {
+        "date": "20251022",
+        "ts_code": "601011.SH",
+        "action": "sell",
+        "price": 3.94,
+        "shares": 400,
+        "commission": 5,
+        "stamp_duty": 1.576,
+        "pnl": -5.855999999999902,
+        "pnl_ratio": 0.0004570616017470535,
+        "reason": "持股超时",
+        "hold_days": 0
+      },
+      {
+        "date": "20251022",
+        "ts_code": "603861.SH",
+        "action": "sell",
+        "price": 12.44055,
+        "shares": 100,
+        "commission": 5,
+        "stamp_duty": 1.2440550000000001,
+        "pnl": -131.42405499999995,
+        "pnl_ratio": -0.09142331301785299,
+        "reason": "止损",
+        "hold_days": 0
+      },
+      {
+        "date": "20251023",
+        "ts_code": "600172.SH",
+        "action": "buy",
+        "price": 8.231649999999998,
+        "shares": 200,
+        "commission": 5,
+        "score": 33.699999999999996,
+        "name": ""
+      },
+      {
+        "date": "20251023",
+        "ts_code": "600293.SH",
+        "action": "buy",
+        "price": 3.7148999999999996,
+        "shares": 400,
+        "commission": 5,
+        "score": 33.699999999999996,
+        "name": ""
+      },
+      {
+        "date": "20251024",
+        "ts_code": "600172.SH",
+        "action": "sell",
+        "price": 7.417050000000001,
+        "shares": 200,
+        "commission": 5,
+        "stamp_duty": 1.4834100000000001,
+        "pnl": -169.40340999999955,
+        "pnl_ratio": -0.09895950386617482,
+        "reason": "止损",
+        "hold_days": 0
+      },
+      {
+        "date": "20251024",
+        "ts_code": "600293.SH",
+        "action": "sell",
+        "price": 3.45735,
+        "shares": 400,
+        "commission": 5,
+        "stamp_duty": 1.38294,
+        "pnl": -109.4029399999999,
+        "pnl_ratio": -0.06932891867883381,
+        "reason": "止损",
+        "hold_days": 0
+      },
+      {
+        "date": "20251029",
+        "ts_code": "000599.SZ",
+        "action": "buy",
+        "price": 8.0997,
+        "shares": 200,
+        "commission": 5,
+        "score": 36.0,
+        "name": ""
+      },
+      {
+        "date": "20251029",
+        "ts_code": "000011.SZ",
+        "action": "buy",
+        "price": 11.5101,
+        "shares": 100,
+        "commission": 5,
+        "score": 32.35,
+        "name": ""
+      },
+      {
+        "date": "20251030",
+        "ts_code": "000599.SZ",
+        "action": "sell",
+        "price": 6.7177,
+        "shares": 200,
+        "commission": 5,
+        "stamp_duty": 1.34354,
+        "pnl": -282.7435400000001,
+        "pnl_ratio": -0.17062360334333376,
+        "reason": "止损",
+        "hold_days": 0
+      },
+      {
+        "date": "20251103",
+        "ts_code": "000011.SZ",
+        "action": "sell",
+        "price": 10.7365,
+        "shares": 100,
+        "commission": 5,
+        "stamp_duty": 1.07365,
+        "pnl": -83.43365000000001,
+        "pnl_ratio": -0.06721053683286854,
+        "reason": "持股超时",
+        "hold_days": 0
+      },
+      {
+        "date": "20251104",
+        "ts_code": "603169.SH",
+        "action": "buy",
+        "price": 10.48495,
+        "shares": 100,
+        "commission": 5,
+        "score": 36.099999999999994,
+        "name": ""
+      },
+      {
+        "date": "20251107",
+        "ts_code": "603169.SH",
+        "action": "sell",
+        "price": 10.05685,
+        "shares": 100,
+        "commission": 5,
+        "stamp_duty": 1.0056850000000002,
+        "pnl": -48.81568499999988,
+        "pnl_ratio": -0.04082995150191454,
+        "reason": "持股超时",
+        "hold_days": 0
+      },
+      {
+        "date": "20251111",
+        "ts_code": "000533.SZ",
+        "action": "buy",
+        "price": 10.261649999999998,
+        "shares": 100,
+        "commission": 5,
+        "score": 33.699999999999996,
+        "name": ""
+      },
+      {
+        "date": "20251111",
+        "ts_code": "600678.SH",
+        "action": "buy",
+        "price": 12.18,
+        "shares": 100,
+        "commission": 5,
+        "score": 33.1,
+        "name": ""
+      },
+      {
+        "date": "20251113",
+        "ts_code": "000533.SZ",
+        "action": "sell",
+        "price": 9.11125,
+        "shares": 100,
+        "commission": 5,
+        "stamp_duty": 0.9111250000000001,
+        "pnl": -120.95112499999976,
+        "pnl_ratio": -0.1121067274756007,
+        "reason": "止损",
+        "hold_days": 0
+      },
+      {
+        "date": "20251113",
+        "ts_code": "600678.SH",
+        "action": "sell",
+        "price": 10.638,
+        "shares": 100,
+        "commission": 5,
+        "stamp_duty": 1.0638,
+        "pnl": -160.26379999999997,
+        "pnl_ratio": -0.12660098522167487,
+        "reason": "止损",
+        "hold_days": 0
+      },
+      {
+        "date": "20251114",
+        "ts_code": "000533.SZ",
+        "action": "buy",
+        "price": 10.413899999999998,
+        "shares": 100,
+        "commission": 5,
+        "score": 33.699999999999996,
+        "name": ""
+      },
+      {
+        "date": "20251114",
+        "ts_code": "002578.SZ",
+        "action": "buy",
+        "price": 5.074999999999999,
+        "shares": 200,
+        "commission": 5,
+        "score": 29.199999999999996,
+        "name": ""
+      },
+      {
+        "date": "20251117",
+        "ts_code": "000533.SZ",
+        "action": "sell",
+        "price": 8.894549999999999,
+        "shares": 100,
+        "commission": 5,
+        "stamp_duty": 0.889455,
+        "pnl": -157.82445499999994,
+        "pnl_ratio": -0.14589635007057872,
+        "reason": "止损",
+        "hold_days": 0
+      },
+      {
+        "date": "20251118",
+        "ts_code": "600327.SH",
+        "action": "buy",
+        "price": 6.58735,
+        "shares": 200,
+        "commission": 5,
+        "score": 37.6,
+        "name": ""
+      },
+      {
+        "date": "20251119",
+        "ts_code": "600327.SH",
+        "action": "sell",
+        "price": 5.5554,
+        "shares": 200,
+        "commission": 5,
+        "stamp_duty": 1.1110799999999998,
+        "pnl": -212.50108000000003,
+        "pnl_ratio": -0.15665631854994802,
+        "reason": "止损",
+        "hold_days": 0
+      },
+      {
+        "date": "20251119",
+        "ts_code": "002578.SZ",
+        "action": "sell",
+        "price": 4.36355,
+        "shares": 200,
+        "commission": 5,
+        "stamp_duty": 0.8727100000000001,
+        "pnl": -148.16270999999986,
+        "pnl_ratio": -0.14018719211822647,
+        "reason": "持股超时",
+        "hold_days": 0
+      },
+      {
+        "date": "20251121",
+        "ts_code": "000859.SZ",
+        "action": "buy",
+        "price": 7.9373,
+        "shares": 100,
+        "commission": 5,
+        "score": 34.6,
+        "name": ""
+      },
+      {
+        "date": "20251125",
+        "ts_code": "002228.SZ",
+        "action": "buy",
+        "price": 4.496449999999999,
+        "shares": 300,
+        "commission": 5,
+        "score": 32.75,
+        "name": ""
+      },
+      {
+        "date": "20251125",
+        "ts_code": "000859.SZ",
+        "action": "sell",
+        "price": 8.471,
+        "shares": 100,
+        "commission": 5,
+        "stamp_duty": 0.8471000000000001,
+        "pnl": 47.52290000000005,
+        "pnl_ratio": 0.06723948949894808,
+        "reason": "止盈",
+        "hold_days": 0
+      },
+      {
+        "date": "20251127",
+        "ts_code": "002596.SZ",
+        "action": "buy",
+        "price": 6.191499999999999,
+        "shares": 200,
+        "commission": 5,
+        "score": 39.1,
+        "name": ""
+      },
+      {
+        "date": "20251128",
+        "ts_code": "002596.SZ",
+        "action": "sell",
+        "price": 5.7721,
+        "shares": 200,
+        "commission": 5,
+        "stamp_duty": 1.15442,
+        "pnl": -90.03441999999974,
+        "pnl_ratio": -0.06773802794153254,
+        "reason": "止损",
+        "hold_days": 0
+      },
+      {
+        "date": "20251128",
+        "ts_code": "002228.SZ",
+        "action": "sell",
+        "price": 4.0582,
+        "shares": 300,
+        "commission": 5,
+        "stamp_duty": 1.21746,
+        "pnl": -137.69245999999973,
+        "pnl_ratio": -0.09746577855864053,
+        "reason": "持股超时",
+        "hold_days": 0
+      },
+      {
+        "date": "20251201",
+        "ts_code": "600868.SH",
+        "action": "buy",
+        "price": 3.6946,
+        "shares": 300,
+        "commission": 5,
+        "score": 30.799999999999997,
+        "name": ""
+      },
+      {
+        "date": "20251204",
+        "ts_code": "002519.SZ",
+        "action": "buy",
+        "price": 6.4959999999999996,
+        "shares": 100,
+        "commission": 5,
+        "score": 33.699999999999996,
+        "name": ""
+      },
+      {
+        "date": "20251204",
+        "ts_code": "600868.SH",
+        "action": "sell",
+        "price": 3.59525,
+        "shares": 300,
+        "commission": 5,
+        "stamp_duty": 1.078575,
+        "pnl": -35.88357499999995,
+        "pnl_ratio": -0.026890597087641376,
+        "reason": "持股超时",
+        "hold_days": 0
+      },
+      {
+        "date": "20251205",
+        "ts_code": "600151.SH",
+        "action": "buy",
+        "price": 13.194999999999999,
+        "shares": 100,
+        "commission": 5,
+        "score": 40.5,
+        "name": ""
+      },
+      {
+        "date": "20251205",
+        "ts_code": "002519.SZ",
+        "action": "sell",
+        "price": 5.8706,
+        "shares": 100,
+        "commission": 5,
+        "stamp_duty": 0.5870599999999999,
+        "pnl": -68.12705999999999,
+        "pnl_ratio": -0.09627463054187192,
+        "reason": "止损",
+        "hold_days": 0
+      },
+      {
+        "date": "20251210",
+        "ts_code": "600151.SH",
+        "action": "sell",
+        "price": 14.4204,
+        "shares": 100,
+        "commission": 5,
+        "stamp_duty": 1.44204,
+        "pnl": 116.09796000000021,
+        "pnl_ratio": 0.09286851079954546,
+        "reason": "止盈",
+        "hold_days": 0
+      },
+      {
+        "date": "20251211",
+        "ts_code": "601933.SH",
+        "action": "buy",
+        "price": 5.460699999999999,
+        "shares": 200,
+        "commission": 5,
+        "score": 37.5,
+        "name": ""
+      },
+      {
+        "date": "20251212",
+        "ts_code": "603601.SH",
+        "action": "buy",
+        "price": 8.12,
+        "shares": 100,
+        "commission": 5,
+        "score": 37.5,
+        "name": ""
+      },
+      {
+        "date": "20251215",
+        "ts_code": "601933.SH",
+        "action": "sell",
+        "price": 4.8265,
+        "shares": 200,
+        "commission": 5,
+        "stamp_duty": 0.9653,
+        "pnl": -132.80529999999982,
+        "pnl_ratio": -0.11613895654403265,
+        "reason": "止损",
+        "hold_days": 0
+      },
+      {
+        "date": "20251216",
+        "ts_code": "002083.SZ",
+        "action": "buy",
+        "price": 11.4695,
+        "shares": 100,
+        "commission": 5,
+        "score": 39.1,
+        "name": ""
+      },
+      {
+        "date": "20251216",
+        "ts_code": "603601.SH",
+        "action": "sell",
+        "price": 8.865,
+        "shares": 100,
+        "commission": 5,
+        "stamp_duty": 0.8865000000000001,
+        "pnl": 68.6135000000001,
+        "pnl_ratio": 0.09174876847290654,
+        "reason": "止盈",
+        "hold_days": 0
+      },
+      {
+        "date": "20251217",
+        "ts_code": "002083.SZ",
+        "action": "sell",
+        "price": 10.834999999999999,
+        "shares": 100,
+        "commission": 5,
+        "stamp_duty": 1.0835000000000001,
+        "pnl": -69.5335000000001,
+        "pnl_ratio": -0.05532063298312925,
+        "reason": "止损",
+        "hold_days": 0
+      },
+      {
+        "date": "20251218",
+        "ts_code": "603123.SH",
+        "action": "buy",
+        "price": 14.209999999999999,
+        "shares": 100,
+        "commission": 5,
+        "score": 32.3,
+        "name": ""
+      },
+      {
+        "date": "20251219",
+        "ts_code": "000950.SZ",
+        "action": "buy",
+        "price": 6.820799999999999,
+        "shares": 100,
+        "commission": 5,
+        "score": 37.5,
+        "name": ""
+      },
+      {
+        "date": "20251223",
+        "ts_code": "603123.SH",
+        "action": "sell",
+        "price": 13.62255,
+        "shares": 100,
+        "commission": 5,
+        "stamp_duty": 1.3622550000000002,
+        "pnl": -65.10725499999987,
+        "pnl_ratio": -0.04134060520760019,
+        "reason": "持股超时",
+        "hold_days": 0
+      },
+      {
+        "date": "20251224",
+        "ts_code": "000950.SZ",
+        "action": "sell",
+        "price": 6.4025,
+        "shares": 100,
+        "commission": 5,
+        "stamp_duty": 0.64025,
+        "pnl": -47.47024999999994,
+        "pnl_ratio": -0.06132711705371796,
+        "reason": "持股超时",
+        "hold_days": 0
+      },
+      {
+        "date": "20251225",
+        "ts_code": "000036.SZ",
+        "action": "buy",
+        "price": 6.983199999999999,
+        "shares": 200,
+        "commission": 5,
+        "score": 36.0,
+        "name": ""
+      },
+      {
+        "date": "20251226",
+        "ts_code": "600179.SH",
+        "action": "buy",
+        "price": 6.1610499999999995,
+        "shares": 100,
+        "commission": 5,
+        "score": 34.5,
+        "name": ""
+      },
+      {
+        "date": "20251230",
+        "ts_code": "000036.SZ",
+        "action": "sell",
+        "price": 6.64875,
+        "shares": 200,
+        "commission": 5,
+        "stamp_duty": 1.32975,
+        "pnl": -73.2197499999999,
+        "pnl_ratio": -0.047893515866651325,
+        "reason": "持股超时",
+        "hold_days": 0
+      },
+      {
+        "date": "20251231",
+        "ts_code": "600179.SH",
+        "action": "sell",
+        "price": 5.42735,
+        "shares": 100,
+        "commission": 5,
+        "stamp_duty": 0.5427350000000001,
+        "pnl": -78.91273499999997,
+        "pnl_ratio": -0.11908684396328546,
+        "reason": "持股超时",
+        "hold_days": 0
+      },
+      {
+        "date": "20260105",
+        "ts_code": "002177.SZ",
+        "action": "buy",
+        "price": 9.0335,
+        "shares": 100,
+        "commission": 5,
+        "score": 33.699999999999996,
+        "name": ""
+      },
+      {
+        "date": "20260106",
+        "ts_code": "002766.SZ",
+        "action": "buy",
+        "price": 7.044099999999999,
+        "shares": 100,
+        "commission": 5,
+        "score": 34.6,
+        "name": ""
+      },
+      {
+        "date": "20260108",
+        "ts_code": "002177.SZ",
+        "action": "sell",
+        "price": 8.77635,
+        "shares": 100,
+        "commission": 5,
+        "stamp_duty": 0.8776350000000002,
+        "pnl": -31.592634999999934,
+        "pnl_ratio": -0.028466264460065237,
+        "reason": "持股超时",
+        "hold_days": 0
+      },
+      {
+        "date": "20260109",
+        "ts_code": "002195.SZ",
+        "action": "buy",
+        "price": 10.495099999999999,
+        "shares": 100,
+        "commission": 5,
+        "score": 33.699999999999996,
+        "name": ""
+      },
+      {
+        "date": "20260109",
+        "ts_code": "002766.SZ",
+        "action": "sell",
+        "price": 6.84575,
+        "shares": 100,
+        "commission": 5,
+        "stamp_duty": 0.6845749999999999,
+        "pnl": -25.519574999999957,
+        "pnl_ratio": -0.028158316889311565,
+        "reason": "持股超时",
+        "hold_days": 0
+      },
+      {
+        "date": "20260114",
+        "ts_code": "002195.SZ",
+        "action": "sell",
+        "price": 11.603299999999999,
+        "shares": 100,
+        "commission": 5,
+        "stamp_duty": 1.1603299999999999,
+        "pnl": 104.65967,
+        "pnl_ratio": 0.10559213347181068,
+        "reason": "止盈",
+        "hold_days": 0
+      },
+      {
+        "date": "20260115",
+        "ts_code": "002044.SZ",
+        "action": "buy",
+        "price": 8.708699999999999,
+        "shares": 100,
+        "commission": 5,
+        "score": 36.900000000000006,
+        "name": ""
+      },
+      {
+        "date": "20260119",
+        "ts_code": "002044.SZ",
+        "action": "sell",
+        "price": 7.1905,
+        "shares": 100,
+        "commission": 5,
+        "stamp_duty": 0.71905,
+        "pnl": -157.53904999999986,
+        "pnl_ratio": -0.1743314157107259,
+        "reason": "止损",
+        "hold_days": 0
+      },
+      {
+        "date": "20260120",
+        "ts_code": "002339.SZ",
+        "action": "buy",
+        "price": 11.6725,
+        "shares": 100,
+        "commission": 5,
+        "score": 32.75,
+        "name": ""
+      },
+      {
+        "date": "20260122",
+        "ts_code": "002554.SZ",
+        "action": "buy",
+        "price": 4.1006,
+        "shares": 200,
+        "commission": 5,
+        "score": 37.5,
+        "name": ""
+      },
+      {
+        "date": "20260122",
+        "ts_code": "002339.SZ",
+        "action": "sell",
+        "price": 10.50995,
+        "shares": 100,
+        "commission": 5,
+        "stamp_duty": 1.050995,
+        "pnl": -122.30599499999995,
+        "pnl_ratio": -0.0995973441850503,
+        "reason": "止损",
+        "hold_days": 0
+      },
+      {
+        "date": "20260126",
+        "ts_code": "002471.SZ",
+        "action": "buy",
+        "price": 9.135,
+        "shares": 100,
+        "commission": 5,
+        "score": 39.1,
+        "name": ""
+      },
+      {
+        "date": "20260127",
+        "ts_code": "002554.SZ",
+        "action": "sell",
+        "price": 3.9596999999999993,
+        "shares": 200,
+        "commission": 5,
+        "stamp_duty": 0.7919399999999999,
+        "pnl": -33.97194000000013,
+        "pnl_ratio": -0.034360825245086254,
+        "reason": "持股超时",
+        "hold_days": 0
+      },
+      {
+        "date": "20260127",
+        "ts_code": "002471.SZ",
+        "action": "sell",
+        "price": 7.771649999999999,
+        "shares": 100,
+        "commission": 5,
+        "stamp_duty": 0.777165,
+        "pnl": -142.11216500000003,
+        "pnl_ratio": -0.14924466338259448,
+        "reason": "止损",
+        "hold_days": 0
+      },
+      {
+        "date": "20260128",
+        "ts_code": "000592.SZ",
+        "action": "buy",
+        "price": 10.850349999999999,
+        "shares": 100,
+        "commission": 5,
+        "score": 34.99999999999999,
+        "name": ""
+      },
+      {
+        "date": "20260202",
+        "ts_code": "000592.SZ",
+        "action": "sell",
+        "price": 10.1455,
+        "shares": 100,
+        "commission": 5,
+        "stamp_duty": 1.01455,
+        "pnl": -76.49954999999987,
+        "pnl_ratio": -0.06496103812319406,
+        "reason": "持股超时",
+        "hold_days": 0
+      },
+      {
+        "date": "20260204",
+        "ts_code": "002471.SZ",
+        "action": "buy",
+        "price": 9.540999999999999,
+        "shares": 100,
+        "commission": 5,
+        "score": 32.3,
+        "name": ""
+      },
+      {
+        "date": "20260206",
+        "ts_code": "002291.SZ",
+        "action": "buy",
+        "price": 8.6275,
+        "shares": 100,
+        "commission": 5,
+        "score": 33.5,
+        "name": ""
+      },
+      {
+        "date": "20260209",
+        "ts_code": "002471.SZ",
+        "action": "sell",
+        "price": 9.62345,
+        "shares": 100,
+        "commission": 5,
+        "stamp_duty": 0.962345,
+        "pnl": 2.2826550000001467,
+        "pnl_ratio": 0.008641651818467821,
+        "reason": "持股超时",
+        "hold_days": 0
+      },
+      {
+        "date": "20260211",
+        "ts_code": "002291.SZ",
+        "action": "sell",
+        "price": 8.4119,
+        "shares": 100,
+        "commission": 5,
+        "stamp_duty": 0.84119,
+        "pnl": -27.401190000000025,
+        "pnl_ratio": -0.024989858012170414,
+        "reason": "持股超时",
+        "hold_days": 0
+      },
+      {
+        "date": "20260213",
+        "ts_code": "002323.SZ",
+        "action": "buy",
+        "price": 2.7201999999999997,
+        "shares": 400,
+        "commission": 5,
+        "score": 33.699999999999996,
+        "name": ""
+      },
+      {
+        "date": "20260224",
+        "ts_code": "002323.SZ",
+        "action": "sell",
+        "price": 2.2655,
+        "shares": 400,
+        "commission": 5,
+        "stamp_duty": 0.9062,
+        "pnl": -187.78619999999995,
+        "pnl_ratio": -0.1671568267039188,
+        "reason": "止损",
+        "hold_days": 0
+      },
+      {
+        "date": "20260227",
+        "ts_code": "002491.SZ",
+        "action": "buy",
+        "price": 10.271799999999999,
+        "shares": 100,
+        "commission": 5,
+        "score": 36.528571428571425,
+        "name": ""
+      },
+      {
+        "date": "20260304",
+        "ts_code": "002491.SZ",
+        "action": "sell",
+        "price": 10.84485,
+        "shares": 100,
+        "commission": 5,
+        "stamp_duty": 1.084485,
+        "pnl": 51.22051500000003,
+        "pnl_ratio": 0.05578866410950372,
+        "reason": "止盈",
+        "hold_days": 0
+      },
+      {
+        "date": "20260306",
+        "ts_code": "002877.SZ",
+        "action": "buy",
+        "price": 10.951849999999999,
+        "shares": 100,
+        "commission": 5,
+        "score": 32.3,
+        "name": ""
+      },
+      {
+        "date": "20260311",
+        "ts_code": "002877.SZ",
+        "action": "sell",
+        "price": 10.5789,
+        "shares": 100,
+        "commission": 5,
+        "stamp_duty": 1.0578900000000002,
+        "pnl": -43.35288999999977,
+        "pnl_ratio": -0.034053607381401105,
+        "reason": "持股超时",
+        "hold_days": 0
+      },
+      {
+        "date": "20260316",
+        "ts_code": "600121.SH",
+        "action": "buy",
+        "price": 5.8058,
+        "shares": 200,
+        "commission": 5,
+        "score": 34.6,
+        "name": ""
+      },
+      {
+        "date": "20260317",
+        "ts_code": "600121.SH",
+        "action": "sell",
+        "price": 5.01365,
+        "shares": 200,
+        "commission": 5,
+        "stamp_duty": 1.0027300000000001,
+        "pnl": -164.4327299999999,
+        "pnl_ratio": -0.13644114506183463,
+        "reason": "止损",
+        "hold_days": 0
+      },
+      {
+        "date": "20260320",
+        "ts_code": "603387.SH",
+        "action": "buy",
+        "price": 9.947,
+        "shares": 100,
+        "commission": 5,
+        "score": 36.85,
+        "name": ""
+      },
+      {
+        "date": "20260320",
+        "ts_code": "002323.SZ",
+        "action": "buy",
+        "price": 2.7303499999999996,
+        "shares": 300,
+        "commission": 5,
+        "score": 36.0,
+        "name": ""
+      },
+      {
+        "date": "20260320",
+        "ts_code": "603387.SH",
+        "action": "sell",
+        "price": 9.65,
+        "shares": 100,
+        "commission": 5,
+        "stamp_duty": 0.965,
+        "pnl": -35.664999999999885,
+        "pnl_ratio": -0.029858248718206377,
+        "reason": "清算",
+        "hold_days": 0
+      },
+      {
+        "date": "20260320",
+        "ts_code": "002323.SZ",
+        "action": "sell",
+        "price": 2.55,
+        "shares": 300,
+        "commission": 5,
+        "stamp_duty": 0.765,
+        "pnl": -59.86999999999993,
+        "pnl_ratio": -0.06605380262603688,
+        "reason": "清算",
+        "hold_days": 0
+      }
+    ],
+    "daily_capital": [
+      {
+        "date": "20250915",
+        "cash": 8820.645,
+        "position_value": 1117.0,
+        "total": 9937.645,
+        "positions": 1
+      },
+      {
+        "date": "20250916",
+        "cash": 7601.705,
+        "position_value": 2324.0,
+        "total": 9925.705,
+        "positions": 2
+      },
+      {
+        "date": "20250917",
+        "cash": 7601.705,
+        "position_value": 2205.0,
+        "total": 9806.705,
+        "positions": 2
+      },
+      {
+        "date": "20250918",
+        "cash": 8629.92075,
+        "position_value": 1114.0,
+        "total": 9743.92075,
+        "positions": 1
+      },
+      {
+        "date": "20250919",
+        "cash": 7864.048309999999,
+        "position_value": 1664.999999999999,
+        "total": 9529.048309999998,
+        "positions": 1
+      },
+      {
+        "date": "20250922",
+        "cash": 7864.048309999999,
+        "position_value": 1829.999999999999,
+        "total": 9694.048309999998,
+        "positions": 1
+      },
+      {
+        "date": "20250923",
+        "cash": 7864.048309999999,
+        "position_value": 1739.999999999999,
+        "total": 9604.048309999998,
+        "positions": 1
+      },
+      {
+        "date": "20250924",
+        "cash": 7864.048309999999,
+        "position_value": 1914.999999999999,
+        "total": 9779.048309999998,
+        "positions": 1
+      },
+      {
+        "date": "20250925",
+        "cash": 8255.025309999999,
+        "position_value": 1379.0,
+        "total": 9634.025309999999,
+        "positions": 1
+      },
+      {
+        "date": "20250926",
+        "cash": 8255.025309999999,
+        "position_value": 1286.0,
+        "total": 9541.025309999999,
+        "positions": 1
+      },
+      {
+        "date": "20250929",
+        "cash": 9514.484584999998,
+        "position_value": 0.0,
+        "total": 9514.484584999998,
+        "positions": 0
+      },
+      {
+        "date": "20250930",
+        "cash": 8166.639584999998,
+        "position_value": 1318.999999999999,
+        "total": 9485.639584999997,
+        "positions": 1
+      },
+      {
+        "date": "20251009",
+        "cash": 8166.639584999998,
+        "position_value": 1340.999999999999,
+        "total": 9507.639584999997,
+        "positions": 1
+      },
+      {
+        "date": "20251010",
+        "cash": 8166.639584999998,
+        "position_value": 1400.999999999999,
+        "total": 9567.639584999997,
+        "positions": 1
+      },
+      {
+        "date": "20251013",
+        "cash": 8166.639584999998,
+        "position_value": 1329.999999999999,
+        "total": 9496.639584999997,
+        "positions": 1
+      },
+      {
+        "date": "20251014",
+        "cash": 7890.580284999998,
+        "position_value": 1584.0,
+        "total": 9474.580284999998,
+        "positions": 1
+      },
+      {
+        "date": "20251015",
+        "cash": 7890.580284999998,
+        "position_value": 1436.0,
+        "total": 9326.580284999998,
+        "positions": 1
+      },
+      {
+        "date": "20251016",
+        "cash": 7690.793404999999,
+        "position_value": 1580.000000000001,
+        "total": 9270.793405,
+        "positions": 1
+      },
+      {
+        "date": "20251017",
+        "cash": 7690.793404999999,
+        "position_value": 1600.000000000001,
+        "total": 9290.793405,
+        "positions": 1
+      },
+      {
+        "date": "20251020",
+        "cash": 6316.558405,
+        "position_value": 3104.0,
+        "total": 9420.558405,
+        "positions": 2
+      },
+      {
+        "date": "20251021",
+        "cash": 6316.558405,
+        "position_value": 2919.0,
+        "total": 9235.558405,
+        "positions": 2
+      },
+      {
+        "date": "20251022",
+        "cash": 5981.50335,
+        "position_value": 3039.999999999999,
+        "total": 9021.503349999999,
+        "positions": 2
+      },
+      {
+        "date": "20251023",
+        "cash": 5981.50335,
+        "position_value": 2937.999999999999,
+        "total": 8919.503349999999,
+        "positions": 2
+      },
+      {
+        "date": "20251024",
+        "cash": 8834.987000000001,
+        "position_value": 0.0,
+        "total": 8834.987000000001,
+        "positions": 0
+      },
+      {
+        "date": "20251027",
+        "cash": 8834.987000000001,
+        "position_value": 0.0,
+        "total": 8834.987000000001,
+        "positions": 0
+      },
+      {
+        "date": "20251028",
+        "cash": 6054.037,
+        "position_value": 2638.0,
+        "total": 8692.037,
+        "positions": 2
+      },
+      {
+        "date": "20251029",
+        "cash": 6054.037,
+        "position_value": 2517.0,
+        "total": 8571.037,
+        "positions": 2
+      },
+      {
+        "date": "20251030",
+        "cash": 7391.23346,
+        "position_value": 1097.999999999999,
+        "total": 8489.23346,
+        "positions": 1
+      },
+      {
+        "date": "20251031",
+        "cash": 7391.23346,
+        "position_value": 1115.999999999999,
+        "total": 8507.23346,
+        "positions": 1
+      },
+      {
+        "date": "20251103",
+        "cash": 7405.314810000001,
+        "position_value": 957.9999999999991,
+        "total": 8363.31481,
+        "positions": 1
+      },
+      {
+        "date": "20251104",
+        "cash": 7405.314810000001,
+        "position_value": 1053.999999999999,
+        "total": 8459.31481,
+        "positions": 1
+      },
+      {
+        "date": "20251105",
+        "cash": 7405.314810000001,
+        "position_value": 1057.999999999999,
+        "total": 8463.31481,
+        "positions": 1
+      },
+      {
+        "date": "20251106",
+        "cash": 7405.314810000001,
+        "position_value": 1064.999999999999,
+        "total": 8470.31481,
+        "positions": 1
+      },
+      {
+        "date": "20251107",
+        "cash": 8404.994125000001,
+        "position_value": 0.0,
+        "total": 8404.994125000001,
+        "positions": 0
+      },
+      {
+        "date": "20251110",
+        "cash": 6150.829125000001,
+        "position_value": 2193.999999999999,
+        "total": 8344.829125,
+        "positions": 2
+      },
+      {
+        "date": "20251111",
+        "cash": 6150.829125000001,
+        "position_value": 2206.999999999999,
+        "total": 8357.829125,
+        "positions": 2
+      },
+      {
+        "date": "20251112",
+        "cash": 6150.829125000001,
+        "position_value": 2078.999999999999,
+        "total": 8229.829125,
+        "positions": 2
+      },
+      {
+        "date": "20251113",
+        "cash": 6047.389200000001,
+        "position_value": 2011.0,
+        "total": 8058.389200000001,
+        "positions": 2
+      },
+      {
+        "date": "20251114",
+        "cash": 6047.389200000001,
+        "position_value": 1933.0,
+        "total": 7980.389200000001,
+        "positions": 2
+      },
+      {
+        "date": "20251117",
+        "cash": 5608.484745000001,
+        "position_value": 2216.0,
+        "total": 7824.484745000001,
+        "positions": 2
+      },
+      {
+        "date": "20251118",
+        "cash": 5608.484745000001,
+        "position_value": 2060.0,
+        "total": 7668.484745000001,
+        "positions": 2
+      },
+      {
+        "date": "20251119",
+        "cash": 7580.290955000001,
+        "position_value": 0.0,
+        "total": 7580.290955000001,
+        "positions": 0
+      },
+      {
+        "date": "20251120",
+        "cash": 6781.560955000002,
+        "position_value": 789.0,
+        "total": 7570.560955000002,
+        "positions": 1
+      },
+      {
+        "date": "20251121",
+        "cash": 6781.560955000002,
+        "position_value": 868.0,
+        "total": 7649.560955000002,
+        "positions": 1
+      },
+      {
+        "date": "20251124",
+        "cash": 5427.625955000002,
+        "position_value": 2284.0,
+        "total": 7711.625955000002,
+        "positions": 2
+      },
+      {
+        "date": "20251125",
+        "cash": 6268.878855000003,
+        "position_value": 1347.0,
+        "total": 7615.878855000003,
+        "positions": 1
+      },
+      {
+        "date": "20251126",
+        "cash": 5025.578855000003,
+        "position_value": 2456.0,
+        "total": 7481.578855000003,
+        "positions": 2
+      },
+      {
+        "date": "20251127",
+        "cash": 5025.578855000003,
+        "position_value": 2397.0,
+        "total": 7422.578855000003,
+        "positions": 2
+      },
+      {
+        "date": "20251128",
+        "cash": 6271.706975000004,
+        "position_value": 1074.0,
+        "total": 7345.706975000004,
+        "positions": 1
+      },
+      {
+        "date": "20251201",
+        "cash": 6271.706975000004,
+        "position_value": 1182.0,
+        "total": 7453.706975000004,
+        "positions": 1
+      },
+      {
+        "date": "20251202",
+        "cash": 6271.706975000004,
+        "position_value": 1155.0,
+        "total": 7426.706975000004,
+        "positions": 1
+      },
+      {
+        "date": "20251203",
+        "cash": 5617.106975000004,
+        "position_value": 1753.0,
+        "total": 7370.106975000004,
+        "positions": 2
+      },
+      {
+        "date": "20251204",
+        "cash": 5365.1034000000045,
+        "position_value": 1839.0,
+        "total": 7204.1034000000045,
+        "positions": 2
+      },
+      {
+        "date": "20251205",
+        "cash": 5946.576340000004,
+        "position_value": 1365.0,
+        "total": 7311.576340000004,
+        "positions": 1
+      },
+      {
+        "date": "20251208",
+        "cash": 5946.576340000004,
+        "position_value": 1348.0,
+        "total": 7294.576340000004,
+        "positions": 1
+      },
+      {
+        "date": "20251209",
+        "cash": 5946.576340000004,
+        "position_value": 1483.0,
+        "total": 7429.576340000004,
+        "positions": 1
+      },
+      {
+        "date": "20251210",
+        "cash": 6285.034300000005,
+        "position_value": 1046.0,
+        "total": 7331.034300000005,
+        "positions": 1
+      },
+      {
+        "date": "20251211",
+        "cash": 5468.034300000005,
+        "position_value": 1876.0,
+        "total": 7344.034300000005,
+        "positions": 2
+      },
+      {
+        "date": "20251212",
+        "cash": 5468.034300000005,
+        "position_value": 1843.0,
+        "total": 7311.034300000005,
+        "positions": 2
+      },
+      {
+        "date": "20251215",
+        "cash": 5275.419000000005,
+        "position_value": 2057.0,
+        "total": 7332.419000000005,
+        "positions": 2
+      },
+      {
+        "date": "20251216",
+        "cash": 6156.032500000006,
+        "position_value": 1071.0,
+        "total": 7227.032500000006,
+        "positions": 1
+      },
+      {
+        "date": "20251217",
+        "cash": 5807.449000000006,
+        "position_value": 1412.0,
+        "total": 7219.449000000006,
+        "positions": 1
+      },
+      {
+        "date": "20251218",
+        "cash": 5120.369000000006,
+        "position_value": 2042.0,
+        "total": 7162.369000000006,
+        "positions": 2
+      },
+      {
+        "date": "20251219",
+        "cash": 5120.369000000006,
+        "position_value": 2082.0,
+        "total": 7202.369000000006,
+        "positions": 2
+      },
+      {
+        "date": "20251222",
+        "cash": 5120.369000000006,
+        "position_value": 2082.0,
+        "total": 7202.369000000006,
+        "positions": 2
+      },
+      {
+        "date": "20251223",
+        "cash": 6476.261745000006,
+        "position_value": 672.0,
+        "total": 7148.261745000006,
+        "positions": 1
+      },
+      {
+        "date": "20251224",
+        "cash": 5709.231495000005,
+        "position_value": 1348.0,
+        "total": 7057.231495000005,
+        "positions": 1
+      },
+      {
+        "date": "20251225",
+        "cash": 5088.126495000006,
+        "position_value": 2015.0,
+        "total": 7103.126495000006,
+        "positions": 2
+      },
+      {
+        "date": "20251226",
+        "cash": 5088.126495000006,
+        "position_value": 2217.0,
+        "total": 7305.126495000006,
+        "positions": 2
+      },
+      {
+        "date": "20251229",
+        "cash": 5088.126495000006,
+        "position_value": 1996.0,
+        "total": 7084.126495000006,
+        "positions": 2
+      },
+      {
+        "date": "20251230",
+        "cash": 6411.546745000006,
+        "position_value": 549.0,
+        "total": 6960.546745000006,
+        "positions": 1
+      },
+      {
+        "date": "20251231",
+        "cash": 6040.389010000005,
+        "position_value": 941.0,
+        "total": 6981.389010000005,
+        "positions": 1
+      },
+      {
+        "date": "20260105",
+        "cash": 5330.9790100000055,
+        "position_value": 1528.0,
+        "total": 6858.9790100000055,
+        "positions": 2
+      },
+      {
+        "date": "20260106",
+        "cash": 5330.9790100000055,
+        "position_value": 1681.0,
+        "total": 7011.9790100000055,
+        "positions": 2
+      },
+      {
+        "date": "20260107",
+        "cash": 5330.9790100000055,
+        "position_value": 1598.0,
+        "total": 6928.9790100000055,
+        "positions": 2
+      },
+      {
+        "date": "20260108",
+        "cash": 5148.226375000006,
+        "position_value": 1758.0,
+        "total": 6906.226375000006,
+        "positions": 2
+      },
+      {
+        "date": "20260109",
+        "cash": 5827.116800000005,
+        "position_value": 1035.0,
+        "total": 6862.116800000005,
+        "positions": 1
+      },
+      {
+        "date": "20260112",
+        "cash": 5827.116800000005,
+        "position_value": 1139.0,
+        "total": 6966.116800000005,
+        "positions": 1
+      },
+      {
+        "date": "20260113",
+        "cash": 5827.116800000005,
+        "position_value": 1199.0,
+        "total": 7026.116800000005,
+        "positions": 1
+      },
+      {
+        "date": "20260114",
+        "cash": 6105.416470000006,
+        "position_value": 815.0,
+        "total": 6920.416470000006,
+        "positions": 1
+      },
+      {
+        "date": "20260115",
+        "cash": 6105.416470000006,
+        "position_value": 851.0,
+        "total": 6956.416470000006,
+        "positions": 1
+      },
+      {
+        "date": "20260116",
+        "cash": 6105.416470000006,
+        "position_value": 766.0,
+        "total": 6871.416470000006,
+        "positions": 1
+      },
+      {
+        "date": "20260119",
+        "cash": 5646.497420000005,
+        "position_value": 1140.0,
+        "total": 6786.497420000005,
+        "positions": 1
+      },
+      {
+        "date": "20260120",
+        "cash": 5646.497420000005,
+        "position_value": 1108.0,
+        "total": 6754.497420000005,
+        "positions": 1
+      },
+      {
+        "date": "20260121",
+        "cash": 4821.377420000005,
+        "position_value": 1889.0,
+        "total": 6710.377420000005,
+        "positions": 2
+      },
+      {
+        "date": "20260122",
+        "cash": 5866.321425000006,
+        "position_value": 824.0,
+        "total": 6690.321425000006,
+        "positions": 1
+      },
+      {
+        "date": "20260123",
+        "cash": 4947.821425000006,
+        "position_value": 1684.0,
+        "total": 6631.821425000006,
+        "positions": 2
+      },
+      {
+        "date": "20260126",
+        "cash": 4947.821425000006,
+        "position_value": 1614.0,
+        "total": 6561.821425000006,
+        "positions": 2
+      },
+      {
+        "date": "20260127",
+        "cash": 5415.322320000005,
+        "position_value": 1068.0,
+        "total": 6483.322320000005,
+        "positions": 1
+      },
+      {
+        "date": "20260128",
+        "cash": 5415.322320000005,
+        "position_value": 1114.0,
+        "total": 6529.322320000005,
+        "positions": 1
+      },
+      {
+        "date": "20260129",
+        "cash": 5415.322320000005,
+        "position_value": 1057.0,
+        "total": 6472.322320000005,
+        "positions": 1
+      },
+      {
+        "date": "20260130",
+        "cash": 5415.322320000005,
+        "position_value": 1035.0,
+        "total": 6450.322320000005,
+        "positions": 1
+      },
+      {
+        "date": "20260202",
+        "cash": 6423.857770000005,
+        "position_value": 0.0,
+        "total": 6423.857770000005,
+        "positions": 0
+      },
+      {
+        "date": "20260203",
+        "cash": 5464.757770000006,
+        "position_value": 947.0,
+        "total": 6411.757770000006,
+        "positions": 1
+      },
+      {
+        "date": "20260204",
+        "cash": 5464.757770000006,
+        "position_value": 909.0,
+        "total": 6373.757770000006,
+        "positions": 1
+      },
+      {
+        "date": "20260205",
+        "cash": 4597.007770000006,
+        "position_value": 1857.0,
+        "total": 6454.007770000006,
+        "positions": 2
+      },
+      {
+        "date": "20260206",
+        "cash": 4597.007770000006,
+        "position_value": 1836.0,
+        "total": 6433.007770000006,
+        "positions": 2
+      },
+      {
+        "date": "20260209",
+        "cash": 5553.390425000006,
+        "position_value": 887.0,
+        "total": 6440.390425000006,
+        "positions": 1
+      },
+      {
+        "date": "20260210",
+        "cash": 5553.390425000006,
+        "position_value": 851.0,
+        "total": 6404.390425000006,
+        "positions": 1
+      },
+      {
+        "date": "20260211",
+        "cash": 6388.739235000006,
+        "position_value": 0.0,
+        "total": 6388.739235000006,
+        "positions": 0
+      },
+      {
+        "date": "20260212",
+        "cash": 5295.659235000006,
+        "position_value": 1048.0,
+        "total": 6343.659235000006,
+        "positions": 1
+      },
+      {
+        "date": "20260213",
+        "cash": 5295.659235000006,
+        "position_value": 944.0,
+        "total": 6239.659235000006,
+        "positions": 1
+      },
+      {
+        "date": "20260224",
+        "cash": 6195.953035000006,
+        "position_value": 0.0,
+        "total": 6195.953035000006,
+        "positions": 0
+      },
+      {
+        "date": "20260225",
+        "cash": 6195.953035000006,
+        "position_value": 0.0,
+        "total": 6195.953035000006,
+        "positions": 0
+      },
+      {
+        "date": "20260226",
+        "cash": 5163.773035000006,
+        "position_value": 1048.0,
+        "total": 6211.773035000006,
+        "positions": 1
+      },
+      {
+        "date": "20260227",
+        "cash": 5163.773035000006,
+        "position_value": 1059.0,
+        "total": 6222.773035000006,
+        "positions": 1
+      },
+      {
+        "date": "20260302",
+        "cash": 5163.773035000006,
+        "position_value": 1112.0,
+        "total": 6275.773035000006,
+        "positions": 1
+      },
+      {
+        "date": "20260303",
+        "cash": 5163.773035000006,
+        "position_value": 1223.0,
+        "total": 6386.773035000006,
+        "positions": 1
+      },
+      {
+        "date": "20260304",
+        "cash": 6242.173550000005,
+        "position_value": 0.0,
+        "total": 6242.173550000005,
+        "positions": 0
+      },
+      {
+        "date": "20260305",
+        "cash": 5141.9885500000055,
+        "position_value": 1089.0,
+        "total": 6230.9885500000055,
+        "positions": 1
+      },
+      {
+        "date": "20260306",
+        "cash": 5141.9885500000055,
+        "position_value": 1090.0,
+        "total": 6231.9885500000055,
+        "positions": 1
+      },
+      {
+        "date": "20260309",
+        "cash": 5141.9885500000055,
+        "position_value": 1095.0,
+        "total": 6236.9885500000055,
+        "positions": 1
+      },
+      {
+        "date": "20260310",
+        "cash": 5141.9885500000055,
+        "position_value": 1085.0,
+        "total": 6226.9885500000055,
+        "positions": 1
+      },
+      {
+        "date": "20260311",
+        "cash": 6193.820660000006,
+        "position_value": 0.0,
+        "total": 6193.820660000006,
+        "positions": 0
+      },
+      {
+        "date": "20260312",
+        "cash": 6193.820660000006,
+        "position_value": 0.0,
+        "total": 6193.820660000006,
+        "positions": 0
+      },
+      {
+        "date": "20260313",
+        "cash": 5027.660660000006,
+        "position_value": 1130.0,
+        "total": 6157.660660000006,
+        "positions": 1
+      },
+      {
+        "date": "20260316",
+        "cash": 5027.660660000006,
+        "position_value": 1056.0,
+        "total": 6083.660660000006,
+        "positions": 1
+      },
+      {
+        "date": "20260317",
+        "cash": 6024.387930000006,
+        "position_value": 0.0,
+        "total": 6024.387930000006,
+        "positions": 0
+      },
+      {
+        "date": "20260318",
+        "cash": 4200.582930000007,
+        "position_value": 1947.0,
+        "total": 6147.582930000007,
+        "positions": 2
+      },
+      {
+        "date": "20260320",
+        "cash": 4200.582930000007,
+        "position_value": 1730.0,
+        "total": 5930.582930000007,
+        "positions": 2
+      }
+    ],
+    "daily_returns": [
+      -0.001201491902759709,
+      -0.011989072816490113,
+      -0.006402175858252146,
+      -0.02205194864705781,
+      0.017315475232384463,
+      -0.009284046986557675,
+      0.018221482686398525,
+      -0.014829970709082145,
+      -0.009653285828870218,
+      -0.002781747677808094,
+      -0.003031693387309342,
+      0.0023192953730594443,
+      0.0063107146062478785,
+      -0.007420848096254874,
+      -0.002322853236932545,
+      -0.015620744724102575,
+      -0.005981493569483367,
+      0.002157312662065518,
+      0.013967052580263399,
+      -0.019637901708863724,
+      -0.02317727262534709,
+      -0.011306319583642343,
+      -0.009475454706791278,
+      0.0,
+      -0.01617998985171124,
+      -0.013920787497798272,
+      -0.009544182343396813,
+      0.0021203327820837198,
+      -0.01691720941674964,
+      0.011478702186986071,
+      0.0004728515358326049,
+      0.0008270990926308223,
+      -0.007711718686403673,
+      -0.007158244146898897,
+      0.0015578509524004182,
+      -0.015314981687903316,
+      -0.020831529111486717,
+      -0.009679353784500752,
+      -0.019535946317004282,
+      -0.019937415061060355,
+      -0.011500810516380489,
+      -0.0012835918908339003,
+      0.01043515803777053,
+      0.008113537543541346,
+      -0.012415941924403096,
+      -0.01763420907251278,
+      -0.00788603597495598,
+      -0.010356492197885805,
+      0.014702465040813848,
+      -0.0036223586586592352,
+      -0.007621143555350711,
+      -0.022523903053659495,
+      0.01491829503724219,
+      -0.002325080011405583,
+      0.0185069007037083,
+      -0.013263480377671078,
+      0.00177328320507244,
+      -0.004493443065754742,
+      0.002924989696738327,
+      -0.014372678375308277,
+      -0.0010493241866561033,
+      -0.007906420559242108,
+      0.005584744377174642,
+      0.0,
+      -0.007512424731362674,
+      -0.0127345994379226,
+      0.006503258399914569,
+      0.028438181432104685,
+      -0.03025272733487414,
+      -0.017444599568799735,
+      0.002994343083030225,
+      -0.017533760090529572,
+      0.022306526930164768,
+      -0.01183688654538627,
+      -0.0032836922968251005,
+      -0.0063869286358283275,
+      0.015155673246482764,
+      0.008613120009701812,
+      -0.015043918711968977,
+      0.005201999064082335,
+      -0.012218934902268715,
+      -0.01235830346927005,
+      -0.004715245290699599,
+      -0.00653194416350815,
+      -0.0029888028265330708,
+      -0.008743974509416034,
+      -0.010555169615412245,
+      -0.011963005378495303,
+      0.007095127733831374,
+      -0.008729849317654755,
+      -0.003399089061435986,
+      -0.004102825980950309,
+      -0.0018836033475877292,
+      -0.005926611915658811,
+      0.012590688710782293,
+      -0.0032537921781894573,
+      0.0011476210295328672,
+      -0.005589723234830125,
+      -0.0024438219660850194,
+      -0.007056165284229179,
+      -0.016394323236374138,
+      -0.0070045812365585845,
+      0.0,
+      0.0025532795214287312,
+      0.0017708309588938466,
+      0.00851710317922594,
+      0.017687064108429774,
+      -0.02264046087242875,
+      -0.001791843804150476,
+      0.00016048817807569218,
+      0.0008023121287666672,
+      -0.0016033378801056147,
+      -0.005326473580877178,
+      0.0,
+      -0.005838076687225203,
+      -0.012017550833988297,
+      -0.009742938226275038,
+      0.020449380324019155,
+      -0.03529842581562373
+    ],
+    "stats": {
+      "start_time": "2026-03-25 23:18:05.481667",
+      "end_time": "2026-03-25 23:20:57.671789",
+      "total_days": 120,
+      "trading_days": 120,
+      "total_stocks_analyzed": 460693,
+      "total_signals_generated": 252,
+      "total_buy_attempts": 126,
+      "successful_buys": 47,
+      "failed_buys_high_open": 10,
+      "failed_buys_limit_up": 23
+    }
+  },
+  "health_report": {
+    "check_time": "2026-03-25 23:20:58",
+    "overall_status": "健康",
+    "issues": [],
+    "recommendations": [],
+    "overfit_check": {
+      "is_overfit": "False",
+      "severity": "轻微",
+      "train_return": -0.3230824009999996,
+      "test_return": -0.4069417069999993,
+      "return_diff": 0.08385930599999974,
+      "return_ratio": 0.20607203576702912,
+      "sharpe_diff": 1.580659022813717,
+      "recommendation": "策略泛化能力正常"
+    }
+  }
+}

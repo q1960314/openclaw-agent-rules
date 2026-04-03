@@ -1,0 +1,26 @@
+{
+  "task_id": "daily_research_20260330_183001::smoke_backtest",
+  "cycle_id": "daily_research_20260330_183001",
+  "cycle_type": "daily_research",
+  "stage": "smoke_backtest",
+  "owner_agent": "validation-center",
+  "mode": "command",
+  "status": "completed",
+  "timeout_seconds": 1800,
+  "retry_limit": 1,
+  "attempts": [
+    {
+      "attempt": 1,
+      "started_at": "2026-03-30 18:30:05",
+      "finished_at": "2026-03-30 18:31:59",
+      "exit_code": 0,
+      "result": "success"
+    }
+  ],
+  "created_at": "2026-03-30 18:30:05",
+  "updated_at": "2026-03-30 18:31:59",
+  "command": "/home/admin/miniconda3/envs/vnpy_env/bin/python /home/admin/.openclaw/workspace/master/scripts/run_smoke_backtest.py --code-root /data/agents/master --cycle-dir /home/admin/.openclaw/workspace/master/traces/cycles/daily_research/daily_research_20260330_183001 --stage-id smoke_backtest --strategy '打板策略' --days 60",
+  "log_file": "/home/admin/.openclaw/workspace/master/traces/cycles/daily_research/daily_research_20260330_183001/logs/03_smoke_backtest.log",
+  "finished_at": "2026-03-30 18:31:59",
+  "exit_code": 0
+}

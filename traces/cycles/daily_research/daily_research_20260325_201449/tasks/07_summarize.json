@@ -1,0 +1,26 @@
+{
+  "task_id": "daily_research_20260325_201449::summarize",
+  "cycle_id": "daily_research_20260325_201449",
+  "cycle_type": "daily_research",
+  "stage": "summarize",
+  "owner_agent": "doc-knowledge-manager",
+  "mode": "command",
+  "status": "completed",
+  "timeout_seconds": 120,
+  "retry_limit": 0,
+  "attempts": [
+    {
+      "attempt": 1,
+      "started_at": "2026-03-25 20:20:47",
+      "finished_at": "2026-03-25 20:20:49",
+      "exit_code": 0,
+      "result": "success"
+    }
+  ],
+  "created_at": "2026-03-25 20:20:47",
+  "updated_at": "2026-03-25 20:20:49",
+  "command": "/home/admin/miniconda3/envs/vnpy_env/bin/python /home/admin/.openclaw/workspace/master/scripts/workflow_summary.py --cycle-dir /home/admin/.openclaw/workspace/master/traces/cycles/daily_research/daily_research_20260325_201449 --stage-id summarize",
+  "log_file": "/home/admin/.openclaw/workspace/master/traces/cycles/daily_research/daily_research_20260325_201449/logs/07_summarize.log",
+  "finished_at": "2026-03-25 20:20:49",
+  "exit_code": 0
+}

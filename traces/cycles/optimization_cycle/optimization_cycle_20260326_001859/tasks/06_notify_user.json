@@ -1,0 +1,26 @@
+{
+  "task_id": "optimization_cycle_20260326_001859::notify_user",
+  "cycle_id": "optimization_cycle_20260326_001859",
+  "cycle_type": "optimization_cycle",
+  "stage": "notify_user",
+  "owner_agent": "master-quant",
+  "mode": "command",
+  "status": "completed",
+  "timeout_seconds": 120,
+  "retry_limit": 0,
+  "attempts": [
+    {
+      "attempt": 1,
+      "started_at": "2026-03-26 00:26:46",
+      "finished_at": "2026-03-26 00:26:58",
+      "exit_code": 0,
+      "result": "success"
+    }
+  ],
+  "created_at": "2026-03-26 00:26:46",
+  "updated_at": "2026-03-26 00:26:58",
+  "command": "/home/admin/miniconda3/envs/vnpy_env/bin/python /home/admin/.openclaw/workspace/master/scripts/workflow_notify.py --cycle-dir /home/admin/.openclaw/workspace/master/traces/cycles/optimization_cycle/optimization_cycle_20260326_001859 --mode success",
+  "log_file": "/home/admin/.openclaw/workspace/master/traces/cycles/optimization_cycle/optimization_cycle_20260326_001859/logs/06_notify_user.log",
+  "finished_at": "2026-03-26 00:26:58",
+  "exit_code": 0
+}

@@ -1,0 +1,89 @@
+{
+  "cycle_id": "weekly_health_20260325_192753",
+  "cycle_type": "weekly_health",
+  "description": "周度健康检查闭环：预检查 -> 数据校验 -> 健康检查 -> 汇总",
+  "trigger": "manual",
+  "status": "completed",
+  "created_at": "2026-03-25 19:27:53",
+  "updated_at": "2026-03-25 19:34:08",
+  "current_stage": null,
+  "stages": [
+    "preflight",
+    "data_validate",
+    "health_check",
+    "followup_ticket",
+    "summarize"
+  ],
+  "approval": {
+    "auto_research": true,
+    "auto_validate": true,
+    "require_manual_for": [
+      "code_merge",
+      "prod_param_change",
+      "trading_action",
+      "release"
+    ]
+  },
+  "notifications": {
+    "mode": "summary_and_exception"
+  },
+  "paths": {
+    "cycle_dir": "/home/admin/.openclaw/workspace/master/traces/cycles/weekly_health/weekly_health_20260325_192753",
+    "codebase_root": "/data/agents/master",
+    "workspace_root": "/home/admin/.openclaw/workspace/master"
+  },
+  "summary": {
+    "cycle_id": "weekly_health_20260325_192753",
+    "cycle_type": "weekly_health",
+    "generated_at": "2026-03-25 19:34:08",
+    "status": "completed",
+    "task_total": 5,
+    "task_completed": 5,
+    "task_failed": 0,
+    "artifacts": {
+      "data_check": "/home/admin/.openclaw/workspace/master/traces/cycles/weekly_health/weekly_health_20260325_192753/artifacts/data_validate/data_check.json",
+      "smoke_backtest": null,
+      "weekly_health": "/home/admin/.openclaw/workspace/master/traces/cycles/weekly_health/weekly_health_20260325_192753/artifacts/health_check/weekly_health.json",
+      "followup_ticket": "/home/admin/.openclaw/workspace/master/traces/cycles/weekly_health/weekly_health_20260325_192753/artifacts/followup_ticket/followup_tickets.json"
+    },
+    "data_check": {
+      "sample_stock_count": 20,
+      "latest_sample_trade_date": "20260320",
+      "limit_list_latest_trade_date": "20260320",
+      "sample_trade_date_spread_days": 0,
+      "warnings": 0,
+      "errors": 0,
+      "status": "ok"
+    },
+    "weekly_health": {
+      "check_time": "2026-03-25 19:34:06",
+      "overall_status": "健康",
+      "issues": [],
+      "recommendations": [],
+      "overfit_check": {
+        "is_overfit": "False",
+        "severity": "轻微",
+        "train_return": -0.3230824009999996,
+        "test_return": -0.4069417069999993,
+        "return_diff": 0.08385930599999974,
+        "return_ratio": 0.20607203576702912,
+        "sharpe_diff": 1.580659022813717,
+        "recommendation": "策略泛化能力正常"
+      }
+    },
+    "weekly_strategy": "打板策略",
+    "followup_ticket_count": 1,
+    "followup_tickets": [
+      {
+        "ticket_id": "weekly_health_20260325_192753::weekly_stable",
+        "category": "monitoring",
+        "priority": "P3",
+        "owner": "doc-knowledge-manager",
+        "title": "周度健康检查通过，无需优化，仅做归档",
+        "reason": "health_status=健康",
+        "suggested_next_step": "沉淀本周稳定性结果，等待下一个周期",
+        "approval_required": false
+      }
+    ]
+  }
+}

@@ -1,0 +1,26 @@
+{
+  "task_id": "build_candidate_cycle_20260326_053002::create_worktree",
+  "cycle_id": "build_candidate_cycle_20260326_053002",
+  "cycle_type": "build_candidate_cycle",
+  "stage": "create_worktree",
+  "owner_agent": "coder",
+  "mode": "command",
+  "status": "completed",
+  "timeout_seconds": 180,
+  "retry_limit": 0,
+  "attempts": [
+    {
+      "attempt": 1,
+      "started_at": "2026-03-26 05:30:04",
+      "finished_at": "2026-03-26 05:30:06",
+      "exit_code": 0,
+      "result": "success"
+    }
+  ],
+  "created_at": "2026-03-26 05:30:04",
+  "updated_at": "2026-03-26 05:30:06",
+  "command": "/home/admin/miniconda3/envs/vnpy_env/bin/python /home/admin/.openclaw/workspace/master/scripts/workflow_create_worktree.py --cycle-dir /home/admin/.openclaw/workspace/master/traces/cycles/build_candidate_cycle/build_candidate_cycle_20260326_053002 --stage-id create_worktree",
+  "log_file": "/home/admin/.openclaw/workspace/master/traces/cycles/build_candidate_cycle/build_candidate_cycle_20260326_053002/logs/02_create_worktree.log",
+  "finished_at": "2026-03-26 05:30:06",
+  "exit_code": 0
+}

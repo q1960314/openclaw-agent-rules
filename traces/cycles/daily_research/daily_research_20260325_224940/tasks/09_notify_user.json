@@ -1,0 +1,26 @@
+{
+  "task_id": "daily_research_20260325_224940::notify_user",
+  "cycle_id": "daily_research_20260325_224940",
+  "cycle_type": "daily_research",
+  "stage": "notify_user",
+  "owner_agent": "master-quant",
+  "mode": "command",
+  "status": "completed",
+  "timeout_seconds": 120,
+  "retry_limit": 0,
+  "attempts": [
+    {
+      "attempt": 1,
+      "started_at": "2026-03-25 22:51:59",
+      "finished_at": "2026-03-25 22:52:11",
+      "exit_code": 0,
+      "result": "success"
+    }
+  ],
+  "created_at": "2026-03-25 22:51:59",
+  "updated_at": "2026-03-25 22:52:11",
+  "command": "/home/admin/miniconda3/envs/vnpy_env/bin/python /home/admin/.openclaw/workspace/master/scripts/workflow_notify.py --cycle-dir /home/admin/.openclaw/workspace/master/traces/cycles/daily_research/daily_research_20260325_224940 --mode success",
+  "log_file": "/home/admin/.openclaw/workspace/master/traces/cycles/daily_research/daily_research_20260325_224940/logs/09_notify_user.log",
+  "finished_at": "2026-03-25 22:52:11",
+  "exit_code": 0
+}

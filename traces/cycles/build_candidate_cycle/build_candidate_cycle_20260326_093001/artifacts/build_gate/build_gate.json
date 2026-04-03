@@ -1,0 +1,12 @@
+{
+  "stage": "build_gate",
+  "generated_at": "2026-03-26 09:32:12",
+  "decision": "validation_cycle_candidate",
+  "rationale": "已检测到 worktree 中存在实际代码改动，进入验证候选链",
+  "changed_count": 3,
+  "changed_files": [
+    "M modules/strategy_core.py",
+    "M plugins/strategy_ensemble.py",
+    "M vnpy_backtest/backtest_engine.py"
+  ]
+}

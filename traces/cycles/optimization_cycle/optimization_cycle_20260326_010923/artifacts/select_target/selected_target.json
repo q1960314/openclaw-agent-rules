@@ -1,0 +1,18 @@
+{
+  "stage": "select_target",
+  "generated_at": "2026-03-26 01:09:25",
+  "selected": true,
+  "selected_ticket": {
+    "ticket_id": "daily_research_20260325_224940::strategy_review",
+    "category": "strategy_review",
+    "priority": "P1",
+    "owner": "strategy-expert",
+    "dispatch_agent_id": "strategy-expert",
+    "title": "每日闭环触发策略复核",
+    "reason": "smoke_backtest total_return=-0.1715, sharpe=-4.4467, max_drawdown=0.1693",
+    "suggested_next_step": "复核近 60 交易日策略表现，确认是否需要进入周度优化/参数审查",
+    "approval_required": false
+  },
+  "source_queue_file": "/home/admin/.openclaw/workspace/master/reports/workflow/queue/done/daily_research_20260325_224940____strategy_review.json",
+  "candidate_count": 1
+}

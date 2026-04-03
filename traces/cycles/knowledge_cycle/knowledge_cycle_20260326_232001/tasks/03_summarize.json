@@ -1,0 +1,26 @@
+{
+  "task_id": "knowledge_cycle_20260326_232001::summarize",
+  "cycle_id": "knowledge_cycle_20260326_232001",
+  "cycle_type": "knowledge_cycle",
+  "stage": "summarize",
+  "owner_agent": "doc-knowledge-manager",
+  "mode": "command",
+  "status": "completed",
+  "timeout_seconds": 120,
+  "retry_limit": 0,
+  "attempts": [
+    {
+      "attempt": 1,
+      "started_at": "2026-03-26 23:20:05",
+      "finished_at": "2026-03-26 23:20:07",
+      "exit_code": 0,
+      "result": "success"
+    }
+  ],
+  "created_at": "2026-03-26 23:20:05",
+  "updated_at": "2026-03-26 23:20:07",
+  "command": "/home/admin/miniconda3/envs/vnpy_env/bin/python /home/admin/.openclaw/workspace/master/scripts/workflow_summary.py --cycle-dir /home/admin/.openclaw/workspace/master/traces/cycles/knowledge_cycle/knowledge_cycle_20260326_232001 --stage-id summarize",
+  "log_file": "/home/admin/.openclaw/workspace/master/traces/cycles/knowledge_cycle/knowledge_cycle_20260326_232001/logs/03_summarize.log",
+  "finished_at": "2026-03-26 23:20:07",
+  "exit_code": 0
+}

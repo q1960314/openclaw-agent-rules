@@ -1,0 +1,9 @@
+{
+  "task_id": "INTAKE-20260330-000919-7573",
+  "request": "测试任务",
+  "task_type": "test",
+  "owner_role": "coder",
+  "received_at": "2026-03-30T00:09:19.063615",
+  "next_roles": [],
+  "status": "queued"
+}

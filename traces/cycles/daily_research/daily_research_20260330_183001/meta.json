@@ -1,0 +1,133 @@
+{
+  "cycle_id": "daily_research_20260330_183001",
+  "cycle_type": "daily_research",
+  "description": "每日研究闭环：预检查 -> 数据校验 -> 冒烟回测 -> 生成工单 -> 入队派发 -> 回执采集 -> 汇总",
+  "trigger": "cron",
+  "status": "completed",
+  "created_at": "2026-03-30 18:30:01",
+  "updated_at": "2026-03-30 18:33:07",
+  "current_stage": null,
+  "stages": [
+    "preflight",
+    "data_validate",
+    "smoke_backtest",
+    "followup_ticket",
+    "queue_ticket",
+    "dispatch_ticket",
+    "collect_reply",
+    "summarize",
+    "notify_user"
+  ],
+  "approval": {
+    "auto_research": true,
+    "auto_validate": true,
+    "require_manual_for": [
+      "code_merge",
+      "prod_param_change",
+      "trading_action",
+      "release"
+    ]
+  },
+  "notifications": {
+    "mode": "summary_and_exception",
+    "channel": "feishu",
+    "account_id": "master-feishu",
+    "target": "user:ou_61884ea8aa288c6514cc8b4cb3cd16d8"
+  },
+  "paths": {
+    "cycle_dir": "/home/admin/.openclaw/workspace/master/traces/cycles/daily_research/daily_research_20260330_183001",
+    "codebase_root": "/data/agents/master",
+    "workspace_root": "/home/admin/.openclaw/workspace/master"
+  },
+  "summary": {
+    "cycle_id": "daily_research_20260330_183001",
+    "cycle_type": "daily_research",
+    "generated_at": "2026-03-30 18:32:51",
+    "status": "completed",
+    "task_total": 8,
+    "task_completed": 8,
+    "task_failed": 0,
+    "artifacts": {
+      "data_check": "/home/admin/.openclaw/workspace/master/traces/cycles/daily_research/daily_research_20260330_183001/artifacts/data_validate/data_check.json",
+      "smoke_backtest": "/home/admin/.openclaw/workspace/master/traces/cycles/daily_research/daily_research_20260330_183001/artifacts/smoke_backtest/smoke_backtest.json",
+      "weekly_health": null,
+      "followup_ticket": "/home/admin/.openclaw/workspace/master/traces/cycles/daily_research/daily_research_20260330_183001/artifacts/followup_ticket/followup_tickets.json",
+      "queue_result": "/home/admin/.openclaw/workspace/master/traces/cycles/daily_research/daily_research_20260330_183001/artifacts/queue_ticket/queue_result.json",
+      "dispatch_result": "/home/admin/.openclaw/workspace/master/traces/cycles/daily_research/daily_research_20260330_183001/artifacts/dispatch_ticket/dispatch_result.json",
+      "collect_result": "/home/admin/.openclaw/workspace/master/traces/cycles/daily_research/daily_research_20260330_183001/artifacts/collect_reply/collect_result.json",
+      "select_target": null,
+      "opencode_result": null,
+      "data_snapshot": null,
+      "data_quality_score": null
+    },
+    "data_check": {
+      "sample_stock_count": 20,
+      "latest_sample_trade_date": "20260320",
+      "limit_list_latest_trade_date": "20260320",
+      "sample_trade_date_spread_days": 0,
+      "warnings": 0,
+      "errors": 0,
+      "status": "ok"
+    },
+    "smoke_backtest": {
+      "total_return": -0.17148248350000012,
+      "annual_return": -0.546197255862186,
+      "max_drawdown": 0.1692785795716037,
+      "sharpe_ratio": -4.446659151292172,
+      "win_rate": 0.16666666666666666,
+      "total_trades": 24
+    },
+    "smoke_strategy": "打板策略",
+    "smoke_range": [
+      "20251216",
+      "20260320"
+    ],
+    "followup_ticket_count": 1,
+    "followup_tickets": [
+      {
+        "ticket_id": "daily_research_20260330_183001::strategy_review",
+        "category": "strategy_review",
+        "priority": "P1",
+        "owner": "strategy-expert",
+        "dispatch_agent_id": "strategy-expert",
+        "title": "每日闭环触发策略复核",
+        "reason": "smoke_backtest total_return=-0.1715, sharpe=-4.4467, max_drawdown=0.1693",
+        "suggested_next_step": "复核近 60 交易日策略表现，确认是否需要进入周度优化/参数审查",
+        "approval_required": false
+      }
+    ],
+    "queue_enqueued_count": 1,
+    "queue_skipped_count": 0,
+    "dispatch_done_count": 1,
+    "dispatch_dispatched_count": 0,
+    "dispatch_blocked_count": 0,
+    "dispatch_failed_count": 0,
+    "dispatch_done_items": [
+      {
+        "ticket_id": "daily_research_20260330_183001::strategy_review",
+        "status": "done",
+        "agent_id": "strategy-expert",
+        "returncode": 0,
+        "assistant_text": "【工单复核报告】daily_research_20260330_183001::strategy_review\n\n---\n\n## 1. 当前结果判断\n\n**策略表现：持续劣化** 🚨\n\n| 指标 | 数值 | 评价 |\n|------|------|------|\n| 总收益率 | -17.15% | 60 天亏损超 17% |\n| 夏普比率 | -4.45 | 风险调整后收益极差 |\n| 最大回撤 | 16.93% | 接近总亏损幅度 |\n| 胜率 | 16.7% | 24 战仅 4 胜 |\n| 盈亏比 | 0.18 | 盈利无法覆盖亏损 |\n\n**关键发现：数据未滚动更新** ⚠️\n- 当前日期：2026-03-30\n- 回测 end_date：2026-03-20（滞后 10 天）\n- 回测 start_date：2025-12-16\n- 与 03-26 工单数据完全一致，说明数据源或脚本未更新\n\n**闭环状态：进行中**\n- 当前阶段：`dispatch_ticket`（运行中）\n- 上次（03-26）在此阶段失败，需关注本次是否成功\n\n---\n\n## 2. 是否需要下一步动作\n\n**是，需要立即介入**\n\n理由：\n1. 策略 60 日表现持续崩坏（胜率<20%，盈亏比<0.2）\n2. 回测数据未滚动更新，可能存在数据源或脚本问题\n3. 需确认闭环流程是否成功完成（上次失败于 dispatch_ticket）\n\n---\n\n## 3. 最小可执行建议\n\n### 建议 A：检查数据更新机制（优先级 P0）\n```bash\n# 检查数据源最新日期\nls -la /data/quant_data/daily/ | tail -5\n# 或检查脚本中的日期配置\ngrep -n \"end_date\\|END_DATE\" /home/admin/.openclaw/workspace/master/scripts/*.py\n```\n\n### 建议 B：等待并验证闭环完成（优先级 P0）\n- 监控 `06_dispatch_ticket.log` 是否成功完成\n- 如再次失败，检查 `openclaw` 命令路径问题\n\n### 建议 C：策略深度诊断（优先级 P1）\n- 分析 110 个信号中仅 24 个成交的原因（成交率 21.8%）\n- 复盘 8 次\"涨停跳过\"和 3 次\"高开失败\"案例\n- 对比历史同期，确认是市场风格切换还是策略失效\n\n---\n\n## 4. 风险与验收要点\n\n| 风险项 | 等级 | 验收要点 |\n|--------|------|----------|\n| 策略持续失效 | 高 | 确认是否需暂停实盘信号 |\n| 数据更新滞后 | 高 | 修复数据源或脚本日期配置 |\n| 闭环流程中断 | 中 | 确认本次 dispatch_ticket 成功完成 |\n| 参数过拟合 | 中 | 周度优化需做参数鲁棒性测试 |\n\n**验收标准**：\n- [ ] 闭环流程成功完成，工单成功派发\n- [ ] 数据更新机制修复，end_date 滚动至最新交易日\n- [ ] 策略诊断报告完成（信号质量 + 失败案例分析）\n- [ ] 用户书面确认是否进入周度优化流程\n\n---\n\n【合规提示】本内容仅为量化研究回测使用，不构成任何投资建议，投资有风险，入市需谨慎",
+        "parsed_json": true,
+        "summary": "completed",
+        "recovery": null,
+        "stderr": "Config was last written by a newer OpenClaw (2026.3.24); current version is 2026.2.26.\nConfig was last written by a newer OpenClaw (2026.3.24); current version is 2026.2.26.\nConfig was last written by a newer OpenClaw (2026.3.24); current version is 2026.2.26.\n",
+        "stdout_tail": "able_list_fields\",\n              \"summaryChars\": 76,\n              \"schemaChars\": 255,\n              \"propertiesCount\": 2\n            },\n            {\n              \"name\": \"feishu_bitable_list_records\",\n              \"summaryChars\": 64,\n              \"schemaChars\": 462,\n              \"propertiesCount\": 4\n            },\n            {\n              \"name\": \"feishu_bitable_get_record\",\n              \"summaryChars\": 46,\n              \"schemaChars\": 335,\n              \"propertiesCount\": 3\n            },\n            {\n              \"name\": \"feishu_bitable_create_record\",\n              \"summaryChars\": 44,\n              \"schemaChars\": 549,\n              \"propertiesCount\": 3\n            },\n            {\n              \"name\": \"feishu_bitable_update_record\",\n              \"summaryChars\": 50,\n              \"schemaChars\": 473,\n              \"propertiesCount\": 4\n            },\n            {\n              \"name\": \"feishu_bitable_create_app\",\n              \"summaryChars\": 57,\n              \"schemaChars\": 243,\n              \"propertiesCount\": 2\n            },\n            {\n              \"name\": \"feishu_bitable_create_field\",\n              \"summaryChars\": 46,\n              \"schemaChars\": 911,\n              \"propertiesCount\": 5\n            },\n            {\n              \"name\": \"memory_recall\",\n              \"summaryChars\": 181,\n              \"schemaChars\": 411,\n              \"propertiesCount\": 4\n            },\n            {\n              \"name\": \"memory_store\",\n              \"summaryChars\": 117,\n              \"schemaChars\": 390,\n              \"propertiesCount\": 4\n            },\n            {\n              \"name\": \"memory_forget\",\n              \"summaryChars\": 82,\n              \"schemaChars\": 267,\n              \"propertiesCount\": 3\n            },\n            {\n              \"name\": \"memory_update\",\n              \"summaryChars\": 183,\n              \"schemaChars\": 411,\n              \"propertiesCount\": 4\n            }\n          ]\n        }\n      },\n      \"stopReason\": \"stop\"\n    }\n  }\n}\n"
+      }
+    ],
+    "dispatch_failed_items": [],
+    "dispatch_blocked_items": [],
+    "collect_done_count": 0,
+    "collect_failed_count": 0,
+    "collect_pending_followup_count": 0,
+    "recommended_actions": [
+      {
+        "type": "strategy_review",
+        "ticket_id": "daily_research_20260330_183001::strategy_review",
+        "owner": "strategy-expert",
+        "action": "根据策略复核结果，决定是否启动周度优化流程"
+      }
+    ]
+  }
+}

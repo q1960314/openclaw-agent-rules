@@ -1,0 +1,43 @@
+# OpenCode Optimization Plan
+
+## 1. Diagnosis
+
+
+## 2. Minimal Change Path
+
+
+## 3. Files To Touch
+
+
+## 4. Validation Plan
+
+
+## 5. Approval Gates
+# OpenCode Optimization Plan
+
+## 1. Diagnosis
+基于系统架构分析，当前工单显示smoke_backtest结果异常：total_return=-0.1715, sharpe=-4.4467, max_drawdown=0.1693，表明策略在过去60个交易日表现不佳，主要问题是策略逻辑或参数在近期市场环境下失效。系统具备完整的回测框架(v8.0向量化引擎)、双策略(打板+缩量潜伏)、风险管理体系，但近期表现不佳可能源于市场风格变化或参数过拟合。
+
+## 2. Minimal Change Path
+1. 复核策略参数有效性，调整风险参数和评分权重
+2. 检查数据质量，确认特征工程无偏差
+3. 进行短期回测验证(近30日)
+4. 评估是否需切换策略配置而非重构核心逻辑
+
+## 3. Files To Touch
+- `/data/agents/master/modules/strategy_core.py` - 策略核心参数调整
+- `/data/agents/master/vnpy_backtest/backtest_engine.py` - 回测配置
+- `/data/agents/master/plugins/strategy_ensemble.py` - 策略组合权重
+- `/data/agents/master/modules/risk_engine.py` - 风险参数调整
+
+## 4. Validation Plan
+- 近30日数据回测验证策略表现
+- A/B测试：原参数 vs 新参数对比
+- 风险指标验证：最大回撤、夏普比率、胜率
+- 执行`test_stage_0_3_optimization.py`自动化验证
+
+## 5. Approval Gates
+- 参数调整(±20%)需人工审批
+- 策略逻辑变更需回测引擎智能体验证
+- 风险参数调整需风控部门(模拟)审批
+- 最终部署需Master-Agent审批确认

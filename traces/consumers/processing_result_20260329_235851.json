@@ -1,0 +1,99 @@
+{
+  "scanned_count": 7,
+  "processed_tasks": [
+    "SIMPLE-TEST-20260329-234106",
+    "SIMPLE-TEST-20260329-234109",
+    "FIX-TEST-20260329-235451",
+    "SIMPLE-TEST-20260329-234115",
+    "TASK-20260329-234816-001",
+    "TASK-20260327-ECO-001",
+    "TASK-20260329-234026-001"
+  ],
+  "decisions": [
+    {
+      "task_id": "SIMPLE-TEST-20260329-234106",
+      "original_task_type": "simple_test",
+      "original_owner": "coder",
+      "next_actions": [
+        {
+          "action": "task_complete",
+          "message": "Task SIMPLE-TEST-20260329-234106 completed with no further actions required"
+        }
+      ],
+      "decision_timestamp": "2026-03-29T23:58:51.623225"
+    },
+    {
+      "task_id": "SIMPLE-TEST-20260329-234109",
+      "original_task_type": "simple_test",
+      "original_owner": "coder",
+      "next_actions": [
+        {
+          "action": "task_complete",
+          "message": "Task SIMPLE-TEST-20260329-234109 completed with no further actions required"
+        }
+      ],
+      "decision_timestamp": "2026-03-29T23:58:51.623963"
+    },
+    {
+      "task_id": "FIX-TEST-20260329-235451",
+      "original_task_type": "fix_verification",
+      "original_owner": "coder",
+      "next_actions": [
+        {
+          "action": "task_complete",
+          "message": "Task FIX-TEST-20260329-235451 completed with no further actions required"
+        }
+      ],
+      "decision_timestamp": "2026-03-29T23:58:51.624577"
+    },
+    {
+      "task_id": "SIMPLE-TEST-20260329-234115",
+      "original_task_type": "simple_test",
+      "original_owner": "coder",
+      "next_actions": [
+        {
+          "action": "task_complete",
+          "message": "Task SIMPLE-TEST-20260329-234115 completed with no further actions required"
+        }
+      ],
+      "decision_timestamp": "2026-03-29T23:58:51.625079"
+    },
+    {
+      "task_id": "TASK-20260329-234816-001",
+      "original_task_type": "code_fix",
+      "original_owner": "coder",
+      "next_actions": [
+        {
+          "action": "task_complete",
+          "message": "Task TASK-20260329-234816-001 completed with no further actions required"
+        }
+      ],
+      "decision_timestamp": "2026-03-29T23:58:51.625495"
+    },
+    {
+      "task_id": "TASK-20260327-ECO-001",
+      "original_task_type": "code_fix",
+      "original_owner": "coder",
+      "next_actions": [
+        {
+          "action": "task_complete",
+          "message": "Task TASK-20260327-ECO-001 completed with no further actions required"
+        }
+      ],
+      "decision_timestamp": "2026-03-29T23:58:51.626004"
+    },
+    {
+      "task_id": "TASK-20260329-234026-001",
+      "original_task_type": "code_fix",
+      "original_owner": "coder",
+      "next_actions": [
+        {
+          "action": "task_complete",
+          "message": "Task TASK-20260329-234026-001 completed with no further actions required"
+        }
+      ],
+      "decision_timestamp": "2026-03-29T23:58:51.626667"
+    }
+  ],
+  "errors": []
+}

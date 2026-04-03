@@ -1,0 +1,46 @@
+{
+  "cycle_id": "optimization_cycle_20260326_010923",
+  "cycle_type": "optimization_cycle",
+  "description": "优化支线：选择工单 -> OpenCode计划 -> 低风险验证 -> 决策门 -> 汇总 -> 通知",
+  "trigger": "manual",
+  "status": "failed",
+  "created_at": "2026-03-26 01:09:23",
+  "updated_at": "2026-03-26 01:17:40",
+  "current_stage": "split_ticket",
+  "stages": [
+    "preflight",
+    "select_target",
+    "prepare_task",
+    "opencode_plan",
+    "create_optimization_ticket",
+    "split_ticket",
+    "low_risk_validation",
+    "decide_next_path",
+    "summarize",
+    "notify_user"
+  ],
+  "approval": {
+    "auto_research": true,
+    "auto_validate": true,
+    "require_manual_for": [
+      "code_merge",
+      "prod_param_change",
+      "trading_action",
+      "release"
+    ]
+  },
+  "notifications": {
+    "mode": "summary_and_exception",
+    "channel": "feishu",
+    "account_id": "master-feishu",
+    "target": "user:ou_61884ea8aa288c6514cc8b4cb3cd16d8"
+  },
+  "paths": {
+    "cycle_dir": "/home/admin/.openclaw/workspace/master/traces/cycles/optimization_cycle/optimization_cycle_20260326_010923",
+    "codebase_root": "/data/agents/master",
+    "workspace_root": "/home/admin/.openclaw/workspace/master"
+  },
+  "summary": {},
+  "failed_stage": "split_ticket",
+  "failed_task_file": "/home/admin/.openclaw/workspace/master/traces/cycles/optimization_cycle/optimization_cycle_20260326_010923/tasks/06_split_ticket.json"
+}

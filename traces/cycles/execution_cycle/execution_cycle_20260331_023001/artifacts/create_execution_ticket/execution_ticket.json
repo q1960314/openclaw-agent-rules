@@ -1,0 +1,47 @@
+{
+  "cycle_id": "execution_cycle_20260331_023001",
+  "source_ticket_id": "daily_research_20260325_224940::strategy_review",
+  "stage": "create_execution_ticket",
+  "title": "策略核心代码最小化修复 - 止损/风控/信号逻辑适配",
+  "objective": "针对策略复核中发现的夏普-4.45、收益-17.15%、回撤16.93%问题，执行4个核心文件的最小改动修复，优先调整止损阈值、仓位风控和策略信号适配，不改核心算法结构。",
+  "target_files": [
+    "/data/agents/master/modules/risk_engine.py",
+    "/data/agents/master/modules/strategy_core.py",
+    "/data/agents/master/plugins/strategy_ensemble.py",
+    "/data/agents/master/vnpy_backtest/backtest_engine.py"
+  ],
+  "file_order": [
+    "modules/risk_engine.py",
+    "modules/strategy_core.py",
+    "plugins/strategy_ensemble.py",
+    "vnpy_backtest/backtest_engine.py"
+  ],
+  "minimal_changes": {
+    "risk_engine.py": "添加风险验证钩子和熔断逻辑，强化止损阈值执行",
+    "strategy_core.py": "连接风险引擎验证，实现执行前安全检查，调整止损/止盈触发条件",
+    "strategy_ensemble.py": "更新使用已验证的策略和风险接口，优化子策略权重分配",
+    "backtest_engine.py": "添加风险约束验证集成点，支持熔断回测"
+  },
+  "validation_plan": {
+    "unit_tests": "每个组件修改后执行单元测试",
+    "integration_tests": "risk_engine与strategy组件间集成测试",
+    "backtest_validation": "使用历史数据验证风险控制有效性",
+    "dry_run": "受控环境干运行执行"
+  },
+  "approval_gates": [
+    "test-expert验证风险控制",
+    "strategy-expert复核核心逻辑变更",
+    "backtest-engine验证性能影响",
+    "risk-officer审批新增熔断机制"
+  ],
+  "constraints": {
+    "scope_limitation": "禁止扫描无关目录，仅限上述4个文件",
+    "parameter_protection": "禁止修改实盘交易参数",
+    "execution_prevention": "禁止自动交易，仅回测验证",
+    "problem_scope": "禁止扩展问题范围，严格按诊断结论执行"
+  },
+  "ready_for_dispatch": true,
+  "recommended_executor": "coder",
+  "generated_at": "2026-03-31T10:31:00+08:00",
+  "generated_by": "doc-manager"
+}

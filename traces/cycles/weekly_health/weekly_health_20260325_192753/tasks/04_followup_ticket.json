@@ -1,0 +1,26 @@
+{
+  "task_id": "weekly_health_20260325_192753::followup_ticket",
+  "cycle_id": "weekly_health_20260325_192753",
+  "cycle_type": "weekly_health",
+  "stage": "followup_ticket",
+  "owner_agent": "master-quant",
+  "mode": "command",
+  "status": "completed",
+  "timeout_seconds": 120,
+  "retry_limit": 0,
+  "attempts": [
+    {
+      "attempt": 1,
+      "started_at": "2026-03-25 19:34:08",
+      "finished_at": "2026-03-25 19:34:08",
+      "exit_code": 0,
+      "result": "success"
+    }
+  ],
+  "created_at": "2026-03-25 19:34:08",
+  "updated_at": "2026-03-25 19:34:08",
+  "command": "/home/admin/miniconda3/envs/vnpy_env/bin/python /home/admin/.openclaw/workspace/master/scripts/workflow_followup.py --cycle-dir /home/admin/.openclaw/workspace/master/traces/cycles/weekly_health/weekly_health_20260325_192753 --stage-id followup_ticket",
+  "log_file": "/home/admin/.openclaw/workspace/master/traces/cycles/weekly_health/weekly_health_20260325_192753/logs/04_followup_ticket.log",
+  "finished_at": "2026-03-25 19:34:08",
+  "exit_code": 0
+}

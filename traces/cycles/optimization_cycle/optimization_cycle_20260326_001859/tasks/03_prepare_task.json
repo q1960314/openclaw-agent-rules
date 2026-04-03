@@ -1,0 +1,26 @@
+{
+  "task_id": "optimization_cycle_20260326_001859::prepare_task",
+  "cycle_id": "optimization_cycle_20260326_001859",
+  "cycle_type": "optimization_cycle",
+  "stage": "prepare_task",
+  "owner_agent": "coder",
+  "mode": "command",
+  "status": "completed",
+  "timeout_seconds": 120,
+  "retry_limit": 0,
+  "attempts": [
+    {
+      "attempt": 1,
+      "started_at": "2026-03-26 00:19:03",
+      "finished_at": "2026-03-26 00:19:05",
+      "exit_code": 0,
+      "result": "success"
+    }
+  ],
+  "created_at": "2026-03-26 00:19:03",
+  "updated_at": "2026-03-26 00:19:05",
+  "command": "/home/admin/miniconda3/envs/vnpy_env/bin/python /home/admin/.openclaw/workspace/master/scripts/workflow_prepare_opencode_task.py --cycle-dir /home/admin/.openclaw/workspace/master/traces/cycles/optimization_cycle/optimization_cycle_20260326_001859 --stage-id prepare_task",
+  "log_file": "/home/admin/.openclaw/workspace/master/traces/cycles/optimization_cycle/optimization_cycle_20260326_001859/logs/03_prepare_task.log",
+  "finished_at": "2026-03-26 00:19:05",
+  "exit_code": 0
+}

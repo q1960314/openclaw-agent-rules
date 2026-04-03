@@ -1,0 +1,13 @@
+{
+  "stage": "queue_ticket",
+  "generated_at": "2026-03-29 21:06:33",
+  "cycle_id": "weekly_health_20260329_210001",
+  "cycle_type": "weekly_health",
+  "enqueued": [
+    {
+      "ticket_id": "weekly_health_20260329_210001::weekly_stable",
+      "path": "/home/admin/.openclaw/workspace/master/reports/workflow/queue/pending/weekly_health_20260329_210001____weekly_stable.json"
+    }
+  ],
+  "skipped": []
+}

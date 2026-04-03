@@ -1,0 +1,41 @@
+{
+  "cycle_id": "diagnosis_cycle_20260326_174001",
+  "cycle_type": "diagnosis_cycle",
+  "description": "专项诊断支线：专项agent先诊断 -> 诊断门 -> 汇总 -> 通知",
+  "trigger": "auto_dispatcher",
+  "status": "failed",
+  "created_at": "2026-03-26 17:40:01",
+  "updated_at": "2026-03-26 17:40:06",
+  "current_stage": "specialist_diagnosis",
+  "stages": [
+    "preflight",
+    "specialist_diagnosis",
+    "diagnosis_gate",
+    "summarize",
+    "notify_user"
+  ],
+  "approval": {
+    "auto_research": true,
+    "auto_validate": true,
+    "require_manual_for": [
+      "code_merge",
+      "prod_param_change",
+      "trading_action",
+      "release"
+    ]
+  },
+  "notifications": {
+    "mode": "summary_and_exception",
+    "channel": "feishu",
+    "account_id": "master-feishu",
+    "target": "user:ou_61884ea8aa288c6514cc8b4cb3cd16d8"
+  },
+  "paths": {
+    "cycle_dir": "/home/admin/.openclaw/workspace/master/traces/cycles/diagnosis_cycle/diagnosis_cycle_20260326_174001",
+    "codebase_root": "/data/agents/master",
+    "workspace_root": "/home/admin/.openclaw/workspace/master"
+  },
+  "summary": {},
+  "failed_stage": "specialist_diagnosis",
+  "failed_task_file": "/home/admin/.openclaw/workspace/master/traces/cycles/diagnosis_cycle/diagnosis_cycle_20260326_174001/tasks/02_specialist_diagnosis.json"
+}

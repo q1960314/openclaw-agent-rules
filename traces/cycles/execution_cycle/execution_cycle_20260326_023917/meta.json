@@ -1,0 +1,40 @@
+{
+  "cycle_id": "execution_cycle_20260326_023917",
+  "cycle_type": "execution_cycle",
+  "description": "执行支线：从 diagnosis candidate 进入 coder/OpenCode 执行计划",
+  "trigger": "manual",
+  "status": "dry_run_completed",
+  "created_at": "2026-03-26 02:39:17",
+  "updated_at": "2026-03-26 02:39:17",
+  "current_stage": null,
+  "stages": [
+    "preflight",
+    "select_execution_target",
+    "prepare_execution_task",
+    "opencode_execution_plan",
+    "summarize",
+    "notify_user"
+  ],
+  "approval": {
+    "auto_research": true,
+    "auto_validate": true,
+    "require_manual_for": [
+      "code_merge",
+      "prod_param_change",
+      "trading_action",
+      "release"
+    ]
+  },
+  "notifications": {
+    "mode": "summary_and_exception",
+    "channel": "feishu",
+    "account_id": "master-feishu",
+    "target": "user:ou_61884ea8aa288c6514cc8b4cb3cd16d8"
+  },
+  "paths": {
+    "cycle_dir": "/home/admin/.openclaw/workspace/master/traces/cycles/execution_cycle/execution_cycle_20260326_023917",
+    "codebase_root": "/data/agents/master",
+    "workspace_root": "/home/admin/.openclaw/workspace/master"
+  },
+  "summary": {}
+}

@@ -1,0 +1,23 @@
+{
+  "stage": "dispatch_ticket_healthgate",
+  "generated_at": "2026-03-25 21:25:39",
+  "pending_scanned": 1,
+  "done": [],
+  "dispatched": [],
+  "blocked": [],
+  "failed": [
+    {
+      "ticket_id": "daily_research_20260325_201449::strategy_review",
+      "status": "failed",
+      "reason": "agent_aborted_or_overloaded",
+      "agent_id": "strategy-expert",
+      "health": {
+        "reason": "agent_aborted_or_overloaded",
+        "abortedLastRun": true,
+        "contextTokens": 262144,
+        "totalTokens": 224908,
+        "sessionId": "bad88bea-7f96-4ef3-82ba-5cfa20ee45f0"
+      }
+    }
+  ]
+}

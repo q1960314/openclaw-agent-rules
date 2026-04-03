@@ -1,0 +1,26 @@
+{
+  "task_id": "daily_data_cycle_20260326_041001::summarize",
+  "cycle_id": "daily_data_cycle_20260326_041001",
+  "cycle_type": "daily_data_cycle",
+  "stage": "summarize",
+  "owner_agent": "doc-knowledge-manager",
+  "mode": "command",
+  "status": "completed",
+  "timeout_seconds": 120,
+  "retry_limit": 0,
+  "attempts": [
+    {
+      "attempt": 1,
+      "started_at": "2026-03-26 04:10:09",
+      "finished_at": "2026-03-26 04:10:11",
+      "exit_code": 0,
+      "result": "success"
+    }
+  ],
+  "created_at": "2026-03-26 04:10:09",
+  "updated_at": "2026-03-26 04:10:11",
+  "command": "/home/admin/miniconda3/envs/vnpy_env/bin/python /home/admin/.openclaw/workspace/master/scripts/workflow_summary.py --cycle-dir /home/admin/.openclaw/workspace/master/traces/cycles/daily_data_cycle/daily_data_cycle_20260326_041001 --stage-id summarize",
+  "log_file": "/home/admin/.openclaw/workspace/master/traces/cycles/daily_data_cycle/daily_data_cycle_20260326_041001/logs/05_summarize.log",
+  "finished_at": "2026-03-26 04:10:11",
+  "exit_code": 0
+}

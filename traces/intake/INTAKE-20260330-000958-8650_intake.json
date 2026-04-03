@@ -1,0 +1,12 @@
+{
+  "task_id": "INTAKE-20260330-000958-8650",
+  "request": "修复 workflow_run_opencode.py 中的命令路径问题",
+  "task_type": "code_fix",
+  "owner_role": "coder",
+  "received_at": "2026-03-30T00:09:58.912386",
+  "next_roles": [
+    "test-expert",
+    "doc-manager"
+  ],
+  "status": "queued"
+}

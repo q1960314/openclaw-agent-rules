@@ -1,0 +1,17 @@
+{
+  "stage": "prepare_task",
+  "generated_at": "2026-03-26 00:19:03",
+  "ticket": {
+    "ticket_id": "daily_research_20260325_224940::strategy_review",
+    "category": "strategy_review",
+    "priority": "P1",
+    "owner": "strategy-expert",
+    "dispatch_agent_id": "strategy-expert",
+    "title": "每日闭环触发策略复核",
+    "reason": "smoke_backtest total_return=-0.1715, sharpe=-4.4467, max_drawdown=0.1693",
+    "suggested_next_step": "复核近 60 交易日策略表现，确认是否需要进入周度优化/参数审查",
+    "approval_required": false
+  },
+  "code_root": "/data/agents/master",
+  "prompt": "你正在维护一个中国A股量化回测/选股系统，代码根目录为 /data/agents/master。\n\n当前进入 optimization_cycle，来源工单如下：\n- ticket_id: daily_research_20260325_224940::strategy_review\n- category: strategy_review\n- title: 每日闭环触发策略复核\n- reason: smoke_backtest total_return=-0.1715, sharpe=-4.4467, max_drawdown=0.1693\n- suggested_next_step: 复核近 60 交易日策略表现，确认是否需要进入周度优化/参数审查\n\n请先做“计划模式”输出，不要直接进行高风险改动。你的任务：\n1. 阅读与该工单最相关的代码文件\n2. 判断这是参数问题、策略逻辑问题、数据问题，还是回测框架问题\n3. 给出最小改动路径\n4. 给出建议修改文件列表\n5. 给出验证方案（test/backtest）\n6. 明确哪些改动必须人工审批后才能执行\n\n强约束：\n- 只围绕中国A股量化回测/选股系统\n- 不做实盘交易动作\n- 不修改实盘参数\n- 不删除大量文件\n- 默认输出“计划”，不要直接 build\n\n输出格式：\n# OpenCode Optimization Plan\n## 1. Diagnosis\n## 2. Minimal Change Path\n## 3. Files To Touch\n## 4. Validation Plan\n## 5. Approval Gates\n"
+}

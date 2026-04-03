@@ -1,0 +1,34 @@
+{
+  "stage": "diagnosis_gate",
+  "generated_at": "2026-03-26 02:19:37",
+  "decision": "execution_cycle_candidate",
+  "rationale": "多数专项 agent 认为应进入代码执行候选链",
+  "agent_votes": [
+    {
+      "agent_id": "strategy-expert",
+      "need_code": true,
+      "no_code": false
+    },
+    {
+      "agent_id": "parameter-evolver",
+      "need_code": true,
+      "no_code": false
+    },
+    {
+      "agent_id": "backtest-engine",
+      "need_code": true,
+      "no_code": false
+    }
+  ],
+  "source_ticket": {
+    "ticket_id": "daily_research_20260325_224940::strategy_review",
+    "category": "strategy_review",
+    "priority": "P1",
+    "owner": "strategy-expert",
+    "dispatch_agent_id": "strategy-expert",
+    "title": "每日闭环触发策略复核",
+    "reason": "smoke_backtest total_return=-0.1715, sharpe=-4.4467, max_drawdown=0.1693",
+    "suggested_next_step": "复核近 60 交易日策略表现，确认是否需要进入周度优化/参数审查",
+    "approval_required": false
+  }
+}

@@ -1,0 +1,26 @@
+{
+  "task_id": "daily_data_cycle_20260326_010443::data_snapshot",
+  "cycle_id": "daily_data_cycle_20260326_010443",
+  "cycle_type": "daily_data_cycle",
+  "stage": "data_snapshot",
+  "owner_agent": "data-collector",
+  "mode": "command",
+  "status": "completed",
+  "timeout_seconds": 180,
+  "retry_limit": 0,
+  "attempts": [
+    {
+      "attempt": 1,
+      "started_at": "2026-03-26 01:04:47",
+      "finished_at": "2026-03-26 01:04:49",
+      "exit_code": 0,
+      "result": "success"
+    }
+  ],
+  "created_at": "2026-03-26 01:04:47",
+  "updated_at": "2026-03-26 01:04:49",
+  "command": "/home/admin/miniconda3/envs/vnpy_env/bin/python /home/admin/.openclaw/workspace/master/scripts/workflow_data_snapshot.py --code-root /data/agents/master --cycle-dir /home/admin/.openclaw/workspace/master/traces/cycles/daily_data_cycle/daily_data_cycle_20260326_010443 --stage-id data_snapshot",
+  "log_file": "/home/admin/.openclaw/workspace/master/traces/cycles/daily_data_cycle/daily_data_cycle_20260326_010443/logs/03_data_snapshot.log",
+  "finished_at": "2026-03-26 01:04:49",
+  "exit_code": 0
+}

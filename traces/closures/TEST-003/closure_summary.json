@@ -1,0 +1,11 @@
+{
+  "request_id": "TEST-003",
+  "closure_id": "CLOSURE-TEST-003-20260331-093234",
+  "status": "completed",
+  "execution_success": true,
+  "artifacts_count": 0,
+  "next_action": "notify_completion",
+  "followup_required": false,
+  "generated_at": "2026-03-31T09:32:34.744027",
+  "summary_version": "1.0.0"
+}

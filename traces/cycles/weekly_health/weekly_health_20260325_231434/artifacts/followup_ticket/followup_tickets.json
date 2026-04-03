@@ -1,0 +1,20 @@
+{
+  "stage": "followup_ticket",
+  "generated_at": "2026-03-25 23:20:59",
+  "cycle_id": "weekly_health_20260325_231434",
+  "cycle_type": "weekly_health",
+  "ticket_count": 1,
+  "tickets": [
+    {
+      "ticket_id": "weekly_health_20260325_231434::weekly_stable",
+      "category": "monitoring",
+      "priority": "P3",
+      "owner": "knowledge-steward",
+      "dispatch_agent_id": "knowledge-steward",
+      "title": "周度健康检查通过，无需优化，仅做归档",
+      "reason": "health_status=健康",
+      "suggested_next_step": "沉淀本周稳定性结果，等待下一个周期",
+      "approval_required": false
+    }
+  ]
+}

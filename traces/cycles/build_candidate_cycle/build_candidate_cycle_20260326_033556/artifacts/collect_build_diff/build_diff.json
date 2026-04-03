@@ -1,0 +1,12 @@
+{
+  "stage": "collect_build_diff",
+  "generated_at": "2026-03-26 03:38:26",
+  "worktree": "/data/agents/worktrees/build_candidate_cycle_20260326_033556",
+  "changed_files": [
+    "M fetch_data_optimized.py",
+    "M plugins/strategy_ensemble.py",
+    "M vnpy_backtest/backtest_engine.py"
+  ],
+  "changed_count": 3,
+  "diff_stat": " fetch_data_optimized.py          | 4006 ++++++++++++++++++++++++--------------\n plugins/strategy_ensemble.py     |  304 +--\n vnpy_backtest/backtest_engine.py |  352 ++--\n 3 files changed, 2882 insertions(+), 1780 deletions(-)\n"
+}

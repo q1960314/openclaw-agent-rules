@@ -1,0 +1,13 @@
+{
+  "stage": "queue_ticket_manual",
+  "generated_at": "2026-03-25 20:07:00",
+  "cycle_id": "daily_research_20260325_192554",
+  "cycle_type": "daily_research",
+  "enqueued": [
+    {
+      "ticket_id": "daily_research_20260325_192554::strategy_review",
+      "path": "/home/admin/.openclaw/workspace/master/reports/workflow/queue/pending/daily_research_20260325_192554____strategy_review.json"
+    }
+  ],
+  "skipped": []
+}

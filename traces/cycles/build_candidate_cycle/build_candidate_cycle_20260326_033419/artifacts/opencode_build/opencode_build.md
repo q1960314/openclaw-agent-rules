@@ -1,0 +1,1 @@
+I'll create a comprehensive execution plan based on the diagnostic information and code analysis. Let me analyze the files to understand the current state and create a targeted plan for performance improvements.

@@ -1,0 +1,51 @@
+{
+  "stage": "preflight",
+  "checked_at": "2026-03-29 15:10:02",
+  "python_executable": "/home/admin/miniconda3/envs/vnpy_env/bin/python",
+  "code_root": "/data/agents/master",
+  "workspace_root": "/home/admin/.openclaw/workspace/master",
+  "total_stock_dirs": 4587,
+  "checks": [
+    {
+      "name": "code_root_exists",
+      "ok": true,
+      "detail": "/data/agents/master"
+    },
+    {
+      "name": "workspace_root_exists",
+      "ok": true,
+      "detail": "/home/admin/.openclaw/workspace/master"
+    },
+    {
+      "name": "python_env_exists",
+      "ok": true,
+      "detail": "/home/admin/miniconda3/envs/vnpy_env/bin/python"
+    },
+    {
+      "name": "required_fetch_file",
+      "ok": true,
+      "detail": "/data/agents/master/fetch_data_optimized.py"
+    },
+    {
+      "name": "required_backtest_package",
+      "ok": true,
+      "detail": "/data/agents/master/vnpy_backtest"
+    },
+    {
+      "name": "required_data_dir",
+      "ok": true,
+      "detail": "/data/agents/master/data_all_stocks"
+    },
+    {
+      "name": "required_limit_file",
+      "ok": true,
+      "detail": "/data/agents/master/data/limit_list_d.parquet"
+    },
+    {
+      "name": "git_repo_present",
+      "ok": true,
+      "detail": "/data/agents/master/.git"
+    }
+  ],
+  "all_passed": true
+}

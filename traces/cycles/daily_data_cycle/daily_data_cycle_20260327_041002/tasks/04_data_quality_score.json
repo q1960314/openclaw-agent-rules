@@ -1,0 +1,26 @@
+{
+  "task_id": "daily_data_cycle_20260327_041002::data_quality_score",
+  "cycle_id": "daily_data_cycle_20260327_041002",
+  "cycle_type": "daily_data_cycle",
+  "stage": "data_quality_score",
+  "owner_agent": "validation-center",
+  "mode": "command",
+  "status": "completed",
+  "timeout_seconds": 120,
+  "retry_limit": 0,
+  "attempts": [
+    {
+      "attempt": 1,
+      "started_at": "2026-03-27 04:10:08",
+      "finished_at": "2026-03-27 04:10:10",
+      "exit_code": 0,
+      "result": "success"
+    }
+  ],
+  "created_at": "2026-03-27 04:10:08",
+  "updated_at": "2026-03-27 04:10:10",
+  "command": "/home/admin/miniconda3/envs/vnpy_env/bin/python /home/admin/.openclaw/workspace/master/scripts/workflow_data_quality_score.py --cycle-dir /home/admin/.openclaw/workspace/master/traces/cycles/daily_data_cycle/daily_data_cycle_20260327_041002 --stage-id data_quality_score",
+  "log_file": "/home/admin/.openclaw/workspace/master/traces/cycles/daily_data_cycle/daily_data_cycle_20260327_041002/logs/04_data_quality_score.log",
+  "finished_at": "2026-03-27 04:10:10",
+  "exit_code": 0
+}

@@ -1,0 +1,20 @@
+{
+  "stage": "execution_gate",
+  "generated_at": "2026-03-26 03:12:56",
+  "decision": "build_candidate_ready",
+  "rationale": "执行计划包含范围、文件顺序、最小改动、验证和审批门，已可作为 build 候选输入",
+  "checks": {
+    "has_scope": true,
+    "has_order": true,
+    "has_changes": true,
+    "has_validation": true,
+    "has_approval": true,
+    "file_count": 4
+  },
+  "files": [
+    "/data/agents/master/modules/strategy_core.py",
+    "/data/agents/master/vnpy_backtest/backtest_engine.py",
+    "/data/agents/master/plugins/strategy_ensemble.py",
+    "/data/agents/master/modules/risk_engine.py"
+  ]
+}

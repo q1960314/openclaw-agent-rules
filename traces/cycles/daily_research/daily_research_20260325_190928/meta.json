@@ -1,0 +1,36 @@
+{
+  "cycle_id": "daily_research_20260325_190928",
+  "cycle_type": "daily_research",
+  "description": "每日研究闭环：预检查 -> 数据校验 -> 冒烟回测 -> 汇总",
+  "trigger": "manual",
+  "status": "stopped_after_stage",
+  "created_at": "2026-03-25 19:09:28",
+  "updated_at": "2026-03-25 19:09:30",
+  "current_stage": "data_validate",
+  "stages": [
+    "preflight",
+    "data_validate",
+    "smoke_backtest",
+    "summarize"
+  ],
+  "approval": {
+    "auto_research": true,
+    "auto_validate": true,
+    "require_manual_for": [
+      "code_merge",
+      "prod_param_change",
+      "trading_action",
+      "release"
+    ]
+  },
+  "notifications": {
+    "mode": "summary_and_exception"
+  },
+  "paths": {
+    "cycle_dir": "/home/admin/.openclaw/workspace/master/traces/cycles/daily_research/daily_research_20260325_190928",
+    "codebase_root": "/data/agents/master",
+    "workspace_root": "/home/admin/.openclaw/workspace/master"
+  },
+  "summary": {},
+  "stopped_stage": "data_validate"
+}

@@ -1,0 +1,26 @@
+{
+  "task_id": "diagnosis_cycle_20260326_021825::notify_user",
+  "cycle_id": "diagnosis_cycle_20260326_021825",
+  "cycle_type": "diagnosis_cycle",
+  "stage": "notify_user",
+  "owner_agent": "master-quant",
+  "mode": "command",
+  "status": "completed",
+  "timeout_seconds": 120,
+  "retry_limit": 0,
+  "attempts": [
+    {
+      "attempt": 1,
+      "started_at": "2026-03-26 02:19:41",
+      "finished_at": "2026-03-26 02:19:53",
+      "exit_code": 0,
+      "result": "success"
+    }
+  ],
+  "created_at": "2026-03-26 02:19:41",
+  "updated_at": "2026-03-26 02:19:53",
+  "command": "/home/admin/miniconda3/envs/vnpy_env/bin/python /home/admin/.openclaw/workspace/master/scripts/workflow_notify.py --cycle-dir /home/admin/.openclaw/workspace/master/traces/cycles/diagnosis_cycle/diagnosis_cycle_20260326_021825 --mode success",
+  "log_file": "/home/admin/.openclaw/workspace/master/traces/cycles/diagnosis_cycle/diagnosis_cycle_20260326_021825/logs/05_notify_user.log",
+  "finished_at": "2026-03-26 02:19:53",
+  "exit_code": 0
+}

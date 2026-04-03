@@ -1,0 +1,11 @@
+{
+  "stage": "data_quality_score",
+  "generated_at": "2026-03-26 04:10:07",
+  "score": 100,
+  "grade": "A",
+  "errors": 0,
+  "warnings": 0,
+  "sample_trade_date_spread_days": 0,
+  "sample_stock_count": 20,
+  "status": "pass"
+}

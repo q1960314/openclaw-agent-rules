@@ -1,0 +1,26 @@
+{
+  "task_id": "knowledge_cycle_20260327_232001::archive_knowledge",
+  "cycle_id": "knowledge_cycle_20260327_232001",
+  "cycle_type": "knowledge_cycle",
+  "stage": "archive_knowledge",
+  "owner_agent": "knowledge-steward",
+  "mode": "command",
+  "status": "completed",
+  "timeout_seconds": 120,
+  "retry_limit": 0,
+  "attempts": [
+    {
+      "attempt": 1,
+      "started_at": "2026-03-27 23:20:03",
+      "finished_at": "2026-03-27 23:20:05",
+      "exit_code": 0,
+      "result": "success"
+    }
+  ],
+  "created_at": "2026-03-27 23:20:03",
+  "updated_at": "2026-03-27 23:20:05",
+  "command": "/home/admin/miniconda3/envs/vnpy_env/bin/python /home/admin/.openclaw/workspace/master/scripts/workflow_knowledge_archive.py --cycle-dir /home/admin/.openclaw/workspace/master/traces/cycles/knowledge_cycle/knowledge_cycle_20260327_232001 --stage-id archive_knowledge",
+  "log_file": "/home/admin/.openclaw/workspace/master/traces/cycles/knowledge_cycle/knowledge_cycle_20260327_232001/logs/02_archive_knowledge.log",
+  "finished_at": "2026-03-27 23:20:05",
+  "exit_code": 0
+}

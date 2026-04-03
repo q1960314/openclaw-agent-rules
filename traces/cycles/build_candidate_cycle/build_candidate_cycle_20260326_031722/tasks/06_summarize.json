@@ -1,0 +1,24 @@
+{
+  "task_id": "build_candidate_cycle_20260326_031722::summarize",
+  "cycle_id": "build_candidate_cycle_20260326_031722",
+  "cycle_type": "build_candidate_cycle",
+  "stage": "summarize",
+  "owner_agent": "doc-knowledge-manager",
+  "mode": "command",
+  "status": "dry_run",
+  "timeout_seconds": 120,
+  "retry_limit": 0,
+  "attempts": [
+    {
+      "attempt": 1,
+      "started_at": "2026-03-26 03:17:22",
+      "finished_at": "2026-03-26 03:17:22",
+      "exit_code": 0,
+      "result": "dry_run"
+    }
+  ],
+  "created_at": "2026-03-26 03:17:22",
+  "updated_at": "2026-03-26 03:17:22",
+  "command": "/home/admin/miniconda3/envs/vnpy_env/bin/python /home/admin/.openclaw/workspace/master/scripts/workflow_summary.py --cycle-dir /home/admin/.openclaw/workspace/master/traces/cycles/build_candidate_cycle/build_candidate_cycle_20260326_031722 --stage-id summarize",
+  "log_file": "/home/admin/.openclaw/workspace/master/traces/cycles/build_candidate_cycle/build_candidate_cycle_20260326_031722/logs/06_summarize.log"
+}

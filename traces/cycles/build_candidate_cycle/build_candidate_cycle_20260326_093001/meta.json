@@ -1,0 +1,66 @@
+{
+  "cycle_id": "build_candidate_cycle_20260326_093001",
+  "cycle_type": "build_candidate_cycle",
+  "description": "build候选支线：选择 build candidate -> worktree -> OpenCode build -> diff 收集 -> 汇总 -> 通知",
+  "trigger": "auto_dispatcher",
+  "status": "failed",
+  "created_at": "2026-03-26 09:30:01",
+  "updated_at": "2026-03-26 09:32:18",
+  "current_stage": "notify_user",
+  "stages": [
+    "select_build_candidate",
+    "create_worktree",
+    "prepare_build_task",
+    "opencode_build",
+    "collect_build_diff",
+    "build_gate",
+    "summarize",
+    "notify_user"
+  ],
+  "approval": {
+    "auto_research": true,
+    "auto_validate": true,
+    "require_manual_for": [
+      "code_merge",
+      "prod_param_change",
+      "trading_action",
+      "release"
+    ]
+  },
+  "notifications": {
+    "mode": "summary_and_exception",
+    "channel": "feishu",
+    "account_id": "master-feishu",
+    "target": "user:ou_61884ea8aa288c6514cc8b4cb3cd16d8"
+  },
+  "paths": {
+    "cycle_dir": "/home/admin/.openclaw/workspace/master/traces/cycles/build_candidate_cycle/build_candidate_cycle_20260326_093001",
+    "codebase_root": "/data/agents/master",
+    "workspace_root": "/home/admin/.openclaw/workspace/master"
+  },
+  "summary": {
+    "cycle_id": "build_candidate_cycle_20260326_093001",
+    "cycle_type": "build_candidate_cycle",
+    "generated_at": "2026-03-26 09:32:14",
+    "status": "completed",
+    "task_total": 7,
+    "task_completed": 7,
+    "task_failed": 0,
+    "artifacts": {
+      "data_check": null,
+      "smoke_backtest": null,
+      "weekly_health": null,
+      "followup_ticket": null,
+      "queue_result": null,
+      "dispatch_result": null,
+      "collect_result": null,
+      "select_target": null,
+      "opencode_result": null,
+      "data_snapshot": null,
+      "data_quality_score": null
+    },
+    "recommended_actions": []
+  },
+  "failed_stage": "notify_user",
+  "failed_task_file": "/home/admin/.openclaw/workspace/master/traces/cycles/build_candidate_cycle/build_candidate_cycle_20260326_093001/tasks/08_notify_user.json"
+}

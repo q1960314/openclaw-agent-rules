@@ -1,0 +1,26 @@
+{
+  "task_id": "execution_cycle_20260329_231001::opencode_execution_plan",
+  "cycle_id": "execution_cycle_20260329_231001",
+  "cycle_type": "execution_cycle",
+  "stage": "opencode_execution_plan",
+  "owner_agent": "coder",
+  "mode": "command",
+  "status": "failed",
+  "timeout_seconds": 420,
+  "retry_limit": 0,
+  "attempts": [
+    {
+      "attempt": 1,
+      "started_at": "2026-03-29 23:10:07",
+      "finished_at": "2026-03-29 23:10:09",
+      "exit_code": 1,
+      "result": "failed"
+    }
+  ],
+  "created_at": "2026-03-29 23:10:07",
+  "updated_at": "2026-03-29 23:10:09",
+  "command": "/home/admin/miniconda3/envs/vnpy_env/bin/python /home/admin/.openclaw/workspace/master/scripts/workflow_run_execution_opencode.py --cycle-dir /home/admin/.openclaw/workspace/master/traces/cycles/execution_cycle/execution_cycle_20260329_231001 --stage-id opencode_execution_plan",
+  "log_file": "/home/admin/.openclaw/workspace/master/traces/cycles/execution_cycle/execution_cycle_20260329_231001/logs/04_opencode_execution_plan.log",
+  "finished_at": "2026-03-29 23:10:09",
+  "exit_code": 1
+}

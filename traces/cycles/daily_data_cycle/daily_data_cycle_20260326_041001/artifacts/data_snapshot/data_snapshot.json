@@ -1,0 +1,89 @@
+{
+  "stage": "data_snapshot",
+  "generated_at": "2026-03-26 04:10:06",
+  "code_root": "/data/agents/master",
+  "stock_dir_count": 4587,
+  "sample_size": 10,
+  "important_files": [
+    {
+      "path": "/data/agents/master/data/limit_list_d.parquet",
+      "exists": true,
+      "size_bytes": 7581429,
+      "mtime": "2026-03-21 23:16:50"
+    },
+    {
+      "path": "/data/agents/master/data/top_list.parquet",
+      "exists": true,
+      "size_bytes": 6922896,
+      "mtime": "2026-03-23 16:05:24"
+    },
+    {
+      "path": "/data/agents/master/data/hm_detail.parquet",
+      "exists": true,
+      "size_bytes": 1509089,
+      "mtime": "2026-03-23 17:13:16"
+    }
+  ],
+  "samples": [
+    {
+      "ts_code": "000001.SZ",
+      "daily_exists": true,
+      "daily_size_bytes": 79911,
+      "latest_trade_date": "20260320"
+    },
+    {
+      "ts_code": "000002.SZ",
+      "daily_exists": true,
+      "daily_size_bytes": 83852,
+      "latest_trade_date": "20260320"
+    },
+    {
+      "ts_code": "000004.SZ",
+      "daily_exists": true,
+      "daily_size_bytes": 82824,
+      "latest_trade_date": "20260320"
+    },
+    {
+      "ts_code": "000006.SZ",
+      "daily_exists": true,
+      "daily_size_bytes": 72035,
+      "latest_trade_date": "20260320"
+    },
+    {
+      "ts_code": "000007.SZ",
+      "daily_exists": true,
+      "daily_size_bytes": 70820,
+      "latest_trade_date": "20260320"
+    },
+    {
+      "ts_code": "000008.SZ",
+      "daily_exists": true,
+      "daily_size_bytes": 58167,
+      "latest_trade_date": "20260320"
+    },
+    {
+      "ts_code": "000009.SZ",
+      "daily_exists": true,
+      "daily_size_bytes": 78182,
+      "latest_trade_date": "20260320"
+    },
+    {
+      "ts_code": "000010.SZ",
+      "daily_exists": true,
+      "daily_size_bytes": 63437,
+      "latest_trade_date": "20260320"
+    },
+    {
+      "ts_code": "000011.SZ",
+      "daily_exists": true,
+      "daily_size_bytes": 74087,
+      "latest_trade_date": "20260320"
+    },
+    {
+      "ts_code": "000012.SZ",
+      "daily_exists": true,
+      "daily_size_bytes": 68249,
+      "latest_trade_date": "20260320"
+    }
+  ]
+}

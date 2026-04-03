@@ -1,0 +1,26 @@
+{
+  "task_id": "build_candidate_cycle_20260326_033419::collect_build_diff",
+  "cycle_id": "build_candidate_cycle_20260326_033419",
+  "cycle_type": "build_candidate_cycle",
+  "stage": "collect_build_diff",
+  "owner_agent": "coder",
+  "mode": "command",
+  "status": "completed",
+  "timeout_seconds": 120,
+  "retry_limit": 0,
+  "attempts": [
+    {
+      "attempt": 1,
+      "started_at": "2026-03-26 03:34:33",
+      "finished_at": "2026-03-26 03:34:35",
+      "exit_code": 0,
+      "result": "success"
+    }
+  ],
+  "created_at": "2026-03-26 03:34:33",
+  "updated_at": "2026-03-26 03:34:35",
+  "command": "/home/admin/miniconda3/envs/vnpy_env/bin/python /home/admin/.openclaw/workspace/master/scripts/workflow_collect_build_diff.py --cycle-dir /home/admin/.openclaw/workspace/master/traces/cycles/build_candidate_cycle/build_candidate_cycle_20260326_033419 --stage-id collect_build_diff",
+  "log_file": "/home/admin/.openclaw/workspace/master/traces/cycles/build_candidate_cycle/build_candidate_cycle_20260326_033419/logs/05_collect_build_diff.log",
+  "finished_at": "2026-03-26 03:34:35",
+  "exit_code": 0
+}

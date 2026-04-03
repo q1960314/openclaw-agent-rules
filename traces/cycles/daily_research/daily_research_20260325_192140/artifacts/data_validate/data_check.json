@@ -1,0 +1,163 @@
+{
+  "stage": "data_validate",
+  "checked_at": "2026-03-25 19:21:41",
+  "required_files": [
+    {
+      "path": "/data/agents/master/data/limit_list_d.parquet",
+      "exists": true
+    }
+  ],
+  "samples": [
+    {
+      "ts_code": "000001.SZ",
+      "daily_file": "/data/agents/master/data_all_stocks/000001.SZ/daily.parquet",
+      "exists": true,
+      "rows": 1502,
+      "latest_trade_date": "20260320"
+    },
+    {
+      "ts_code": "000002.SZ",
+      "daily_file": "/data/agents/master/data_all_stocks/000002.SZ/daily.parquet",
+      "exists": true,
+      "rows": 1502,
+      "latest_trade_date": "20260320"
+    },
+    {
+      "ts_code": "000004.SZ",
+      "daily_file": "/data/agents/master/data_all_stocks/000004.SZ/daily.parquet",
+      "exists": true,
+      "rows": 1499,
+      "latest_trade_date": "20260320"
+    },
+    {
+      "ts_code": "000006.SZ",
+      "daily_file": "/data/agents/master/data_all_stocks/000006.SZ/daily.parquet",
+      "exists": true,
+      "rows": 1502,
+      "latest_trade_date": "20260320"
+    },
+    {
+      "ts_code": "000007.SZ",
+      "daily_file": "/data/agents/master/data_all_stocks/000007.SZ/daily.parquet",
+      "exists": true,
+      "rows": 1498,
+      "latest_trade_date": "20260320"
+    },
+    {
+      "ts_code": "000008.SZ",
+      "daily_file": "/data/agents/master/data_all_stocks/000008.SZ/daily.parquet",
+      "exists": true,
+      "rows": 1502,
+      "latest_trade_date": "20260320"
+    },
+    {
+      "ts_code": "000009.SZ",
+      "daily_file": "/data/agents/master/data_all_stocks/000009.SZ/daily.parquet",
+      "exists": true,
+      "rows": 1502,
+      "latest_trade_date": "20260320"
+    },
+    {
+      "ts_code": "000010.SZ",
+      "daily_file": "/data/agents/master/data_all_stocks/000010.SZ/daily.parquet",
+      "exists": true,
+      "rows": 1501,
+      "latest_trade_date": "20260320"
+    },
+    {
+      "ts_code": "000011.SZ",
+      "daily_file": "/data/agents/master/data_all_stocks/000011.SZ/daily.parquet",
+      "exists": true,
+      "rows": 1502,
+      "latest_trade_date": "20260320"
+    },
+    {
+      "ts_code": "000012.SZ",
+      "daily_file": "/data/agents/master/data_all_stocks/000012.SZ/daily.parquet",
+      "exists": true,
+      "rows": 1502,
+      "latest_trade_date": "20260320"
+    },
+    {
+      "ts_code": "000014.SZ",
+      "daily_file": "/data/agents/master/data_all_stocks/000014.SZ/daily.parquet",
+      "exists": true,
+      "rows": 1502,
+      "latest_trade_date": "20260320"
+    },
+    {
+      "ts_code": "000016.SZ",
+      "daily_file": "/data/agents/master/data_all_stocks/000016.SZ/daily.parquet",
+      "exists": true,
+      "rows": 1483,
+      "latest_trade_date": "20260320"
+    },
+    {
+      "ts_code": "000017.SZ",
+      "daily_file": "/data/agents/master/data_all_stocks/000017.SZ/daily.parquet",
+      "exists": true,
+      "rows": 1500,
+      "latest_trade_date": "20260320"
+    },
+    {
+      "ts_code": "000019.SZ",
+      "daily_file": "/data/agents/master/data_all_stocks/000019.SZ/daily.parquet",
+      "exists": true,
+      "rows": 1502,
+      "latest_trade_date": "20260320"
+    },
+    {
+      "ts_code": "000020.SZ",
+      "daily_file": "/data/agents/master/data_all_stocks/000020.SZ/daily.parquet",
+      "exists": true,
+      "rows": 1502,
+      "latest_trade_date": "20260320"
+    },
+    {
+      "ts_code": "000021.SZ",
+      "daily_file": "/data/agents/master/data_all_stocks/000021.SZ/daily.parquet",
+      "exists": true,
+      "rows": 1502,
+      "latest_trade_date": "20260320"
+    },
+    {
+      "ts_code": "000025.SZ",
+      "daily_file": "/data/agents/master/data_all_stocks/000025.SZ/daily.parquet",
+      "exists": true,
+      "rows": 1502,
+      "latest_trade_date": "20260320"
+    },
+    {
+      "ts_code": "000026.SZ",
+      "daily_file": "/data/agents/master/data_all_stocks/000026.SZ/daily.parquet",
+      "exists": true,
+      "rows": 1502,
+      "latest_trade_date": "20260320"
+    },
+    {
+      "ts_code": "000027.SZ",
+      "daily_file": "/data/agents/master/data_all_stocks/000027.SZ/daily.parquet",
+      "exists": true,
+      "rows": 1502,
+      "latest_trade_date": "20260320"
+    },
+    {
+      "ts_code": "000028.SZ",
+      "daily_file": "/data/agents/master/data_all_stocks/000028.SZ/daily.parquet",
+      "exists": true,
+      "rows": 1502,
+      "latest_trade_date": "20260320"
+    }
+  ],
+  "warnings": [],
+  "errors": [],
+  "summary": {
+    "sample_stock_count": 20,
+    "latest_sample_trade_date": "20260320",
+    "limit_list_latest_trade_date": "20260320",
+    "sample_trade_date_spread_days": 0,
+    "warnings": 0,
+    "errors": 0,
+    "status": "ok"
+  }
+}

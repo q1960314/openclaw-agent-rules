@@ -1,0 +1,60 @@
+{
+  "cycle_id": "knowledge_cycle_20260327_232001",
+  "cycle_type": "knowledge_cycle",
+  "description": "知识循环：收集各循环报告 -> 汇总 -> 通知",
+  "trigger": "cron",
+  "status": "completed",
+  "created_at": "2026-03-27 23:20:01",
+  "updated_at": "2026-03-27 23:20:21",
+  "current_stage": null,
+  "stages": [
+    "collect_cycle_reports",
+    "archive_knowledge",
+    "summarize",
+    "notify_user"
+  ],
+  "approval": {
+    "auto_research": true,
+    "auto_validate": true,
+    "require_manual_for": [
+      "code_merge",
+      "prod_param_change",
+      "trading_action",
+      "release"
+    ]
+  },
+  "notifications": {
+    "mode": "summary_and_exception",
+    "channel": "feishu",
+    "account_id": "master-feishu",
+    "target": "user:ou_61884ea8aa288c6514cc8b4cb3cd16d8"
+  },
+  "paths": {
+    "cycle_dir": "/home/admin/.openclaw/workspace/master/traces/cycles/knowledge_cycle/knowledge_cycle_20260327_232001",
+    "codebase_root": "/data/agents/master",
+    "workspace_root": "/home/admin/.openclaw/workspace/master"
+  },
+  "summary": {
+    "cycle_id": "knowledge_cycle_20260327_232001",
+    "cycle_type": "knowledge_cycle",
+    "generated_at": "2026-03-27 23:20:05",
+    "status": "completed",
+    "task_total": 3,
+    "task_completed": 3,
+    "task_failed": 0,
+    "artifacts": {
+      "data_check": null,
+      "smoke_backtest": null,
+      "weekly_health": null,
+      "followup_ticket": null,
+      "queue_result": null,
+      "dispatch_result": null,
+      "collect_result": null,
+      "select_target": null,
+      "opencode_result": null,
+      "data_snapshot": null,
+      "data_quality_score": null
+    },
+    "recommended_actions": []
+  }
+}

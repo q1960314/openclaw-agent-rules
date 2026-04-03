@@ -1,0 +1,11 @@
+{
+  "stage": "opencode_plan",
+  "generated_at": "2026-03-26 00:26:43",
+  "mode": "plan",
+  "agent": "plan",
+  "model": "bailian/qwen3-coder-plus",
+  "returncode": 0,
+  "text": "# OpenCode Optimization Plan\n\n## 1. Diagnosis\n# OpenCode Optimization Plan\n\n## 1. Diagnosis\n\n根据分析，smoke_backtest出现负面收益(-0.1715)、负夏普(-4.4467)和较大回撤(0.1693)的根本原因是：\n\n**策略参数未经优化** - 当前系统虽具备贝叶斯优化能力，但参数仍使用默认配置，未能适应回测期间的市场环境。主要问题包括：\n- 固定风险参数(止损-6%，止盈+12%)不适用于特定市场周期\n- 策略权重分配不当，单一策略失效影响整体表现\n- 缺乏动态风控和市场状态感知\n\n## 2. Minimal Change Path\n\n1. **立即参数优化** - 使用现有贝叶斯优化器对关键参数进行寻优\n2. **策略权重调整** - 在多策略融合引擎中动态调整权重配比\n3. **风控参数微调** - 基于回测结果调整止损、止盈阈值\n4. **市场状态检测** - 启用动态风险管理模式\n\n## 3. Files To Touch\n\n- `/data/agents/master/modules/param_optimizer.py` - 参数优化器配置\n- `/data/agents/master/fetch_data_optimized.py` - 策略核心参数\n- `/data/agents/master/run_backtest_v4.py` - 回测配置调整\n- `/data/agents/master/modules/backtest_engine.py` - 风控参数优化\n- `/data/agents/master/modules/strategy_core.py` - 策略评分参数\n\n## 4. Validation Plan\n\n1. **分阶段回测验证** - 运行30天滚动窗口回测检验稳定性\n2. **参数敏感性测试** - 验证优化参数的鲁棒性\n3. **样本外测试** - 在未参与训练的数据上验证表现\n4. **对比基准测试** - 与基准策略比较关键指标\n\n## 5. Approval Gates\n\n- **策略参数变更** - 需人工审批参数优化结果\n- **风控阈值调整** - 需确认新的止损止盈设置\n- **实盘应用** - 所有改动仅限回测使用，不得直接应用实盘\n- **参数空间定义** - 需审批贝叶斯优化的参数边界",
+  "raw_lines": 25,
+  "stderr": ""
+}

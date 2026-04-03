@@ -1,0 +1,26 @@
+{
+  "task_id": "execution_cycle_20260329_224002::select_execution_target",
+  "cycle_id": "execution_cycle_20260329_224002",
+  "cycle_type": "execution_cycle",
+  "stage": "select_execution_target",
+  "owner_agent": "master-quant",
+  "mode": "command",
+  "status": "completed",
+  "timeout_seconds": 120,
+  "retry_limit": 0,
+  "attempts": [
+    {
+      "attempt": 1,
+      "started_at": "2026-03-29 22:40:04",
+      "finished_at": "2026-03-29 22:40:06",
+      "exit_code": 0,
+      "result": "success"
+    }
+  ],
+  "created_at": "2026-03-29 22:40:04",
+  "updated_at": "2026-03-29 22:40:06",
+  "command": "/home/admin/miniconda3/envs/vnpy_env/bin/python /home/admin/.openclaw/workspace/master/scripts/workflow_select_execution_target.py --cycle-dir /home/admin/.openclaw/workspace/master/traces/cycles/execution_cycle/execution_cycle_20260329_224002 --stage-id select_execution_target",
+  "log_file": "/home/admin/.openclaw/workspace/master/traces/cycles/execution_cycle/execution_cycle_20260329_224002/logs/02_select_execution_target.log",
+  "finished_at": "2026-03-29 22:40:06",
+  "exit_code": 0
+}

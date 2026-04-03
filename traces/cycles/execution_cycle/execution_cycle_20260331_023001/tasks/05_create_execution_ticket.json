@@ -1,0 +1,27 @@
+{
+  "task_id": "05_create_execution_ticket",
+  "stage": "create_execution_ticket",
+  "cycle_id": "execution_cycle_20260331_023001",
+  "title": "创建 build-ready 执行工单",
+  "description": "为 execution_cycle_20260331_023001 创建正式执行工单，将状态从 validation_controlled_execution_runtime 推进到 create_execution_ticket 完成态",
+  "input_refs": [
+    "artifacts/prepare_execution_task/execution_task.json",
+    "artifacts/select_execution_target/selected_execution_target.json",
+    "artifacts/opencode_execution_plan/execution_plan.md",
+    "reports/live_status.json"
+  ],
+  "output_artifacts": [
+    "artifacts/create_execution_ticket/execution_ticket.json",
+    "artifacts/create_execution_ticket/execution_ticket.md"
+  ],
+  "status": "completed",
+  "started_at": "2026-03-31T10:31:00+08:00",
+  "completed_at": "2026-03-31T10:31:30+08:00",
+  "execution_summary": {
+    "execution_ticket_created": true,
+    "files_generated": 2,
+    "ready_for_dispatch": true,
+    "next_stage": "dispatch_execution_ticket"
+  },
+  "agent": "doc-manager"
+}
